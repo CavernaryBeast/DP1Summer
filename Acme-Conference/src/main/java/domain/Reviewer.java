@@ -3,8 +3,14 @@ package domain;
 
 import java.util.Collection;
 
+import javax.persistence.Access;
+import javax.persistence.AccessType;
+import javax.persistence.Entity;
+
 import org.hibernate.validator.constraints.NotEmpty;
 
+@Entity
+@Access(AccessType.PROPERTY)
 public class Reviewer extends Actor {
 
 	//Atributos de clase
