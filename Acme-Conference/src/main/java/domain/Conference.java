@@ -1,11 +1,16 @@
 
 package domain;
 
+import java.util.Collection;
 import java.util.Date;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.validation.Valid;
 import javax.validation.constraints.Future;
 import javax.validation.constraints.Min;
 
@@ -16,18 +21,22 @@ import org.hibernate.validator.constraints.NotBlank;
 public class Conference extends DomainEntity {
 
 	//Atributos de clase
-	private String	title;
-	private String	acronym;
-	private String	venue;
-	private Date	submissionDeadline;
-	private Date	notificationDeadline;
-	private Date	cameraReadyDeadline;
-	private Date	startDate;
-	private Date	endDate;
-	private String	summary;
-	private double	fee;
+	private String						title;
+	private String						acronym;
+	private String						venue;
+	private Date						submissionDeadline;
+	private Date						notificationDeadline;
+	private Date						cameraReadyDeadline;
+	private Date						startDate;
+	private Date						endDate;
+	private String						summary;
+	private double						fee;
 
 	//Atributos de asociación
+	private Administrator				administrator;
+	private Collection<Registration>	registrations;
+	private Collection<Submission>		submissions;
+	private Collection<Activity>		activities;
 
 
 	//Getters and setters
@@ -120,6 +129,46 @@ public class Conference extends DomainEntity {
 
 	public void setFee(final double fee) {
 		this.fee = fee;
+	}
+
+	@Valid
+	@ManyToOne(optional = false)
+	public Administrator getAdministrator() {
+		return this.administrator;
+	}
+
+	public void setAdministrator(final Administrator administrator) {
+		this.administrator = administrator;
+	}
+
+	@Valid
+	@OneToMany
+	public Collection<Registration> getRegistrations() {
+		return this.registrations;
+	}
+
+	public void setRegistrations(final Collection<Registration> registrations) {
+		this.registrations = registrations;
+	}
+
+	@Valid
+	@OneToMany
+	public Collection<Submission> getSubmissions() {
+		return this.submissions;
+	}
+
+	public void setSubmissions(final Collection<Submission> submissions) {
+		this.submissions = submissions;
+	}
+
+	@Valid
+	@OneToMany(cascade = CascadeType.ALL)
+	public Collection<Activity> getActivities() {
+		return this.activities;
+	}
+
+	public void setActivities(final Collection<Activity> activities) {
+		this.activities = activities;
 	}
 
 }

@@ -6,7 +6,11 @@ import java.util.Date;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.validation.Valid;
 import javax.validation.constraints.Future;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -30,6 +34,8 @@ public class Activity extends DomainEntity {
 	private String				type;
 
 	//Atributos de asociación
+	private CameraReadyPaper	cameraReadyPaper;
+	private Collection<Section>	sections;
 
 
 	//Getters and setters
@@ -105,6 +111,26 @@ public class Activity extends DomainEntity {
 
 	public void setType(final String type) {
 		this.type = type;
+	}
+
+	@Valid
+	@OneToOne(optional = true)
+	public CameraReadyPaper getCameraReadyPaper() {
+		return this.cameraReadyPaper;
+	}
+
+	public void setCameraReadyPaper(final CameraReadyPaper cameraReadyPaper) {
+		this.cameraReadyPaper = cameraReadyPaper;
+	}
+
+	@Valid
+	@OneToMany(cascade = CascadeType.ALL)
+	public Collection<Section> getSections() {
+		return this.sections;
+	}
+
+	public void setSections(final Collection<Section> sections) {
+		this.sections = sections;
 	}
 
 }

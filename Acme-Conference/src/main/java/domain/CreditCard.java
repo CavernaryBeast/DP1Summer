@@ -5,6 +5,8 @@ import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import javax.validation.Valid;
 
 import org.hibernate.validator.constraints.CreditCardNumber;
 import org.hibernate.validator.constraints.NotBlank;
@@ -23,6 +25,7 @@ public class CreditCard extends DomainEntity {
 	private int		cvv;
 
 	//Atributos de asociación
+	private Actor	owner;
 
 
 	//Getters and setters
@@ -80,6 +83,16 @@ public class CreditCard extends DomainEntity {
 
 	public void setCvv(final int cvv) {
 		this.cvv = cvv;
+	}
+
+	@Valid
+	@ManyToOne(optional = false)
+	public Actor getOwner() {
+		return this.owner;
+	}
+
+	public void setOwner(final Actor owner) {
+		this.owner = owner;
 	}
 
 }
