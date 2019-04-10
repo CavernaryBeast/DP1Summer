@@ -1,62 +1,594 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- 
- * PopulateDatabase.xml
- *
- * Copyright (C) 2019 Universidad de Sevilla
- * 
- * The use of this project is hereby constrained to the conditions of the 
- * TDG Licence, a copy of which you may download from 
- * http://www.tdg-seville.info/License.html
- -->
+<!-- * PopulateDatabase.xml * * Copyright (C) 2019 Universidad de Sevilla 
+	* * The use of this project is hereby constrained to the conditions of the 
+	* TDG Licence, a copy of which you may download from * http://www.tdg-seville.info/License.html -->
 
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 	">
-	
-	<!-- User accounts -->
+
+	<!-- ##################################################################################################### -->
+
+	<!-- CONFIGURATION PARAMETERS -->
+
+	<bean id="configurationParameters"
+		class="domain.ConfigurationParameters">
+		<property name="sysName" value="Acme Conference" />
+		<property name="banner"
+			value="https://i.ibb.co/GVpZCtM/acme-conference.png" />
+		<property name="message"
+			value="Welcome to Acme Conference! Your scientific event manager" />
+		<property name="messageEs"
+			value="¡Bienvenidos a Acme Conference! Su gestor de eventos científicos" />
+		<property name="countryCode" value="+34" />
+		<property name="defaultCountry" value="Spain" />
+		<property name="creditCardMakes">
+			<list>
+				<value>VISA</value>
+				<value>MASTER</value>
+				<value>DINNERS</value>
+				<value>AMEX</value>
+			</list>
+		</property>
+		<property name="topics">
+			<list>
+				<ref bean="inquiry" />
+				<ref bean="rebuttal" />
+				<ref bean="registration" />
+				<ref bean="topic" />
+				<ref bean="other" />
+			</list>
+		</property>
+	</bean>
+
+	<!-- CONFIGURATION PARAMETERS FINISHED -->
+
+	<!-- TOPICS -->
+
+	<bean id="inquiry" class="domain.Topic">
+		<property name="name" value="INQUIRY" />
+		<property name="nameEs" value="CONSULTA" />
+	</bean>
+
+	<bean id="rebuttal" class="domain.Topic">
+		<property name="name" value="REBUTTAL" />
+		<property name="nameEs" value="REFUTACIÓN" />
+	</bean>
+
+	<bean id="registration" class="domain.Topic">
+		<property name="name" value="REGISTRATION" />
+		<property name="nameEs" value="REGISTRO" />
+	</bean>
+
+	<bean id="topic" class="domain.Topic">
+		<property name="name" value="TOPIC" />
+		<property name="nameEs" value="TÓPICO" />
+	</bean>
+
+	<bean id="other" class="domain.Topic">
+		<property name="name" value="OTHER" />
+		<property name="nameEs" value="OTRO" />
+	</bean>
+
+	<!-- TOPICS FINISHED -->
+
+
+	<!-- ##################################################################################################### -->
+
+
+	<!-- USER ACCOUNTS -->
+
+	<!-- ADMINISTRATOR -->
 
 	<bean id="userAccount1" class="security.UserAccount">
 		<property name="username" value="admin" />
-		<property name="password" value="21232f297a57a5a743894a0e4a801fc3" />
+		<property name="password"
+			value="21232f297a57a5a743894a0e4a801fc3" />
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
-					<property name="authority" value="ADMIN" />
+					<property name="authority" value="ADMINISTRATOR" />
 				</bean>
 			</list>
 		</property>
 	</bean>
 
+	<!-- ADMINISTRATOR FINISHED -->
+
+	<!-- ##################################################################################################### -->
+
+	<!-- AUTHORS -->
+
 	<bean id="userAccount2" class="security.UserAccount">
-		<property name="username" value="customer" />
-		<property name="password" value="91ec1f9324753048c0096d036a694f86" />
+		<property name="username" value="author1" />
+		<property name="password"
+			value="b312ba4ffd5245fa2a1ab819ec0d0347" />
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
-					<property name="authority" value="CUSTOMER" />
+					<property name="authority" value="AUTHOR" />
 				</bean>
 			</list>
 		</property>
 	</bean>
 
 	<bean id="userAccount3" class="security.UserAccount">
-		<property name="username" value="super" />
-		<property name="password" value="1b3231655cebb7a1f783eddf27d254ca" />
+		<property name="username" value="author2" />
+		<property name="password"
+			value="9bd97baef2b853ec00cc3cffd269f679" />
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
-					<property name="authority" value="ADMIN" />
-				</bean>
-				<bean class="security.Authority">
-					<property name="authority" value="CUSTOMER" />
+					<property name="authority" value="AUTHOR" />
 				</bean>
 			</list>
 		</property>
 	</bean>
-	
-	<!-- Other domain beans come here -->	
-	
+
+	<bean id="userAccount4" class="security.UserAccount">
+		<property name="username" value="author3" />
+		<property name="password"
+			value="c59a474d5ade296a15ebc40d6c4e8e11" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="AUTHOR" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="userAccount5" class="security.UserAccount">
+		<property name="username" value="author4" />
+		<property name="password"
+			value="9c479f8cda01e6c46195dd03adc2b9a1" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="AUTHOR" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+
+	<!-- AUTHORS FINISHED -->
+
+	<!-- ##################################################################################################### -->
+
+	<!-- REVIWERS -->
+
+	<bean id="userAccount6" class="security.UserAccount">
+		<property name="username" value="reviewer1" />
+		<property name="password"
+			value="6ce19528a40dde9521d97cf7ba264eca" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="REVIEWER" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="userAccount7" class="security.UserAccount">
+		<property name="username" value="reviewer2" />
+		<property name="password"
+			value="2693b57f0f59df94caacefb811e99851" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="REVIEWER" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+
+
+	<bean id="userAccount8" class="security.UserAccount">
+		<property name="username" value="reviewer3" />
+		<property name="password"
+			value="315d31e7c8f3a136610aafa220d689be" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="REVIEWER" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+
+
+	<bean id="userAccount9" class="security.UserAccount">
+		<property name="username" value="reviewer4" />
+		<property name="password"
+			value="5293e8663cbb7c157ff83eeae25177d3" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="REVIEWER" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+
+	<!-- AUTHORS FINISHED -->
+
+	<!-- USER ACCOUNTS FINISHED -->
+
+
+	<!-- ##################################################################################################### -->
+
+
+	<!-- ACTORS -->
+
+	<!-- ADMINISTRATOR -->
+
+	<bean id="admin" class="domain.Administrator">
+		<property name="name" value="Admin Name" />
+		<property name="middleName" value="Admin Middle Name" />
+		<property name="surname" value="Admin Surname" />
+		<property name="photo" value="https://photoadmin.jpg" />
+		<property name="email" value="admin@us.es" />
+		<property name="phoneNumber" value="666666666" />
+		<property name="address" value="Admin Address" />
+		<property name="userAccount" ref="userAccount1" />
+	</bean>
+
+	<!-- ADMINISTRATOR FINISHED -->
+
+	<!-- ##################################################################################################### -->
+
+	<!-- AUTHORS -->
+
+	<bean id="author1" class="domain.Author">
+		<property name="name" value="Author1 Name" />
+		<property name="middleName" value="Author1 Middle Name" />
+		<property name="surname" value="Author1 Surname" />
+		<property name="photo" value="https://photoauthor1.jpg" />
+		<property name="email" value="author1@us.es" />
+		<property name="phoneNumber" value="666666666" />
+		<property name="address" value="Author1 Address" />
+		<property name="userAccount" ref="userAccount2" />
+	</bean>
+
+	<bean id="author2" class="domain.Author">
+		<property name="name" value="Author2 Name" />
+		<property name="middleName" value="Author2 Middle Name" />
+		<property name="surname" value="Author2 Surname" />
+		<property name="photo" value="https://photoauthor2.jpg" />
+		<property name="email" value="author2@us.es" />
+		<property name="phoneNumber" value="666666666" />
+		<property name="address" value="Author2 Address" />
+		<property name="userAccount" ref="userAccount3" />
+	</bean>
+
+	<bean id="author3" class="domain.Author">
+		<property name="name" value="Author3 Name" />
+		<property name="middleName" value="Author3 Middle Name" />
+		<property name="surname" value="Author3 Surname" />
+		<property name="photo" value="https://photoauthor3.jpg" />
+		<property name="email" value="author3@us.es" />
+		<property name="phoneNumber" value="666666666" />
+		<property name="address" value="Author3 Address" />
+		<property name="userAccount" ref="userAccount4" />
+	</bean>
+
+	<bean id="author4" class="domain.Author">
+		<property name="name" value="Author4 Name" />
+		<property name="middleName" value="Author4 Middle Name" />
+		<property name="surname" value="Author4 Surname" />
+		<property name="photo" value="https://photoauthor4.jpg" />
+		<property name="email" value="author4@us.es" />
+		<property name="phoneNumber" value="666666666" />
+		<property name="address" value="Author4 Address" />
+		<property name="userAccount" ref="userAccount5" />
+	</bean>
+
+	<!-- AUTHORS FINISHED -->
+
+	<!-- ##################################################################################################### -->
+
+	<!-- REVIEWERS -->
+
+	<bean id="reviewer1" class="domain.Author">
+		<property name="name" value="Reviewer1 Name" />
+		<property name="middleName" value="Reviewer1 Middle Name" />
+		<property name="surname" value="Reviewer1 Surname" />
+		<property name="photo" value="https://photoreviewer1.jpg" />
+		<property name="email" value="reviewer1@us.es" />
+		<property name="phoneNumber" value="666666666" />
+		<property name="address" value="Reviewer1 Address" />
+		<property name="userAccount" ref="userAccount6" />
+	</bean>
+
+	<bean id="reviewer2" class="domain.Author">
+		<property name="name" value="Reviewer2 Name" />
+		<property name="middleName" value="Reviewer2 Middle Name" />
+		<property name="surname" value="Reviewer2 Surname" />
+		<property name="photo" value="https://photoreviewer2.jpg" />
+		<property name="email" value="reviewer2@us.es" />
+		<property name="phoneNumber" value="666666666" />
+		<property name="address" value="Reviewer2 Address" />
+		<property name="userAccount" ref="userAccount7" />
+	</bean>
+
+	<bean id="reviewer3" class="domain.Author">
+		<property name="name" value="Reviewer3 Name" />
+		<property name="middleName" value="Reviewer3 Middle Name" />
+		<property name="surname" value="Reviewer3 Surname" />
+		<property name="photo" value="https://photoreviewer3.jpg" />
+		<property name="email" value="reviewer3@us.es" />
+		<property name="phoneNumber" value="666666666" />
+		<property name="address" value="Reviewer3 Address" />
+		<property name="userAccount" ref="userAccount8" />
+	</bean>
+
+	<bean id="reviewer4" class="domain.Author">
+		<property name="name" value="Reviewer4 Name" />
+		<property name="middleName" value="Reviewer4 Middle Name" />
+		<property name="surname" value="Reviewer4 Surname" />
+		<property name="photo" value="https://photoreviewer4.jpg" />
+		<property name="email" value="reviewer4@us.es" />
+		<property name="phoneNumber" value="666666666" />
+		<property name="address" value="Reviewer4 Address" />
+		<property name="userAccount" ref="userAccount9" />
+	</bean>
+
+	<!-- REVIEWERS FINISHED -->
+
+	<!-- ACTORS FINISHED -->
+
+
+	<!-- ##################################################################################################### -->
+
+
+	<!-- MESSAGES -->
+
+	<bean id="message1" class="domain.Message">
+		<property name="moment" value="2019/08/05 22:00" />
+		<property name="subject" value="Message1's subject" />
+		<property name="body" value="Message1's body" />
+		<property name="topic" ref="other" />
+		<property name="sender" ref="admin" />
+		<property name="recipients">
+			<list>
+				<ref bean="author1" />
+				<ref bean="author2" />
+			</list>
+		</property>
+	</bean>
+
+	<bean id="message2" class="domain.Message">
+		<property name="moment" value="2019/08/05 22:00" />
+		<property name="subject" value="Message2's subject" />
+		<property name="body" value="Message2's body" />
+		<property name="topic" ref="other" />
+		<property name="sender" ref="author1" />
+		<property name="recipients">
+			<list>
+				<ref bean="author2" />
+				<ref bean="author3" />
+			</list>
+		</property>
+	</bean>
+
+	<bean id="message3" class="domain.Message">
+		<property name="moment" value="2019/08/05 22:00" />
+		<property name="subject" value="Message3's subject" />
+		<property name="body" value="Message3's body" />
+		<property name="topic" ref="other" />
+		<property name="sender" ref="author2" />
+		<property name="recipients">
+			<list>
+				<ref bean="author3" />
+				<ref bean="author4" />
+			</list>
+		</property>
+	</bean>
+
+	<bean id="message4" class="domain.Message">
+		<property name="moment" value="2019/08/05 22:00" />
+		<property name="subject" value="Message4's subject" />
+		<property name="body" value="Message4's body" />
+		<property name="topic" ref="other" />
+		<property name="sender" ref="author3" />
+		<property name="recipients">
+			<list>
+				<ref bean="author4" />
+				<ref bean="reviewer1" />
+			</list>
+		</property>
+	</bean>
+
+	<bean id="message5" class="domain.Message">
+		<property name="moment" value="2019/08/05 22:00" />
+		<property name="subject" value="Message5's subject" />
+		<property name="body" value="Message5's body" />
+		<property name="topic" ref="other" />
+		<property name="sender" ref="author4" />
+		<property name="recipients">
+			<list>
+				<ref bean="reviewer1" />
+				<ref bean="reviewer2" />
+			</list>
+		</property>
+	</bean>
+
+	<bean id="message6" class="domain.Message">
+		<property name="moment" value="2019/08/05 22:00" />
+		<property name="subject" value="Message1's subject" />
+		<property name="body" value="Message1's body" />
+		<property name="topic" ref="other" />
+		<property name="sender" ref="reviewer1" />
+		<property name="recipients">
+			<list>
+				<ref bean="reviewer2" />
+				<ref bean="reviewer3" />
+			</list>
+		</property>
+	</bean>
+
+	<bean id="message7" class="domain.Message">
+		<property name="moment" value="2019/08/05 22:00" />
+		<property name="subject" value="Message7's subject" />
+		<property name="body" value="Message7's body" />
+		<property name="topic" ref="other" />
+		<property name="sender" ref="reviewer2" />
+		<property name="recipients">
+			<list>
+				<ref bean="reviewer3" />
+				<ref bean="reviewer4" />
+			</list>
+		</property>
+	</bean>
+
+	<bean id="message8" class="domain.Message">
+		<property name="moment" value="2019/08/05 22:00" />
+		<property name="subject" value="Message8's subject" />
+		<property name="body" value="Message8's body" />
+		<property name="topic" ref="other" />
+		<property name="sender" ref="reviewer3" />
+		<property name="recipients">
+			<list>
+				<ref bean="reviewer4" />
+				<ref bean="admin" />
+			</list>
+		</property>
+	</bean>
+
+	<bean id="message9" class="domain.Message">
+		<property name="moment" value="2019/08/05 22:00" />
+		<property name="subject" value="Message9's subject" />
+		<property name="body" value="Message9's body" />
+		<property name="topic" ref="other" />
+		<property name="sender" ref="reviewer4" />
+		<property name="recipients">
+			<list>
+				<ref bean="admin" />
+				<ref bean="author1" />
+			</list>
+		</property>
+	</bean>
+
+	<!-- MESSAGES FINISHED -->
+
+
+	<!-- ##################################################################################################### -->
+
+
+	<!-- CREDIT CARDS -->
+	<bean id="creditCard1" class="domain.CreditCard">
+		<property name="holderName" value="author1" />
+		<property name="brandName" value="Acme Conference's brand" />
+		<property name="number" value="4716299708340661" />
+		<property name="expirationMonth" value="03" />
+		<property name="expirationYear" value="20" />
+		<property name="cvv" value="458" />
+		<property name="make" value="VISA" />
+		<property name="owner" ref="author1" />
+	</bean>
+
+	<bean id="creditCard2" class="domain.CreditCard">
+		<property name="holderName" value="author2" />
+		<property name="brandName" value="Acme Conference's brand" />
+		<property name="number" value="5391370983869986" />
+		<property name="expirationMonth" value="12" />
+		<property name="expirationYear" value="20" />
+		<property name="cvv" value="427" />
+		<property name="make" value="MASTER" />
+		<property name="owner" ref="author2" />
+	</bean>
+
+	<bean id="creditCard3" class="domain.CreditCard">
+		<property name="holderName" value="author3" />
+		<property name="brandName" value="Acme Conference's brand" />
+		<property name="number" value="378842052333621" />
+		<property name="expirationMonth" value="04" />
+		<property name="expirationYear" value="20" />
+		<property name="cvv" value="719" />
+		<property name="make" value="AMEX" />
+		<property name="owner" ref="author3" />
+	</bean>
+
+	<bean id="creditCard4" class="domain.CreditCard">
+		<property name="holderName" value="author4" />
+		<property name="brandName" value="Acme Conference's brand" />
+		<property name="number" value="372871781415462" />
+		<property name="expirationMonth" value="01" />
+		<property name="expirationYear" value="20" />
+		<property name="cvv" value="779" />
+		<property name="make" value="AMEX" />
+		<property name="owner" ref="author4" />
+	</bean>
+	<!-- CREDIT CARDS FINISHED -->
+
+
+	<!-- ##################################################################################################### -->
+
+
+	<!-- CONFERENCES -->
+	<bean id="conference1" class="domain.Conference">
+		<property name="title" value="Conference1's title" />
+		<property name="acronym" value="Conference1's acronym" />
+		<property name="venue" value="Conference1's venue" />
+		<property name="submissionDeadline" value="2019/10/01 21:00" />
+		<property name="notificationDeadline"
+			value="2019/10/02 21:00" />
+		<property name="cameraReadyDeadline" value="2019/10/03 21:00" />
+		<property name="startDate" value="2019/10/10 12:00" />
+		<property name="endDate" value="2019/10/20 21:00" />
+		<property name="summary" value="Conference1's summary" />
+		<property name="fee" value="200." />
+		<property name="administrator" ref="admin" />
+		<property name="registrations">
+			<list>
+			</list>
+		</property>
+		<property name="submissions">
+			<list>
+			</list>
+		</property>
+		<property name="activities">
+			<list>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="conference2" class="domain.Conference">
+		<property name="title" value="Conference2's title" />
+		<property name="acronym" value="Conference2's acronym" />
+		<property name="venue" value="Conference2's venue" />
+		<property name="submissionDeadline" value="2019/10/01 21:00" />
+		<property name="notificationDeadline"
+			value="2019/10/02 21:00" />
+		<property name="cameraReadyDeadline" value="2019/10/03 21:00" />
+		<property name="startDate" value="2019/10/10 12:00" />
+		<property name="endDate" value="2019/10/20 21:00" />
+		<property name="summary" value="Conference2's summary" />
+		<property name="fee" value="100." />
+		<property name="administrator" ref="admin" />
+		<property name="registrations">
+			<list>
+			</list>
+		</property>
+		<property name="submissions">
+			<list>
+			</list>
+		</property>
+		<property name="activities">
+			<list>
+			</list>
+		</property>
+	</bean>
+	<!-- CONFERENCES FINISHED -->
+
+
+	<!-- ##################################################################################################### -->
+
+
+	<!-- Other domain beans come here -->
+
 </beans>

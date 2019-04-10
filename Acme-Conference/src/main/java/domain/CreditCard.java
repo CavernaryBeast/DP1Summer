@@ -23,6 +23,7 @@ public class CreditCard extends DomainEntity {
 	private int		expirationMonth;
 	private int		expirationYear;
 	private int		cvv;
+	private String	make;
 
 	//Atributos de asociación
 	private Actor	owner;
@@ -83,6 +84,15 @@ public class CreditCard extends DomainEntity {
 
 	public void setCvv(final int cvv) {
 		this.cvv = cvv;
+	}
+
+	@NotBlank
+	public String getMake() {
+		return this.make;
+	}
+
+	public void setMake(final String make) {
+		this.make = make;
 	}
 
 	@Valid

@@ -23,6 +23,8 @@ public class ConfigurationParameters extends DomainEntity {
 	private String				countryCode;
 	private String				defaultCountry;
 	private Collection<String>	creditCardMakes;
+	private Collection<String>	topics;
+	private Collection<String>	topicsEs;
 
 	//Atributos de asociación
 
@@ -92,6 +94,24 @@ public class ConfigurationParameters extends DomainEntity {
 
 	public void setCreditCardMakes(final Collection<String> creditCardMakes) {
 		this.creditCardMakes = creditCardMakes;
+	}
+
+	@NotEmpty
+	public Collection<String> getTopics() {
+		return this.topics;
+	}
+
+	public void setTopics(final Collection<String> topics) {
+		this.topics = topics;
+	}
+
+	@NotEmpty
+	public Collection<String> getTopicsEs() {
+		return this.topicsEs;
+	}
+
+	public void setTopicsEs(final Collection<String> topicsEs) {
+		this.topicsEs = topicsEs;
 	}
 
 }
