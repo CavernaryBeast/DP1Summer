@@ -20,6 +20,7 @@ public class Paper extends DomainEntity {
 	private Collection<String>	authors;
 	private String				summary;
 	private String				document;
+	private boolean				cameraReady;
 
 	//Atributos de asociación
 
@@ -62,6 +63,14 @@ public class Paper extends DomainEntity {
 
 	public void setDocument(final String document) {
 		this.document = document;
+	}
+
+	public boolean isCameraReady() {
+		return this.cameraReady;
+	}
+
+	public void setCameraReady(final boolean cameraReady) {
+		this.cameraReady = cameraReady;
 	}
 
 }

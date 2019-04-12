@@ -5,7 +5,6 @@ import java.util.Date;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
@@ -20,14 +19,13 @@ import org.hibernate.validator.constraints.NotBlank;
 public class Submission extends DomainEntity {
 
 	//Atributos de clase
-	private String				ticker;
-	private Date				moment;
-	private String				status;
+	private String	ticker;
+	private Date	moment;
+	private String	status;
 
 	//Atributos de asociación
-	private Author				author;
-	private Paper				paper;
-	private CameraReadyPaper	cameraReadyPaper;
+	private Author	author;
+	private Paper	paper;
 
 
 	//Getters and setters
@@ -71,23 +69,14 @@ public class Submission extends DomainEntity {
 	}
 
 	@Valid
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(optional = false)
+	//@OneToOne(cascade = CascadeType.ALL)
 	public Paper getPaper() {
 		return this.paper;
 	}
 
 	public void setPaper(final Paper paper) {
 		this.paper = paper;
-	}
-
-	@Valid
-	@OneToOne(cascade = CascadeType.ALL)
-	public CameraReadyPaper getCameraReadyPaper() {
-		return this.cameraReadyPaper;
-	}
-
-	public void setCameraReadyPaper(final CameraReadyPaper cameraReadyPaper) {
-		this.cameraReadyPaper = cameraReadyPaper;
 	}
 
 }

@@ -10,7 +10,18 @@ import javax.persistence.Entity;
 public class Author extends Actor {
 
 	//Atributos de clase
+	private String alias;
 
 	//Atributos de asociación
+
+
+	//Getters and setters
+	public String getAlias() {
+		return this.alias;
+	}
+
+	public void setAlias(final String alias) {
+		this.alias = alias;
+	}
 
 }

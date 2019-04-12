@@ -252,6 +252,7 @@
 		<property name="phoneNumber" value="666666666" />
 		<property name="address" value="Author1 Address" />
 		<property name="userAccount" ref="userAccount2" />
+		<property name="alias" value="Author1 alias" />
 	</bean>
 
 	<bean id="author2" class="domain.Author">
@@ -263,6 +264,7 @@
 		<property name="phoneNumber" value="666666666" />
 		<property name="address" value="Author2 Address" />
 		<property name="userAccount" ref="userAccount3" />
+		<property name="alias" value="Author2 alias" />
 	</bean>
 
 	<bean id="author3" class="domain.Author">
@@ -274,6 +276,7 @@
 		<property name="phoneNumber" value="666666666" />
 		<property name="address" value="Author3 Address" />
 		<property name="userAccount" ref="userAccount4" />
+		<property name="alias" value="Author3 alias" />
 	</bean>
 
 	<bean id="author4" class="domain.Author">
@@ -285,6 +288,7 @@
 		<property name="phoneNumber" value="666666666" />
 		<property name="address" value="Author4 Address" />
 		<property name="userAccount" ref="userAccount5" />
+		<property name="alias" value="Author4 alias" />
 	</bean>
 
 	<!-- AUTHORS FINISHED -->
@@ -545,10 +549,17 @@
 		<property name="administrator" ref="admin" />
 		<property name="registrations">
 			<list>
+				<ref bean="registration1"/>
+				<ref bean="registration2"/>
+				<ref bean="registration3"/>
+				<ref bean="registration4"/>
 			</list>
 		</property>
 		<property name="submissions">
 			<list>
+				<ref bean="submission1" />
+				<ref bean="submission2" />
+				<ref bean="submission3" />
 			</list>
 		</property>
 		<property name="activities">
@@ -572,10 +583,13 @@
 		<property name="administrator" ref="admin" />
 		<property name="registrations">
 			<list>
+				<ref bean="registration5"/>
+				<ref bean="registration6"/>
 			</list>
 		</property>
 		<property name="submissions">
 			<list>
+				<ref bean="submission4" />
 			</list>
 		</property>
 		<property name="activities">
@@ -584,6 +598,256 @@
 		</property>
 	</bean>
 	<!-- CONFERENCES FINISHED -->
+
+
+	<!-- ##################################################################################################### -->
+
+
+	<!-- SUBMISSIONS -->
+	<bean id="submission1" class="domain.Conference">
+		<property name="ticker" value="AAA-RR19" />
+		<property name="moment" value="2019/09/10 19:00" />
+		<property name="status" value="UNDER-REVIEW" />
+		<property name="author" ref="author1" />
+		<property name="paper" ref="paper1" />
+		<property name="cameraReadyPaper" />
+	</bean>
+
+	<bean id="submission2" class="domain.Conference">
+		<property name="ticker" value="AAA-RR19" />
+		<property name="moment" value="2019/09/10 19:00" />
+		<property name="status" value="UNDER-REVIEW" />
+		<property name="author" ref="author2" />
+		<property name="paper" ref="paper2" />
+		<property name="cameraReadyPaper" />
+	</bean>
+
+	<bean id="submission3" class="domain.Conference">
+		<property name="ticker" value="AAA-RR19" />
+		<property name="moment" value="2019/09/10 19:00" />
+		<property name="status" value="UNDER-REVIEW" />
+		<property name="author" ref="author3" />
+		<property name="paper" ref="paper3" />
+		<property name="cameraReadyPaper" />
+	</bean>
+
+	<bean id="submission4" class="domain.Conference">
+		<property name="ticker" value="AAA-RR19" />
+		<property name="moment" value="2019/09/10 19:00" />
+		<property name="status" value="UNDER-REVIEW" />
+		<property name="author" ref="author4" />
+		<property name="paper" ref="paper4" />
+		<property name="cameraReadyPaper" />
+	</bean>
+	<!-- SUBMISSIONS FINISHED -->
+
+	<!-- PAPERS -->
+	<bean id="paper1" class="domain.Paper">
+		<property name="title" value="Paper1's title" />
+		<property name="authors">
+			<list>
+				<ref bean="author1" />
+				<ref bean="author2" />
+			</list>
+		</property>
+		<property name="summary" value="Paper1's summary" />
+		<property name="document"
+			value="http://google.com/paperdoc1.html" />
+		<property name="cameraReady" value="false" />
+	</bean>
+
+	<bean id="paper2" class="domain.Paper">
+		<property name="title" value="Paper2's title" />
+		<property name="authors">
+			<list>
+				<ref bean="author2" />
+				<ref bean="author3" />
+			</list>
+		</property>
+		<property name="summary" value="Paper2's summary" />
+		<property name="document"
+			value="http://google.com/paperdoc2.html" />
+		<property name="cameraReady" value="false" />
+	</bean>
+
+	<bean id="paper3" class="domain.Paper">
+		<property name="title" value="Paper3's title" />
+		<property name="authors">
+			<list>
+				<ref bean="author3" />
+				<ref bean="author4" />
+			</list>
+		</property>
+		<property name="summary" value="Paper3's summary" />
+		<property name="document"
+			value="http://google.com/paperdoc3.html" />
+		<property name="cameraReady" value="false" />
+	</bean>
+
+	<bean id="paper4" class="domain.Paper">
+		<property name="title" value="Paper4's title" />
+		<property name="authors">
+			<list>
+				<ref bean="author4" />
+				<ref bean="author1" />
+			</list>
+		</property>
+		<property name="summary" value="Paper4's summary" />
+		<property name="document"
+			value="http://google.com/paperdoc4.html" />
+		<property name="cameraReady" value="false" />
+	</bean>
+	<!-- PAPERS FINISHED -->
+
+
+	<!-- ##################################################################################################### -->
+
+
+	<!-- REPORTS -->
+
+	<bean id="report1" class="domain.Report">
+		<property name="originalityScore" value="7.5" />
+		<property name="qualityScore" value="7.5" />
+		<property name="readabilityScore" value="7.5" />
+		<property name="decision" value="BORDER-LINE" />
+		<property name="reviewer" ref="reviewer1" />
+		<property name="submission" ref="submission1" />
+		<property name="comments">
+			<list>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="report2" class="domain.Report">
+		<property name="originalityScore" value="7.5" />
+		<property name="qualityScore" value="7.5" />
+		<property name="readabilityScore" value="7.5" />
+		<property name="decision" value="ACCEPT" />
+		<property name="reviewer" ref="reviewer2" />
+		<property name="submission" ref="submission1" />
+		<property name="comments">
+			<list>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="report3" class="domain.Report">
+		<property name="originalityScore" value="7.5" />
+		<property name="qualityScore" value="7.5" />
+		<property name="readabilityScore" value="7.5" />
+		<property name="decision" value="BORDER-LINE" />
+		<property name="reviewer" ref="reviewer2" />
+		<property name="submission" ref="submission2" />
+		<property name="comments">
+			<list>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="report4" class="domain.Report">
+		<property name="originalityScore" value="7.5" />
+		<property name="qualityScore" value="7.5" />
+		<property name="readabilityScore" value="7.5" />
+		<property name="decision" value="ACCEPT" />
+		<property name="reviewer" ref="reviewer3" />
+		<property name="submission" ref="submission2" />
+		<property name="comments">
+			<list>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="report5" class="domain.Report">
+		<property name="originalityScore" value="7.5" />
+		<property name="qualityScore" value="7.5" />
+		<property name="readabilityScore" value="7.5" />
+		<property name="decision" value="BORDER-LINE" />
+		<property name="reviewer" ref="reviewer3" />
+		<property name="submission" ref="submission3" />
+		<property name="comments">
+			<list>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="report6" class="domain.Report">
+		<property name="originalityScore" value="7.5" />
+		<property name="qualityScore" value="7.5" />
+		<property name="readabilityScore" value="7.5" />
+		<property name="decision" value="ACCEPT" />
+		<property name="reviewer" ref="reviewer4" />
+		<property name="submission" ref="submission3" />
+		<property name="comments">
+			<list>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="report7" class="domain.Report">
+		<property name="originalityScore" value="4.0" />
+		<property name="qualityScore" value="4.0" />
+		<property name="readabilityScore" value="4.0" />
+		<property name="decision" value="REJECT" />
+		<property name="reviewer" ref="reviewer4" />
+		<property name="submission" ref="submission4" />
+		<property name="comments">
+			<list>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="report8" class="domain.Report">
+		<property name="originalityScore" value="7.5" />
+		<property name="qualityScore" value="7.5" />
+		<property name="readabilityScore" value="7.5" />
+		<property name="decision" value="BORDER-LINE" />
+		<property name="reviewer" ref="reviewer1" />
+		<property name="submission" ref="submission4" />
+		<property name="comments">
+			<list>
+			</list>
+		</property>
+	</bean>
+
+	<!-- REPORTS FINISHED -->
+
+
+	<!-- ##################################################################################################### -->
+
+
+	<!-- REGISTRATIONS -->
+
+	<bean id="registration1" class="domain.Registration">
+		<property name="author" ref="author1" />
+		<property name="creditCard" ref="creditCard1" />
+	</bean>
+
+	<bean id="registration2" class="domain.Registration">
+		<property name="author" ref="author2" />
+		<property name="creditCard" ref="creditCard2" />
+	</bean>
+
+	<bean id="registration3" class="domain.Registration">
+		<property name="author" ref="author3" />
+		<property name="creditCard" ref="creditCard3" />
+	</bean>
+
+	<bean id="registration4" class="domain.Registration">
+		<property name="author" ref="author4" />
+		<property name="creditCard" ref="creditCard4" />
+	</bean>
+
+	<bean id="registration5" class="domain.Registration">
+		<property name="author" ref="author1" />
+		<property name="creditCard" ref="creditCard1" />
+	</bean>
+
+	<bean id="registration6" class="domain.Registration">
+		<property name="author" ref="author2" />
+		<property name="creditCard" ref="creditCard2" />
+	</bean>
+
+	<!-- REGISTRATIONS FINISHED -->
 
 
 	<!-- ##################################################################################################### -->

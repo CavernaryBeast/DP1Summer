@@ -34,7 +34,7 @@ public class Activity extends DomainEntity {
 	private String				type;
 
 	//Atributos de asociación
-	private CameraReadyPaper	cameraReadyPaper;
+	private Paper				paper;
 	private Collection<Section>	sections;
 
 
@@ -115,12 +115,12 @@ public class Activity extends DomainEntity {
 
 	@Valid
 	@OneToOne(optional = true)
-	public CameraReadyPaper getCameraReadyPaper() {
-		return this.cameraReadyPaper;
+	public Paper getPaper() {
+		return this.paper;
 	}
 
-	public void setCameraReadyPaper(final CameraReadyPaper cameraReadyPaper) {
-		this.cameraReadyPaper = cameraReadyPaper;
+	public void setPaper(final Paper paper) {
+		this.paper = paper;
 	}
 
 	@Valid
