@@ -368,7 +368,7 @@
 	<!-- MESSAGES -->
 
 	<bean id="message1" class="domain.Message">
-		<property name="moment" value="2019/03/05 22:00" />
+		<property name="moment" value="2018/03/05 22:00" />
 		<property name="subject" value="Message1's subject" />
 		<property name="body" value="Message1's body" />
 		<property name="topic" ref="other" />
@@ -382,7 +382,7 @@
 	</bean>
 
 	<bean id="message2" class="domain.Message">
-		<property name="moment" value="2019/03/05 22:00" />
+		<property name="moment" value="2018/03/05 22:00" />
 		<property name="subject" value="Message2's subject" />
 		<property name="body" value="Message2's body" />
 		<property name="topic" ref="other" />
@@ -396,7 +396,7 @@
 	</bean>
 
 	<bean id="message3" class="domain.Message">
-		<property name="moment" value="2019/03/05 22:00" />
+		<property name="moment" value="2018/03/05 22:00" />
 		<property name="subject" value="Message3's subject" />
 		<property name="body" value="Message3's body" />
 		<property name="topic" ref="other" />
@@ -410,7 +410,7 @@
 	</bean>
 
 	<bean id="message4" class="domain.Message">
-		<property name="moment" value="2019/03/05 22:00" />
+		<property name="moment" value="2018/03/05 22:00" />
 		<property name="subject" value="Message4's subject" />
 		<property name="body" value="Message4's body" />
 		<property name="topic" ref="other" />
@@ -424,7 +424,7 @@
 	</bean>
 
 	<bean id="message5" class="domain.Message">
-		<property name="moment" value="2019/03/05 22:00" />
+		<property name="moment" value="2018/03/05 22:00" />
 		<property name="subject" value="Message5's subject" />
 		<property name="body" value="Message5's body" />
 		<property name="topic" ref="other" />
@@ -438,7 +438,7 @@
 	</bean>
 
 	<bean id="message6" class="domain.Message">
-		<property name="moment" value="2019/03/05 22:00" />
+		<property name="moment" value="2018/03/05 22:00" />
 		<property name="subject" value="Message1's subject" />
 		<property name="body" value="Message1's body" />
 		<property name="topic" ref="other" />
@@ -452,7 +452,7 @@
 	</bean>
 
 	<bean id="message7" class="domain.Message">
-		<property name="moment" value="2019/03/05 22:00" />
+		<property name="moment" value="2018/03/05 22:00" />
 		<property name="subject" value="Message7's subject" />
 		<property name="body" value="Message7's body" />
 		<property name="topic" ref="other" />
@@ -466,7 +466,7 @@
 	</bean>
 
 	<bean id="message8" class="domain.Message">
-		<property name="moment" value="2019/03/05 22:00" />
+		<property name="moment" value="2018/03/05 22:00" />
 		<property name="subject" value="Message8's subject" />
 		<property name="body" value="Message8's body" />
 		<property name="topic" ref="other" />
@@ -480,7 +480,7 @@
 	</bean>
 
 	<bean id="message9" class="domain.Message">
-		<property name="moment" value="2019/08/05 22:00" />
+		<property name="moment" value="2018/08/05 22:00" />
 		<property name="subject" value="Message9's subject" />
 		<property name="body" value="Message9's body" />
 		<property name="topic" ref="other" />
@@ -622,32 +622,32 @@
 
 	<!-- SUBMISSIONS -->
 	<bean id="submission1" class="domain.Submission">
-		<property name="ticker" value="AAA-RR19" />
-		<property name="moment" value="2019/09/10 19:00" />
+		<property name="ticker" value="AAA-AUT1" />
+		<property name="moment" value="2018/09/10 19:00" />
 		<property name="status" value="UNDER-REVIEW" />
 		<property name="author" ref="author1" />
 		<property name="paper" ref="paper1" />
 	</bean>
 
 	<bean id="submission2" class="domain.Submission">
-		<property name="ticker" value="AAA-RR19" />
-		<property name="moment" value="2019/09/10 19:00" />
+		<property name="ticker" value="AAA-AUT2" />
+		<property name="moment" value="2018/09/10 19:00" />
 		<property name="status" value="UNDER-REVIEW" />
 		<property name="author" ref="author2" />
 		<property name="paper" ref="paper2" />
 	</bean>
 
 	<bean id="submission3" class="domain.Submission">
-		<property name="ticker" value="AAA-RR19" />
-		<property name="moment" value="2019/09/10 19:00" />
+		<property name="ticker" value="AAA-AUT3" />
+		<property name="moment" value="2018/09/10 19:00" />
 		<property name="status" value="UNDER-REVIEW" />
 		<property name="author" ref="author3" />
 		<property name="paper" ref="paper3" />
 	</bean>
 
 	<bean id="submission4" class="domain.Submission">
-		<property name="ticker" value="AAA-RR19" />
-		<property name="moment" value="2019/09/10 19:00" />
+		<property name="ticker" value="AAA-AUT4" />
+		<property name="moment" value="2018/09/10 19:00" />
 		<property name="status" value="UNDER-REVIEW" />
 		<property name="author" ref="author4" />
 		<property name="paper" ref="paper4" />

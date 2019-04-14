@@ -25,7 +25,7 @@ public class CreditCard extends DomainEntity {
 	private int		cvv;
 	private String	make;
 
-	//Atributos de asociación
+	//Atributos de asociaciï¿½n
 	private Actor	owner;
 
 
@@ -48,9 +48,9 @@ public class CreditCard extends DomainEntity {
 		this.brandName = brandName;
 	}
 
-	@Column(unique = true)
 	@NotBlank
 	@CreditCardNumber
+	@Column(unique = true)
 	public String getNumber() {
 		return this.number;
 	}

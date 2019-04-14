@@ -5,6 +5,7 @@ import java.util.Date;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
@@ -26,7 +27,7 @@ public class Submission extends DomainEntity {
 	private Date	moment;
 	private String	status;
 
-	//Atributos de asociación
+	//Atributos de asociaciï¿½n
 	private Author	author;
 	private Paper	paper;
 
@@ -34,6 +35,7 @@ public class Submission extends DomainEntity {
 	//Getters and setters
 	@NotBlank
 	@Pattern(regexp = "^[A-Z]{3}-[A-Z0-9]{4}$")
+	@Column(unique = true)
 	public String getTicker() {
 		return this.ticker;
 	}

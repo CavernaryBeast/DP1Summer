@@ -49,7 +49,7 @@ public class Paper extends DomainEntity {
 
 	//Este es el pattern de un archivo en línea
 	@NotBlank
-	@Pattern(regexp = "\\\\b(https?|ftp|file)://[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]")
+	@Pattern(regexp = "(https?|ftp|file)://[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]")
 	public String getDocument() {
 		return this.document;
 	}
