@@ -7,9 +7,13 @@ import java.util.Date;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.CascadeType;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.Valid;
 import javax.validation.constraints.Future;
 import javax.validation.constraints.Min;
@@ -18,6 +22,7 @@ import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Access(AccessType.PROPERTY)
@@ -25,7 +30,6 @@ public class Activity extends DomainEntity {
 
 	//Atributos de clase
 	private String				title;
-	private Collection<String>	speakers;
 	private Date				startMoment;
 	private double				duration;
 	private String				room;
@@ -36,6 +40,7 @@ public class Activity extends DomainEntity {
 	//Atributos de asociación
 	private Paper				paper;
 	private Collection<Section>	sections;
+	private Collection<Author>	speakers;
 
 
 	//Getters and setters
@@ -49,16 +54,9 @@ public class Activity extends DomainEntity {
 		this.title = title;
 	}
 
-	@NotEmpty
-	public Collection<String> getSpeakers() {
-		return this.speakers;
-	}
-
-	public void setSpeakers(final Collection<String> speakers) {
-		this.speakers = speakers;
-	}
-
 	@Future
+	@Temporal(TemporalType.TIMESTAMP)
+	@DateTimeFormat(pattern = "yyyy/MM/dd HH:mm")
 	public Date getStartMoment() {
 		return this.startMoment;
 	}
@@ -95,6 +93,7 @@ public class Activity extends DomainEntity {
 	}
 
 	@NotNull
+	@ElementCollection
 	public Collection<String> getAttachments() {
 		return this.attachments;
 	}
@@ -125,12 +124,25 @@ public class Activity extends DomainEntity {
 
 	@Valid
 	@OneToMany(cascade = CascadeType.ALL)
+	@NotNull
+	@ElementCollection
 	public Collection<Section> getSections() {
 		return this.sections;
 	}
 
 	public void setSections(final Collection<Section> sections) {
 		this.sections = sections;
+	}
+
+	@NotEmpty
+	@ManyToMany
+	@ElementCollection
+	public Collection<Author> getSpeakers() {
+		return this.speakers;
+	}
+
+	public void setSpeakers(final Collection<Author> speakers) {
+		this.speakers = speakers;
 	}
 
 }

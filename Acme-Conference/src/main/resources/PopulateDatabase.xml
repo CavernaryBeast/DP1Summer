@@ -14,11 +14,9 @@
 
 	<!-- CONFIGURATION PARAMETERS -->
 
-	<bean id="configurationParameters"
-		class="domain.ConfigurationParameters">
+	<bean id="configurationParameters" class="domain.ConfigurationParameters">
 		<property name="sysName" value="Acme Conference" />
-		<property name="banner"
-			value="https://i.ibb.co/GVpZCtM/acme-conference.png" />
+		<property name="banner" value="https://i.ibb.co/GVpZCtM/acme-conference.png" />
 		<property name="message"
 			value="Welcome to Acme Conference! Your scientific event manager" />
 		<property name="messageEs"
@@ -85,8 +83,7 @@
 
 	<bean id="userAccount1" class="security.UserAccount">
 		<property name="username" value="admin" />
-		<property name="password"
-			value="21232f297a57a5a743894a0e4a801fc3" />
+		<property name="password" value="21232f297a57a5a743894a0e4a801fc3" />
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
@@ -104,8 +101,7 @@
 
 	<bean id="userAccount2" class="security.UserAccount">
 		<property name="username" value="author1" />
-		<property name="password"
-			value="b312ba4ffd5245fa2a1ab819ec0d0347" />
+		<property name="password" value="b312ba4ffd5245fa2a1ab819ec0d0347" />
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
@@ -117,8 +113,7 @@
 
 	<bean id="userAccount3" class="security.UserAccount">
 		<property name="username" value="author2" />
-		<property name="password"
-			value="9bd97baef2b853ec00cc3cffd269f679" />
+		<property name="password" value="9bd97baef2b853ec00cc3cffd269f679" />
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
@@ -130,8 +125,7 @@
 
 	<bean id="userAccount4" class="security.UserAccount">
 		<property name="username" value="author3" />
-		<property name="password"
-			value="c59a474d5ade296a15ebc40d6c4e8e11" />
+		<property name="password" value="c59a474d5ade296a15ebc40d6c4e8e11" />
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
@@ -143,8 +137,7 @@
 
 	<bean id="userAccount5" class="security.UserAccount">
 		<property name="username" value="author4" />
-		<property name="password"
-			value="9c479f8cda01e6c46195dd03adc2b9a1" />
+		<property name="password" value="9c479f8cda01e6c46195dd03adc2b9a1" />
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
@@ -162,8 +155,7 @@
 
 	<bean id="userAccount6" class="security.UserAccount">
 		<property name="username" value="reviewer1" />
-		<property name="password"
-			value="6ce19528a40dde9521d97cf7ba264eca" />
+		<property name="password" value="6ce19528a40dde9521d97cf7ba264eca" />
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
@@ -175,8 +167,7 @@
 
 	<bean id="userAccount7" class="security.UserAccount">
 		<property name="username" value="reviewer2" />
-		<property name="password"
-			value="2693b57f0f59df94caacefb811e99851" />
+		<property name="password" value="2693b57f0f59df94caacefb811e99851" />
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
@@ -189,8 +180,7 @@
 
 	<bean id="userAccount8" class="security.UserAccount">
 		<property name="username" value="reviewer3" />
-		<property name="password"
-			value="315d31e7c8f3a136610aafa220d689be" />
+		<property name="password" value="315d31e7c8f3a136610aafa220d689be" />
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
@@ -203,8 +193,7 @@
 
 	<bean id="userAccount9" class="security.UserAccount">
 		<property name="username" value="reviewer4" />
-		<property name="password"
-			value="5293e8663cbb7c157ff83eeae25177d3" />
+		<property name="password" value="5293e8663cbb7c157ff83eeae25177d3" />
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
@@ -297,7 +286,7 @@
 
 	<!-- REVIEWERS -->
 
-	<bean id="reviewer1" class="domain.Author">
+	<bean id="reviewer1" class="domain.Reviewer">
 		<property name="name" value="Reviewer1 Name" />
 		<property name="middleName" value="Reviewer1 Middle Name" />
 		<property name="surname" value="Reviewer1 Surname" />
@@ -306,9 +295,15 @@
 		<property name="phoneNumber" value="666666666" />
 		<property name="address" value="Reviewer1 Address" />
 		<property name="userAccount" ref="userAccount6" />
+		<property name="expertise">
+			<list>
+				<value>Maths</value>
+				<value>Physics</value>
+			</list>
+		</property>
 	</bean>
 
-	<bean id="reviewer2" class="domain.Author">
+	<bean id="reviewer2" class="domain.Reviewer">
 		<property name="name" value="Reviewer2 Name" />
 		<property name="middleName" value="Reviewer2 Middle Name" />
 		<property name="surname" value="Reviewer2 Surname" />
@@ -317,9 +312,16 @@
 		<property name="phoneNumber" value="666666666" />
 		<property name="address" value="Reviewer2 Address" />
 		<property name="userAccount" ref="userAccount7" />
+		<property name="expertise">
+			<list>
+				<value>French</value>
+				<value>Spanish</value>
+			</list>
+		</property>
+
 	</bean>
 
-	<bean id="reviewer3" class="domain.Author">
+	<bean id="reviewer3" class="domain.Reviewer">
 		<property name="name" value="Reviewer3 Name" />
 		<property name="middleName" value="Reviewer3 Middle Name" />
 		<property name="surname" value="Reviewer3 Surname" />
@@ -328,9 +330,16 @@
 		<property name="phoneNumber" value="666666666" />
 		<property name="address" value="Reviewer3 Address" />
 		<property name="userAccount" ref="userAccount8" />
+		<property name="expertise">
+			<list>
+				<value>History</value>
+				<value>Archaeology</value>
+			</list>
+		</property>
+
 	</bean>
 
-	<bean id="reviewer4" class="domain.Author">
+	<bean id="reviewer4" class="domain.Reviewer">
 		<property name="name" value="Reviewer4 Name" />
 		<property name="middleName" value="Reviewer4 Middle Name" />
 		<property name="surname" value="Reviewer4 Surname" />
@@ -339,6 +348,13 @@
 		<property name="phoneNumber" value="666666666" />
 		<property name="address" value="Reviewer4 Address" />
 		<property name="userAccount" ref="userAccount9" />
+		<property name="expertise">
+			<list>
+				<value>Industrial design</value>
+				<value>Marketing</value>
+			</list>
+		</property>
+
 	</bean>
 
 	<!-- REVIEWERS FINISHED -->
@@ -352,7 +368,7 @@
 	<!-- MESSAGES -->
 
 	<bean id="message1" class="domain.Message">
-		<property name="moment" value="2019/08/05 22:00" />
+		<property name="moment" value="2019/03/05 22:00" />
 		<property name="subject" value="Message1's subject" />
 		<property name="body" value="Message1's body" />
 		<property name="topic" ref="other" />
@@ -366,7 +382,7 @@
 	</bean>
 
 	<bean id="message2" class="domain.Message">
-		<property name="moment" value="2019/08/05 22:00" />
+		<property name="moment" value="2019/03/05 22:00" />
 		<property name="subject" value="Message2's subject" />
 		<property name="body" value="Message2's body" />
 		<property name="topic" ref="other" />
@@ -380,7 +396,7 @@
 	</bean>
 
 	<bean id="message3" class="domain.Message">
-		<property name="moment" value="2019/08/05 22:00" />
+		<property name="moment" value="2019/03/05 22:00" />
 		<property name="subject" value="Message3's subject" />
 		<property name="body" value="Message3's body" />
 		<property name="topic" ref="other" />
@@ -394,7 +410,7 @@
 	</bean>
 
 	<bean id="message4" class="domain.Message">
-		<property name="moment" value="2019/08/05 22:00" />
+		<property name="moment" value="2019/03/05 22:00" />
 		<property name="subject" value="Message4's subject" />
 		<property name="body" value="Message4's body" />
 		<property name="topic" ref="other" />
@@ -408,7 +424,7 @@
 	</bean>
 
 	<bean id="message5" class="domain.Message">
-		<property name="moment" value="2019/08/05 22:00" />
+		<property name="moment" value="2019/03/05 22:00" />
 		<property name="subject" value="Message5's subject" />
 		<property name="body" value="Message5's body" />
 		<property name="topic" ref="other" />
@@ -422,7 +438,7 @@
 	</bean>
 
 	<bean id="message6" class="domain.Message">
-		<property name="moment" value="2019/08/05 22:00" />
+		<property name="moment" value="2019/03/05 22:00" />
 		<property name="subject" value="Message1's subject" />
 		<property name="body" value="Message1's body" />
 		<property name="topic" ref="other" />
@@ -436,7 +452,7 @@
 	</bean>
 
 	<bean id="message7" class="domain.Message">
-		<property name="moment" value="2019/08/05 22:00" />
+		<property name="moment" value="2019/03/05 22:00" />
 		<property name="subject" value="Message7's subject" />
 		<property name="body" value="Message7's body" />
 		<property name="topic" ref="other" />
@@ -450,7 +466,7 @@
 	</bean>
 
 	<bean id="message8" class="domain.Message">
-		<property name="moment" value="2019/08/05 22:00" />
+		<property name="moment" value="2019/03/05 22:00" />
 		<property name="subject" value="Message8's subject" />
 		<property name="body" value="Message8's body" />
 		<property name="topic" ref="other" />
@@ -539,8 +555,7 @@
 		<property name="acronym" value="Conference1's acronym" />
 		<property name="venue" value="Conference1's venue" />
 		<property name="submissionDeadline" value="2019/10/01 21:00" />
-		<property name="notificationDeadline"
-			value="2019/10/02 21:00" />
+		<property name="notificationDeadline" value="2019/10/02 21:00" />
 		<property name="cameraReadyDeadline" value="2019/10/03 21:00" />
 		<property name="startDate" value="2019/10/10 12:00" />
 		<property name="endDate" value="2019/10/20 21:00" />
@@ -549,10 +564,10 @@
 		<property name="administrator" ref="admin" />
 		<property name="registrations">
 			<list>
-				<ref bean="registration1"/>
-				<ref bean="registration2"/>
-				<ref bean="registration3"/>
-				<ref bean="registration4"/>
+				<ref bean="registration1" />
+				<ref bean="registration2" />
+				<ref bean="registration3" />
+				<ref bean="registration4" />
 			</list>
 		</property>
 		<property name="submissions">
@@ -564,6 +579,8 @@
 		</property>
 		<property name="activities">
 			<list>
+				<ref bean="activity1" />
+				<ref bean="activity2" />
 			</list>
 		</property>
 	</bean>
@@ -573,8 +590,7 @@
 		<property name="acronym" value="Conference2's acronym" />
 		<property name="venue" value="Conference2's venue" />
 		<property name="submissionDeadline" value="2019/10/01 21:00" />
-		<property name="notificationDeadline"
-			value="2019/10/02 21:00" />
+		<property name="notificationDeadline" value="2019/10/02 21:00" />
 		<property name="cameraReadyDeadline" value="2019/10/03 21:00" />
 		<property name="startDate" value="2019/10/10 12:00" />
 		<property name="endDate" value="2019/10/20 21:00" />
@@ -583,8 +599,8 @@
 		<property name="administrator" ref="admin" />
 		<property name="registrations">
 			<list>
-				<ref bean="registration5"/>
-				<ref bean="registration6"/>
+				<ref bean="registration5" />
+				<ref bean="registration6" />
 			</list>
 		</property>
 		<property name="submissions">
@@ -594,6 +610,7 @@
 		</property>
 		<property name="activities">
 			<list>
+				<ref bean="activity3" />
 			</list>
 		</property>
 	</bean>
@@ -604,40 +621,36 @@
 
 
 	<!-- SUBMISSIONS -->
-	<bean id="submission1" class="domain.Conference">
+	<bean id="submission1" class="domain.Submission">
 		<property name="ticker" value="AAA-RR19" />
 		<property name="moment" value="2019/09/10 19:00" />
 		<property name="status" value="UNDER-REVIEW" />
 		<property name="author" ref="author1" />
 		<property name="paper" ref="paper1" />
-		<property name="cameraReadyPaper" />
 	</bean>
 
-	<bean id="submission2" class="domain.Conference">
+	<bean id="submission2" class="domain.Submission">
 		<property name="ticker" value="AAA-RR19" />
 		<property name="moment" value="2019/09/10 19:00" />
 		<property name="status" value="UNDER-REVIEW" />
 		<property name="author" ref="author2" />
 		<property name="paper" ref="paper2" />
-		<property name="cameraReadyPaper" />
 	</bean>
 
-	<bean id="submission3" class="domain.Conference">
+	<bean id="submission3" class="domain.Submission">
 		<property name="ticker" value="AAA-RR19" />
 		<property name="moment" value="2019/09/10 19:00" />
 		<property name="status" value="UNDER-REVIEW" />
 		<property name="author" ref="author3" />
 		<property name="paper" ref="paper3" />
-		<property name="cameraReadyPaper" />
 	</bean>
 
-	<bean id="submission4" class="domain.Conference">
+	<bean id="submission4" class="domain.Submission">
 		<property name="ticker" value="AAA-RR19" />
 		<property name="moment" value="2019/09/10 19:00" />
 		<property name="status" value="UNDER-REVIEW" />
 		<property name="author" ref="author4" />
 		<property name="paper" ref="paper4" />
-		<property name="cameraReadyPaper" />
 	</bean>
 	<!-- SUBMISSIONS FINISHED -->
 
@@ -651,8 +664,7 @@
 			</list>
 		</property>
 		<property name="summary" value="Paper1's summary" />
-		<property name="document"
-			value="http://google.com/paperdoc1.html" />
+		<property name="document" value="http://google.com/paperdoc1.html" />
 		<property name="cameraReady" value="false" />
 	</bean>
 
@@ -665,8 +677,7 @@
 			</list>
 		</property>
 		<property name="summary" value="Paper2's summary" />
-		<property name="document"
-			value="http://google.com/paperdoc2.html" />
+		<property name="document" value="http://google.com/paperdoc2.html" />
 		<property name="cameraReady" value="false" />
 	</bean>
 
@@ -679,8 +690,7 @@
 			</list>
 		</property>
 		<property name="summary" value="Paper3's summary" />
-		<property name="document"
-			value="http://google.com/paperdoc3.html" />
+		<property name="document" value="http://google.com/paperdoc3.html" />
 		<property name="cameraReady" value="false" />
 	</bean>
 
@@ -693,8 +703,7 @@
 			</list>
 		</property>
 		<property name="summary" value="Paper4's summary" />
-		<property name="document"
-			value="http://google.com/paperdoc4.html" />
+		<property name="document" value="http://google.com/paperdoc4.html" />
 		<property name="cameraReady" value="false" />
 	</bean>
 	<!-- PAPERS FINISHED -->
@@ -851,6 +860,125 @@
 
 
 	<!-- ##################################################################################################### -->
+
+
+	<!-- ACTIVITIES -->
+
+	<bean id="activity1" class="domain.Activity">
+		<property name="title" value="Activity1's title" />
+		<property name="startMoment" value="2019/10/10 16:00" />
+		<property name="duration" value="120" />
+		<property name="room" value="Room1" />
+		<property name="summary" value="Activity1's summary" />
+		<property name="attachments">
+			<list>
+				<value>http://google.com/attachments1.html</value>
+				<value>http://google.com/attachments2.html</value>
+			</list>
+		</property>
+		<property name="type" value="PANEL"></property>
+		<property name="paper">
+			<null></null>
+		</property>
+		<property name="sections">
+			<list>
+			</list>
+		</property>
+		<property name="speakers">
+			<list>
+				<ref bean="author1" />
+			</list>
+		</property>
+	</bean>
+
+	<bean id="activity2" class="domain.Activity">
+		<property name="title" value="Activity2's title" />
+		<property name="startMoment" value="2019/10/10 18:00" />
+		<property name="duration" value="120" />
+		<property name="room" value="Room2" />
+		<property name="summary" value="Activity2's summary" />
+		<property name="attachments">
+			<list>
+				<value>http://google.com/attachments3.html</value>
+				<value>http://google.com/attachments4.html</value>
+			</list>
+		</property>
+		<property name="type" value="TUTORIAL"></property>
+		<property name="paper">
+			<null></null>
+		</property>
+		<property name="sections">
+			<list>
+				<ref bean="section1" />
+				<ref bean="section2" />
+			</list>
+		</property>
+		<property name="speakers">
+			<list>
+				<ref bean="author2" />
+				<ref bean="author3" />
+			</list>
+		</property>
+	</bean>
+
+	<bean id="activity3" class="domain.Activity">
+		<property name="title" value="Activity3's title" />
+		<property name="startMoment" value="2019/10/10 16:00" />
+		<property name="duration" value="120" />
+		<property name="room" value="Room3" />
+		<property name="summary" value="Activity3's summary" />
+		<property name="attachments">
+			<list>
+				<value>http://google.com/attachments5.html</value>
+				<value>http://google.com/attachments6.html</value>
+			</list>
+		</property>
+		<property name="type" value="PANEL"></property>
+		<property name="paper">
+			<null></null>
+		</property>
+		<property name="sections">
+			<list>
+			</list>
+		</property>
+		<property name="speakers">
+			<list>
+				<ref bean="author4" />
+			</list>
+		</property>
+	</bean>
+
+	<!-- ACTIVITIES FINISHED -->
+
+	<!-- SECTIONS -->
+
+	<bean id="section1" class="domain.Section">
+		<property name="title" value="Section1's title" />
+		<property name="summary" value="Section1's summary" />
+		<property name="pictures">
+			<list>
+				<value>http://google.com/picture1.html</value>
+				<value>http://google.com/picture1.htm2</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="section2" class="domain.Section">
+		<property name="title" value="Section2's title" />
+		<property name="summary" value="Section2's summary" />
+		<property name="pictures">
+			<list>
+				<value>http://google.com/picture3.html</value>
+				<value>http://google.com/picture4.htm2</value>
+			</list>
+		</property>
+	</bean>
+
+	<!-- SECTIONS FINISHED -->
+
+
+	<!-- ##################################################################################################### -->
+
 
 
 	<!-- Other domain beans come here -->

@@ -5,7 +5,9 @@ import java.util.Collection;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.validation.Valid;
 import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.NotBlank;
@@ -23,11 +25,10 @@ public class ConfigurationParameters extends DomainEntity {
 	private String				countryCode;
 	private String				defaultCountry;
 	private Collection<String>	creditCardMakes;
-	private Collection<String>	topics;
-	private Collection<String>	topicsEs;
+	private Collection<Topic>	topics;
+
 
 	//Atributos de asociación
-
 
 	//Getters and setters
 
@@ -41,7 +42,7 @@ public class ConfigurationParameters extends DomainEntity {
 	}
 
 	@NotBlank
-	@Pattern(regexp = "\\\\b(https?|ftp|file)://[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]")
+	@Pattern(regexp = "(https?|ftp|file)://[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]")
 	public String getBanner() {
 		return this.banner;
 	}
@@ -69,7 +70,7 @@ public class ConfigurationParameters extends DomainEntity {
 	}
 
 	@NotBlank
-	@Pattern(regexp = "^\\\\+\\\\d{1,3}$")
+	@Pattern(regexp = "^\\+\\d{1,3}$")
 	public String getCountryCode() {
 		return this.countryCode;
 	}
@@ -88,6 +89,7 @@ public class ConfigurationParameters extends DomainEntity {
 	}
 
 	@NotEmpty
+	@ElementCollection
 	public Collection<String> getCreditCardMakes() {
 		return this.creditCardMakes;
 	}
@@ -96,22 +98,15 @@ public class ConfigurationParameters extends DomainEntity {
 		this.creditCardMakes = creditCardMakes;
 	}
 
+	@Valid
 	@NotEmpty
-	public Collection<String> getTopics() {
+	@ElementCollection
+	public Collection<Topic> getTopics() {
 		return this.topics;
 	}
 
-	public void setTopics(final Collection<String> topics) {
+	public void setTopics(final Collection<Topic> topics) {
 		this.topics = topics;
-	}
-
-	@NotEmpty
-	public Collection<String> getTopicsEs() {
-		return this.topicsEs;
-	}
-
-	public void setTopicsEs(final Collection<String> topicsEs) {
-		this.topicsEs = topicsEs;
 	}
 
 }

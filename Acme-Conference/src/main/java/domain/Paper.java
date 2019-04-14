@@ -5,7 +5,9 @@ import java.util.Collection;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
 import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.NotBlank;
@@ -17,12 +19,12 @@ public class Paper extends DomainEntity {
 
 	//Atributos de clase
 	private String				title;
-	private Collection<String>	authors;
 	private String				summary;
 	private String				document;
 	private boolean				cameraReady;
 
 	//Atributos de asociación
+	private Collection<Author>	authors;
 
 
 	//Getters and setters
@@ -34,15 +36,6 @@ public class Paper extends DomainEntity {
 
 	public void setTitle(final String title) {
 		this.title = title;
-	}
-
-	@NotEmpty
-	public Collection<String> getAuthors() {
-		return this.authors;
-	}
-
-	public void setAuthors(final Collection<String> authors) {
-		this.authors = authors;
 	}
 
 	@NotBlank
@@ -71,6 +64,17 @@ public class Paper extends DomainEntity {
 
 	public void setCameraReady(final boolean cameraReady) {
 		this.cameraReady = cameraReady;
+	}
+
+	@NotEmpty
+	@ManyToMany
+	@ElementCollection
+	public Collection<Author> getAuthors() {
+		return this.authors;
+	}
+
+	public void setAuthors(final Collection<Author> authors) {
+		this.authors = authors;
 	}
 
 }

@@ -5,6 +5,7 @@ import java.util.Collection;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.validation.constraints.NotNull;
 
@@ -19,8 +20,8 @@ public class Section extends DomainEntity {
 	private String				summary;
 	private Collection<String>	pictures;
 
-	//Atributos de asociación
 
+	//Atributos de asociación
 
 	//Getters and setters
 
@@ -43,6 +44,7 @@ public class Section extends DomainEntity {
 	}
 
 	@NotNull
+	@ElementCollection
 	public Collection<String> getPictures() {
 		return this.pictures;
 	}

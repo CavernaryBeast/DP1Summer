@@ -7,14 +7,18 @@ import java.util.Date;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.CascadeType;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.Valid;
 import javax.validation.constraints.Future;
 import javax.validation.constraints.Min;
 
 import org.hibernate.validator.constraints.NotBlank;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Access(AccessType.PROPERTY)
@@ -69,6 +73,8 @@ public class Conference extends DomainEntity {
 	}
 
 	@Future
+	@Temporal(TemporalType.TIMESTAMP)
+	@DateTimeFormat(pattern = "yyyy/MM/dd HH:mm")
 	public Date getSubmissionDeadline() {
 		return this.submissionDeadline;
 	}
@@ -78,6 +84,8 @@ public class Conference extends DomainEntity {
 	}
 
 	@Future
+	@Temporal(TemporalType.TIMESTAMP)
+	@DateTimeFormat(pattern = "yyyy/MM/dd HH:mm")
 	public Date getNotificationDeadline() {
 		return this.notificationDeadline;
 	}
@@ -87,6 +95,8 @@ public class Conference extends DomainEntity {
 	}
 
 	@Future
+	@Temporal(TemporalType.TIMESTAMP)
+	@DateTimeFormat(pattern = "yyyy/MM/dd HH:mm")
 	public Date getCameraReadyDeadline() {
 		return this.cameraReadyDeadline;
 	}
@@ -96,6 +106,8 @@ public class Conference extends DomainEntity {
 	}
 
 	@Future
+	@Temporal(TemporalType.TIMESTAMP)
+	@DateTimeFormat(pattern = "yyyy/MM/dd HH:mm")
 	public Date getStartDate() {
 		return this.startDate;
 	}
@@ -105,6 +117,8 @@ public class Conference extends DomainEntity {
 	}
 
 	@Future
+	@Temporal(TemporalType.TIMESTAMP)
+	@DateTimeFormat(pattern = "yyyy/MM/dd HH:mm")
 	public Date getEndDate() {
 		return this.endDate;
 	}
@@ -143,6 +157,7 @@ public class Conference extends DomainEntity {
 
 	@Valid
 	@OneToMany
+	@ElementCollection
 	public Collection<Registration> getRegistrations() {
 		return this.registrations;
 	}
@@ -153,6 +168,7 @@ public class Conference extends DomainEntity {
 
 	@Valid
 	@OneToMany
+	@ElementCollection
 	public Collection<Submission> getSubmissions() {
 		return this.submissions;
 	}
@@ -163,6 +179,7 @@ public class Conference extends DomainEntity {
 
 	@Valid
 	@OneToMany(cascade = CascadeType.ALL)
+	@ElementCollection
 	public Collection<Activity> getActivities() {
 		return this.activities;
 	}

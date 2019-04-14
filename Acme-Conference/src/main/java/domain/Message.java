@@ -6,13 +6,17 @@ import java.util.Date;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.Valid;
 import javax.validation.constraints.Past;
 
 import org.hibernate.validator.constraints.NotBlank;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Access(AccessType.PROPERTY)
@@ -22,7 +26,7 @@ public class Message extends DomainEntity {
 	private Date				moment;
 	private String				subject;
 	private String				body;
-	private String				topic;
+	private Topic				topic;
 
 	//Atributos de asociación
 	private Actor				sender;
@@ -31,6 +35,8 @@ public class Message extends DomainEntity {
 
 	//Getters and setters
 	@Past
+	@Temporal(TemporalType.TIMESTAMP)
+	@DateTimeFormat(pattern = "yyyy/MM/dd HH:mm")
 	public Date getMoment() {
 		return this.moment;
 	}
@@ -63,12 +69,13 @@ public class Message extends DomainEntity {
 	//So, in the MessageService, we will retrieve the list of Topics from the ConfigurationParameters
 	//and we will check that the Topic selected is contained in the list of existing Topics
 
-	@NotBlank
-	public String getTopic() {
+	@Valid
+	@ManyToOne(optional = false)
+	public Topic getTopic() {
 		return this.topic;
 	}
 
-	public void setTopic(final String topic) {
+	public void setTopic(final Topic topic) {
 		this.topic = topic;
 	}
 
@@ -84,6 +91,7 @@ public class Message extends DomainEntity {
 
 	@Valid
 	@ManyToMany
+	@ElementCollection
 	public Collection<Actor> getRecipients() {
 		return this.recipients;
 	}
