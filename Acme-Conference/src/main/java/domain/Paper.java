@@ -68,7 +68,6 @@ public class Paper extends DomainEntity {
 
 	@NotEmpty
 	@ManyToMany
-	@ElementCollection
 	public Collection<Author> getAuthors() {
 		return this.authors;
 	}

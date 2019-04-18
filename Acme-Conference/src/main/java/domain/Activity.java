@@ -136,7 +136,6 @@ public class Activity extends DomainEntity {
 
 	@NotEmpty
 	@ManyToMany
-	@ElementCollection
 	public Collection<Author> getSpeakers() {
 		return this.speakers;
 	}
