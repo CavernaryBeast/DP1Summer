@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import domain.Actor;
-import domain.Author;
 import repositories.ActorRepository;
 import security.Authority;
 import security.UserAccount;
@@ -50,12 +49,12 @@ public class ActorService {
 		return res;
 	}
 
-	public boolean checkAuthority(final Author author, final String authority) {
+	public boolean checkAuthority(final Actor actor, final String authority) {
 
-		Assert.notNull(author);
+		Assert.notNull(actor);
 		Assert.notNull(authority);
 
-		final UserAccount ua = author.getUserAccount();
+		final UserAccount ua = actor.getUserAccount();
 		final Collection<Authority> authorities = ua.getAuthorities();
 
 		Assert.notEmpty(authorities);
