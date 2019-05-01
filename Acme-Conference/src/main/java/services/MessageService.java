@@ -10,15 +10,26 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
-import domain.Message;
 import repositories.MessageRepository;
+import domain.Actor;
+import domain.Message;
+import domain.Topic;
 
 @Service
 @Transactional
 public class MessageService {
 
 	@Autowired
-	private MessageRepository messageRepository;
+	private MessageRepository				messageRepository;
+
+	@Autowired
+	private ActorService					actorService;
+
+	@Autowired
+	private ConfigurationParametersService	configurationParametersService;
+
+	@Autowired
+	private TopicService					topicService;
 
 
 	//El sender se asignara mas adelante
@@ -65,6 +76,76 @@ public class MessageService {
 		saved = this.messageRepository.save(mes);
 
 		return saved;
+	}
+
+	public void delete(final Message mes) {
+
+		Assert.notNull(mes);
+
+		final Actor principal = this.actorService.findByPrincipal();
+		Assert.isTrue(mes.getSender().equals(principal) || mes.getRecipients().contains(principal) || mes.getSender().equals(null));
+
+		if (!mes.getSender().equals(null) || !mes.getRecipients().isEmpty()) {
+
+			Message saved;
+
+			if (mes.getSender().equals(principal))
+				mes.setSender(null);
+			else if (mes.getRecipients().contains(principal)) {
+
+				final Collection<Actor> recipients = mes.getRecipients();
+				recipients.remove(principal);
+				mes.setRecipients(recipients);
+
+			}
+			saved = this.messageRepository.save(mes);
+		} else if (mes.getSender().equals(null) && mes.getRecipients().isEmpty())
+			this.messageRepository.delete(mes);
+	}
+
+	public Collection<Message> listByTopic(final int topicId) {
+
+		Assert.isTrue(topicId != 0);
+		final Collection<Topic> topics = this.configurationParametersService.getConfigurationParameters().getTopics();
+		final Topic topic = this.topicService.findOne(topicId);
+		Assert.isTrue(topics.contains(topic));
+
+		final int principalId = this.actorService.findByPrincipal().getId();
+		final Collection<Message> messages = this.messageRepository.findByTopicId(topicId, principalId);
+		Assert.notNull(messages);
+
+		return messages;
+	}
+
+	public Collection<Message> listBySender(final int senderId) {
+
+		Assert.isTrue(senderId != 0);
+
+		final int principalId = this.actorService.findByPrincipal().getId();
+		final Collection<Message> messages = this.messageRepository.findBySender(senderId, principalId);
+		Assert.notNull(messages);
+
+		return messages;
+	}
+
+	public Collection<Message> listSystemMessages() {
+
+		final int principalId = this.actorService.findByPrincipal().getId();
+		final Collection<Message> messages = this.messageRepository.findSystemMessages(principalId);
+		Assert.notNull(messages);
+
+		return messages;
+	}
+
+	public Collection<Message> listByRecipient(final int recipientId) {
+
+		Assert.isTrue(recipientId != 0);
+
+		final int principalId = this.actorService.findByPrincipal().getId();
+		final Collection<Message> messages = this.messageRepository.findByRecipientId(recipientId, principalId);
+		Assert.notNull(messages);
+
+		return messages;
 	}
 
 }
