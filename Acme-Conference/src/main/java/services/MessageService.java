@@ -1,6 +1,7 @@
 
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 
@@ -10,10 +11,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
-import repositories.MessageRepository;
 import domain.Actor;
+import domain.Administrator;
 import domain.Message;
+import domain.Submission;
 import domain.Topic;
+import repositories.MessageRepository;
 
 @Service
 @Transactional
@@ -24,6 +27,9 @@ public class MessageService {
 
 	@Autowired
 	private ActorService					actorService;
+
+	@Autowired
+	private AdministratorService			administratorService;
 
 	@Autowired
 	private ConfigurationParametersService	configurationParametersService;
@@ -40,6 +46,9 @@ public class MessageService {
 
 		mes = new Message();
 		moment = new Date(System.currentTimeMillis() - 1);
+
+		final Collection<Actor> recipients = new ArrayList<>();
+		mes.setRecipients(recipients);
 
 		mes.setMoment(moment);
 
@@ -80,15 +89,14 @@ public class MessageService {
 
 	public void delete(final Message mes) {
 
+		Message saved;
+
 		Assert.notNull(mes);
 
 		final Actor principal = this.actorService.findByPrincipal();
 		Assert.isTrue(mes.getSender().equals(principal) || mes.getRecipients().contains(principal) || mes.getSender().equals(null));
 
-		if (!mes.getSender().equals(null) || !mes.getRecipients().isEmpty()) {
-
-			Message saved;
-
+		if (!mes.getSender().equals(null) || !mes.getRecipients().isEmpty())
 			if (mes.getSender().equals(principal))
 				mes.setSender(null);
 			else if (mes.getRecipients().contains(principal)) {
@@ -98,9 +106,10 @@ public class MessageService {
 				mes.setRecipients(recipients);
 
 			}
-			saved = this.messageRepository.save(mes);
-		} else if (mes.getSender().equals(null) && mes.getRecipients().isEmpty())
+		if (mes.getSender().equals(null) && mes.getRecipients().isEmpty())
 			this.messageRepository.delete(mes);
+
+		saved = this.messageRepository.save(mes);
 	}
 
 	public Collection<Message> listByTopic(final int topicId) {
@@ -146,6 +155,44 @@ public class MessageService {
 		Assert.notNull(messages);
 
 		return messages;
+	}
+
+	public Collection<Message> listOwn() {
+
+		final Actor principal = this.actorService.findByPrincipal();
+
+		final Collection<Message> messages = this.messageRepository.findOwn(principal.getId());
+		Assert.notNull(messages);
+
+		return messages;
+	}
+
+	//Notification and Broadcast functionality
+	public void notifyAuthor(final Submission submission) {
+
+		Assert.isTrue(submission.getId() != 0);
+		final Administrator admin = this.administratorService.findByPrincipal();
+
+		final Topic topic = this.topicService.findByName("DECISION");
+
+		final Message notification = this.create();
+
+		//Setting of the corresponding recipient->The author of the submission
+		final Collection<Actor> recipients = notification.getRecipients();
+		recipients.add(submission.getAuthor());
+		notification.setRecipients(recipients);
+
+		//Setting of the subject regarding the status of the submission
+		notification.setSubject("Decision made regarding your submission");
+
+		//Setting of the corresponding body of the message->The decision made regarding the submission
+		final String body = "Your submission has been" + submission.getStatus();
+		notification.setBody(body);
+
+		//Setting of the topic regarding the status of the submission
+		notification.setTopic(topic);
+
+		this.messageRepository.save(notification);
 	}
 
 }

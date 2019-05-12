@@ -9,15 +9,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
-import repositories.TopicRepository;
 import domain.Topic;
+import repositories.TopicRepository;
 
 @Service
 @Transactional
 public class TopicService {
 
 	@Autowired
-	private TopicRepository	topicRepository;
+	private TopicRepository topicRepository;
 
 
 	public Topic create() {
@@ -40,6 +40,16 @@ public class TopicService {
 		Assert.isTrue(id != 0);
 
 		final Topic res = this.topicRepository.findOne(id);
+		Assert.notNull(res);
+
+		return res;
+	}
+
+	public Topic findByName(final String name) {
+
+		Assert.isTrue(name.length() > 0);
+
+		final Topic res = this.topicRepository.findByName(name);
 		Assert.notNull(res);
 
 		return res;
