@@ -35,7 +35,6 @@ public class ActorService {
 
 		final Collection<Actor> res = this.actorRepository.findAll();
 
-		Assert.notNull(res);
 		Assert.notEmpty(res);
 
 		return res;
