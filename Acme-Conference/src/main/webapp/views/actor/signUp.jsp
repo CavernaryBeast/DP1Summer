@@ -10,11 +10,11 @@
 	<spring:message code="actor.signUp.subtitle"/>
 	<br/>
 	
-	<acme:button url="author/create.do" code="actor.signUp.author" />
-	<acme:button url="reviewer/create.do" code="actor.signUp.reviewer" />
+	<acme:button url="actor/createAuthor.do" code="actor.signUp.author" />
+	<acme:button url="actor/createReviewer.do" code="actor.signUp.reviewer" />
 	
 	<security:authorize access="hasRole('ADMIN')">
-		<a href="administrator/administrator/create.do"><spring:message code="actor.signUp.administrator"/></a>
+		<a href="actor/administrator/createAdministrator.do"><spring:message code="actor.signUp.administrator"/></a>
 	</security:authorize>
 	<br/>
 	

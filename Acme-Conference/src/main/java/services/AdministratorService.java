@@ -1,6 +1,8 @@
 
 package services;
 
+import java.util.Collection;
+
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,48 @@ public class AdministratorService {
 	private ActorService			actorService;
 
 
+	public Administrator create() {
+
+		final Administrator admin = new Administrator();
+
+		return admin;
+	}
+
+	public Collection<Administrator> findAll() {
+
+		final Collection<Administrator> res = this.administratorRepository.findAll();
+		Assert.notNull(res);
+
+		return res;
+	}
+
+	public Administrator findOne(final int id) {
+
+		Assert.isTrue(id != 0);
+
+		final Administrator res = this.administratorRepository.findOne(id);
+		Assert.notNull(res);
+
+		return res;
+	}
+
+	public Administrator save(final Administrator admin) {
+
+		Assert.notNull(admin);
+
+		this.findByPrincipal();
+
+		final Administrator saved = this.save(admin);
+
+		return saved;
+	}
+
+	/**
+	 * This method finds the logged user that is using the application. Apart from this,
+	 * it checks that the user is an Administrator
+	 *
+	 * @return The logged user, an instance of Administrator
+	 */
 	public Administrator findByPrincipal() {
 
 		Administrator res;
