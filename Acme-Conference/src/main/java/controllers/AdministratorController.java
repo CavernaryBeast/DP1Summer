@@ -6,6 +6,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -41,7 +42,7 @@ public class AdministratorController extends AbstractController {
 	// Save -----------------------------------------------------------
 
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(@Valid final Administrator administrator, final BindingResult binding) {
+	public ModelAndView save(@ModelAttribute("administrator") @Valid final Administrator administrator, final BindingResult binding) {
 		ModelAndView result;
 
 		if (binding.hasErrors())
@@ -60,20 +61,19 @@ public class AdministratorController extends AbstractController {
 
 	}
 
-	//	// Display --------------------------------------------------------
-	//
-	//	@RequestMapping(value = "/display", method = RequestMethod.GET)
-	//	public ModelAndView display(@RequestParam final int administratorId) {
-	//		ModelAndView result;
-	//		Administrator administrator;
-	//
-	//		administrator = this.administratorService.findOne(administratorId);
-	//		result = new ModelAndView("administrator/display");
-	//		result.addObject("administrator", administrator);
-	//		final String banner = this.configurationParametersService.getBanner();
-	//		result.addObject("banner", banner);
-	//		return result;
-	//	}
+	// Display --------------------------------------------------------
+
+	@RequestMapping(value = "/display", method = RequestMethod.GET)
+	public ModelAndView display() {
+		ModelAndView result;
+		final Administrator principal = this.administratorService.findByPrincipal();
+
+		result = new ModelAndView("administrator/display");
+		result.addObject("administrator", principal);
+		final String banner = this.configurationParametersService.getBanner();
+		result.addObject("banner", banner);
+		return result;
+	}
 
 	// Ancillary methods --------------------------------------------------------
 

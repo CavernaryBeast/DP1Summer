@@ -50,4 +50,4 @@
 
 <acme:button url="author/edit.do" code="actor.edit"/>
 
-<acme:button url="/" code="author.back.welcome"/>
+<acme:button url="/" code="actor.back.welcome"/>
