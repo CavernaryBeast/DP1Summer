@@ -16,9 +16,22 @@
        
 <tiles-definitions>
 
-	<definition name="author/display" extends="master.page">	
-		<put-attribute name="title" value="Display the author's profile" />
-		<put-attribute name="body" value="/views/author/display.jsp" />
+	<definition name="message/edit" extends="master.page">
+		<put-attribute name="title" value="Send message" />
+		<put-attribute name="body"
+			value="/views/message/edit.jsp" />
+	</definition>
+
+	<definition name="message/display" extends="master.page">
+		<put-attribute name="title" value="Display message" />
+		<put-attribute name="body"
+			value="/views/message/display.jsp" />
+	</definition>
+
+	<definition name="message/list" extends="master.page">
+		<put-attribute name="title" value="List of messages" />
+		<put-attribute name="body"
+			value="/views/message/list.jsp" />
 	</definition>
 		
 </tiles-definitions>
