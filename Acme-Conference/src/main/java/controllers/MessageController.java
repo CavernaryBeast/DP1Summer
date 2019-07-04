@@ -47,7 +47,7 @@ public class MessageController extends AbstractController {
 	private AdministratorService			administratorService;
 
 
-	//Listing
+	//Listing --------------------------------------------------------
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ModelAndView list() {
@@ -69,7 +69,7 @@ public class MessageController extends AbstractController {
 		return res;
 	}
 
-	//Creation
+	//Creation --------------------------------------------------------
 
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public ModelAndView create() {
@@ -82,13 +82,10 @@ public class MessageController extends AbstractController {
 
 		res = this.createEditModelAndView(m, false, null);
 
-		final String lang = LocaleContextHolder.getLocale().getLanguage();
-		res.addObject("lang", lang);
-
 		return res;
 	}
 
-	//Broadcast
+	//Broadcast --------------------------------------------------------
 
 	@RequestMapping(value = "/broadcast", method = RequestMethod.GET)
 	public ModelAndView broadcast() {
@@ -108,7 +105,7 @@ public class MessageController extends AbstractController {
 		return res;
 	}
 
-	//Reply
+	//Reply --------------------------------------------------------
 
 	@RequestMapping(value = "/reply", method = RequestMethod.GET)
 	public ModelAndView reply(@RequestParam final int messageId) {
@@ -134,7 +131,8 @@ public class MessageController extends AbstractController {
 		return res;
 	}
 
-	//Save
+	//Save --------------------------------------------------------
+
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
 	public ModelAndView save(@ModelAttribute("m") @Valid final Message m, final BindingResult binding, @RequestParam final String type) {
 
@@ -163,7 +161,28 @@ public class MessageController extends AbstractController {
 		return res;
 	}
 
-	//Display
+	//Delete --------------------------------------------------------
+
+	@RequestMapping(value = "delete", method = RequestMethod.GET)
+	public ModelAndView delete(@RequestParam final int messageId) {
+
+		ModelAndView res;
+		final Message toDelete = this.messageService.findOne(messageId);
+
+		try {
+			this.messageService.delete(toDelete);
+			res = new ModelAndView("redirect:list.do");
+			final String banner = this.configurationParametersService.getBanner();
+			res.addObject("banner", banner);
+		} catch (final Throwable oops) {
+			res = new ModelAndView("redirect:display.do?messageId=" + messageId);
+			final String error = "Cannot delete this message";
+			res.addObject("error", error);
+		}
+		return res;
+	}
+
+	//Display --------------------------------------------------------
 
 	@RequestMapping(value = "/display", method = RequestMethod.GET)
 	public ModelAndView dislay(@RequestParam final int messageId) {
@@ -188,7 +207,7 @@ public class MessageController extends AbstractController {
 		return res;
 	}
 
-	//Ancillary methods
+	//Ancillary methods --------------------------------------------------------
 
 	/**
 	 *
