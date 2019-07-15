@@ -126,4 +126,23 @@ public class AuthorService {
 		return res;
 	}
 
+	public Collection<Author> findSubmittedAuthorByConferenceId(final int conferenceId) {
+
+		Assert.isTrue(conferenceId != 0);
+		final Collection<Author> res = this.authorRepository.findSubmittedAuthorByConferenceId(conferenceId);
+		Assert.notNull(res);
+
+		return res;
+	}
+
+	public Collection<Author> findRegisteredAuthorByConferenceId(final int conferenceId) {
+
+		Assert.isTrue(conferenceId != 0);
+
+		final Collection<Author> res = this.authorRepository.findRegisteredAuthorByConferenceId(conferenceId);
+		Assert.notNull(res);
+
+		return res;
+	}
+
 }

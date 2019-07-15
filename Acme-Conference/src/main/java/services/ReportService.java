@@ -50,6 +50,9 @@ public class ReportService {
 
 		Assert.notNull(res);
 
+		//		final Collection<Report> ownReports = this.findOwnReports();
+		//		Assert.isTrue(ownReports.contains(res));
+
 		return res;
 	}
 

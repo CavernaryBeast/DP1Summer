@@ -1,5 +1,5 @@
 
-package author;
+package controllers.author;
 
 import java.util.Collection;
 

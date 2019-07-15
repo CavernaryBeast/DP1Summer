@@ -183,10 +183,10 @@ public class MessageService {
 		notification.setRecipients(recipients);
 
 		//Setting of the subject regarding the status of the submission
-		notification.setSubject("Decision made regarding your submission");
+		notification.setSubject("Decision made regarding your submission/La decisión respecto a su propuesta");
 
 		//Setting of the corresponding body of the message->The decision made regarding the submission
-		final String body = "Your submission has been" + submission.getStatus();
+		final String body = "Your submission has been/Su propuesta ha sido" + submission.getStatus();
 		notification.setBody(body);
 
 		//Setting of the topic regarding the status of the submission

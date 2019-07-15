@@ -26,8 +26,11 @@
 
 	<acme:textbox code="creditCard.cvv" path="cvv" />
 
-	<acme:select items="makes" itemLabel="make" code="creditCard.makes"
-		path="make" />
+	<form:label path="make">
+		<spring:message code="creditCard.make" />: </form:label>
+	<form:select id="makes" path="make">
+		<form:options path="make" items="${makes}" />
+	</form:select>
 
 	<acme:submit name="save" code="creditCard.save" />
 
