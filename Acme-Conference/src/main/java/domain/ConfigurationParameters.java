@@ -88,6 +88,7 @@ public class ConfigurationParameters extends DomainEntity {
 		this.defaultCountry = defaultCountry;
 	}
 
+	@Valid
 	@NotEmpty
 	@ElementCollection
 	public Collection<String> getCreditCardMakes() {
