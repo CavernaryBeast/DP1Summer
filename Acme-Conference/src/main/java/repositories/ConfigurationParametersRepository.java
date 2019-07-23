@@ -30,7 +30,7 @@ public interface ConfigurationParametersRepository extends JpaRepository<Configu
 	@Query("select defaultCountry from ConfigurationParameters confParams")
 	String getDefaultCountry();
 
-	@Query("select creditCardMakes from ConfigurationParameters confParams")
+	@Query("select makes from ConfigurationParameters confParams join confParams.creditCardMakes makes")
 	Collection<String> getCreditCardMakes();
 
 	@Query("select confParams from ConfigurationParameters confParams")
