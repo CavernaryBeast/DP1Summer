@@ -1,11 +1,7 @@
 
 package forms;
 
-import javax.validation.constraints.Pattern;
-
 import org.hibernate.validator.constraints.NotBlank;
-import org.hibernate.validator.constraints.SafeHtml;
-import org.hibernate.validator.constraints.SafeHtml.WhiteListType;
 
 public class FilterConferenceForm {
 
@@ -13,6 +9,8 @@ public class FilterConferenceForm {
 	private String	typeDate;
 
 
+	//	@Pattern(regexp = "^FORTHCOMING|PAST|RUNNING$")
+	@NotBlank
 	public String getTypeDate() {
 		return this.typeDate;
 	}
@@ -21,9 +19,6 @@ public class FilterConferenceForm {
 		this.typeDate = typeDate;
 	}
 
-	@SafeHtml(whitelistType = WhiteListType.NONE)
-	@NotBlank
-	@Pattern(regexp = "^FORTHCOMING|PAST|RUNNING$")
 	public String getKeyWord() {
 		return this.keyWord;
 	}

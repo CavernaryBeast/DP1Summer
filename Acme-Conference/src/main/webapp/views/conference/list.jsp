@@ -32,19 +32,19 @@
 </security:authorize>
 
 
-<jstl:if test="${ requestURI eq 'conference/list.do'}">
-	<form:form action="${actionFilter}" modelAttribute="filterMoveTypeForm" >
-		<acme:textbox code="movement.filter" path="key"/>
-			    <form:select path="category">
+
+	<form:form action="${actionFilter}" modelAttribute="filterConferenceForm" >
+		<acme:textbox code="conference.filter" path="keyWord"/>
+			    <form:select path="typeDate">
 	        <form:option label="${allLabel}" value=""/>
 	        <form:option label="${forthcomingLabel}" value="FORTHCOMING"/>
-	        <form:option label="${pastLabel}" value="PAST"/>
 	        <form:option label="${runningLabel}" value="RUNNING"/>
+	        <form:option label="${pastLabel}" value="PAST"/>
 	    </form:select>
 	    <br/>
 		<acme:submit code="conference.filter" name="filter" />
 	</form:form>
-</jstl:if>
+
 
 <display:table pagesize="10" name="${conferences}" id="row"
 	requestURI="${requestURI}">
@@ -53,12 +53,6 @@
 <display:column property="venue" titleKey="conference.venue" />
 <display:column property="startDate" titleKey="conference.startDate" />
 <display:column property="endDate" titleKey="conference.endDate" />		
-		
-	
-		<display:column property="category" titleKey="movement.category" />
-	<display:column property="power" titleKey="movement.power" />
-	<display:column property="accurate" titleKey="movement.accurate" />
-	
 
 	<security:authorize access="hasRole('ADMIN')">
 		<display:column titleKey="conference.edit">

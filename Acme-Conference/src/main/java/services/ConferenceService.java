@@ -79,9 +79,37 @@ public class ConferenceService {
 		this.conferenceRepository.delete(conference);
 	}
 
-	public Collection<Conference> getConferencesByKeyword(final String keyword) {
+	public Collection<Conference> getAllConferencesByKeyword(final String keyword) {
 		Collection<Conference> result;
-		result = this.conferenceRepository.getConferencesByKeyword(keyword);
+		result = this.conferenceRepository.getAllConferencesByKeyword(keyword);
+		Assert.notNull(result);
+		return result;
+	}
+
+	public Collection<Conference> getForthcomingConferencesByKeyword(final String keyword) {
+		Collection<Conference> result;
+		result = this.conferenceRepository.getForthcomingConferencesByKeyword(keyword);
+		Assert.notNull(result);
+		return result;
+	}
+
+	public Collection<Conference> getRunningConferencesByKeyword(final String keyword) {
+		Collection<Conference> result;
+		result = this.conferenceRepository.getRunningConferencesByKeyword(keyword);
+		Assert.notNull(result);
+		return result;
+	}
+
+	public Collection<Conference> getPastConferencesByKeyword(final String keyword) {
+		Collection<Conference> result;
+		result = this.conferenceRepository.getPastConferencesByKeyword(keyword);
+		Assert.notNull(result);
+		return result;
+	}
+
+	public Collection<Conference> getPConferencesByKeyword(final String keyword) {
+		Collection<Conference> result;
+		result = this.conferenceRepository.getPastConferencesByKeyword(keyword);
 		Assert.notNull(result);
 		return result;
 	}
