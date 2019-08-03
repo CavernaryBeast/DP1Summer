@@ -16,18 +16,19 @@
 <jstl:set var="spanish" value="es"/>
 
 <spring:message code="conference.filter.all" var="allLabel"/>
-<spring:message code="conference.filter.forthcoming" var="forthcomingLabel"/>
-<spring:message code="conference.filter.past" var="pastLabel"/>
-<spring:message code="conference.filter.running" var="runningLabel"/>
+<spring:message code="conference.submission5Days" var="submissionLabel"/>
+<spring:message code="conference.notification5Days" var="notificationLabel"/>
+<spring:message code="conference.cameraReady5Days" var="cameraReadyLabel"/>
+<spring:message code="conference.organised5Days" var="organisedLabel"/>
 
+	<form:form action="${actionFilter}" modelAttribute="administratorfilterConferenceForm" >
 
-	<form:form action="${actionFilter}" modelAttribute="filterConferenceForm" >
-		<acme:textbox code="conference.filter" path="keyWord"/>
-			    <form:select path="typeDate">
+			    <form:select path="typeFilter">
 	        <form:option label="${allLabel}" value=""/>
-	        <form:option label="${forthcomingLabel}" value="FORTHCOMING"/>
-	        <form:option label="${runningLabel}" value="RUNNING"/>
-	        <form:option label="${pastLabel}" value="PAST"/>
+	        <form:option label="${submissionLabel}" value="SUBMISSION"/>
+	        <form:option label="${notificationLabel}" value="NOTIFICATION"/>
+	        <form:option label="${cameraReadyLabel}" value="CAMERAREADY"/>
+	        <form:option label="${organisedLabel}" value="ORGANISED"/>
 	    </form:select>
 	    <br/>
 		<acme:submit code="conference.filter" name="filter" />

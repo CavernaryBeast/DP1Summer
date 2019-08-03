@@ -25,4 +25,16 @@ public interface ConferenceRepository extends JpaRepository<Conference, Integer>
 	@Query("select distinct(c) from Conference c where (c.title like %?1% or c.venue like %?1% or c.summary like %?1%) and  c.endDate < CURRENT_TIMESTAMP")
 	Collection<Conference> getPastConferencesByKeyword(String keyword);
 
+	@Query("select c from Conference c where datediff(c.submissionDeadline, CURRENT_DATE) between -5 and -1")
+	Collection<Conference> getConferencesSubmissionDeadlineLastFiveDays();
+
+	@Query("select c from Conference c where datediff(c.notificationDeadline, CURRENT_DATE) between 0 and 4")
+	Collection<Conference> getConferencesNotificationDeadlineInLessFiveDays();
+
+	@Query("select c from Conference c where datediff(c.cameraReadyDeadline, CURRENT_DATE) between 0 and 4")
+	Collection<Conference> getConferencesCameraReadyDeadlineInLessFiveDays();
+
+	@Query("select c from Conference c where datediff(c.startDate, CURRENT_DATE) between 0 and 4")
+	Collection<Conference> getConferencesStartDateInLessFiveDays();
+
 }

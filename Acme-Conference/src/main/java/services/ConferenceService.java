@@ -51,7 +51,6 @@ public class ConferenceService {
 		return res;
 	}
 
-	//We check that who wants to save the comment is the owner of the comment's Report
 	public Conference save(final Conference conference) {
 		Assert.notNull(conference);
 		Conference saved;
@@ -110,6 +109,34 @@ public class ConferenceService {
 	public Collection<Conference> getPConferencesByKeyword(final String keyword) {
 		Collection<Conference> result;
 		result = this.conferenceRepository.getPastConferencesByKeyword(keyword);
+		Assert.notNull(result);
+		return result;
+	}
+
+	public Collection<Conference> getConferencesSubmissionDeadlineLastFiveDays() {
+		Collection<Conference> result;
+		result = this.conferenceRepository.getConferencesSubmissionDeadlineLastFiveDays();
+		Assert.notNull(result);
+		return result;
+	}
+
+	public Collection<Conference> getConferencesNotificationDeadlineInLessFiveDays() {
+		Collection<Conference> result;
+		result = this.conferenceRepository.getConferencesNotificationDeadlineInLessFiveDays();
+		Assert.notNull(result);
+		return result;
+	}
+
+	public Collection<Conference> getConferencesCameraReadyDeadlineInLessFiveDays() {
+		Collection<Conference> result;
+		result = this.conferenceRepository.getConferencesCameraReadyDeadlineInLessFiveDays();
+		Assert.notNull(result);
+		return result;
+	}
+
+	public Collection<Conference> getConferencesStartDateInLessFiveDays() {
+		Collection<Conference> result;
+		result = this.conferenceRepository.getConferencesStartDateInLessFiveDays();
 		Assert.notNull(result);
 		return result;
 	}

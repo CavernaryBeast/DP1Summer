@@ -9,15 +9,17 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
-<form:form action="message/edit.do" modelAttribute="m">
+<form:form action="conference/administrator/edit.do" modelAttribute="row">
 
 	<form:hidden path="id" />
 	<form:hidden path="version" />
-	<form:hidden path="moment" />
-	<form:hidden path="sender" />
 
-	<acme:select items="${recipients}" itemLabel="userAccount.username"
-		code="message.recipients" path="recipients" />
+
+		<acme:textbox code="conference.title" path="title"/>
+		<br />
+		
+		<acme:textbox code="conference.title" path="title"/>
+		<br />
 
 	<acme:textbox code="message.subject" path="subject" />
 
