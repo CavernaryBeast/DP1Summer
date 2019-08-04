@@ -16,6 +16,7 @@ import javax.persistence.TemporalType;
 import javax.validation.Valid;
 import javax.validation.constraints.Future;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -35,6 +36,7 @@ public class Conference extends DomainEntity {
 	private Date						endDate;
 	private String						summary;
 	private double						fee;
+	private Boolean						isFinal;
 
 	//Atributos de asociación
 	private Administrator				administrator;
@@ -143,6 +145,15 @@ public class Conference extends DomainEntity {
 
 	public void setFee(final double fee) {
 		this.fee = fee;
+	}
+
+	@NotNull
+	public Boolean getIsFinal() {
+		return this.isFinal;
+	}
+
+	public void setIsFinal(final Boolean isFinal) {
+		this.isFinal = isFinal;
 	}
 
 	@Valid

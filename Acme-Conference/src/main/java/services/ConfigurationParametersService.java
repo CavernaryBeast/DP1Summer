@@ -9,15 +9,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
-import domain.ConfigurationParameters;
 import repositories.ConfigurationParametersRepository;
+import domain.ConfigurationParameters;
 
 @Service
 @Transactional
 public class ConfigurationParametersService {
 
 	@Autowired
-	private ConfigurationParametersRepository configurationParametersRepository;
+	private ConfigurationParametersRepository	configurationParametersRepository;
 
 
 	public ConfigurationParameters create() {

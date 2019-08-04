@@ -600,6 +600,7 @@
 				<ref bean="activity2" />
 			</list>
 		</property>
+				<property name="isFinal" value="false" />
 	</bean>
 
 	<bean id="conference2" class="domain.Conference">
@@ -631,6 +632,7 @@
 				<ref bean="activity3" />
 			</list>
 		</property>
+		<property name="isFinal" value="false" />
 	</bean>
 	<!-- CONFERENCES FINISHED -->
 
