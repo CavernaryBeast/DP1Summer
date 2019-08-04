@@ -1,6 +1,7 @@
 
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 
@@ -11,8 +12,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import repositories.ConferenceRepository;
+import domain.Activity;
 import domain.Actor;
+import domain.Administrator;
 import domain.Conference;
+import domain.Registration;
+import domain.Submission;
 
 @Transactional
 @Service
@@ -26,11 +31,15 @@ public class ConferenceService {
 
 
 	public Conference create() {
-		final Actor actorLogged = this.actorService.findActorLogged();
+		final Actor actorLogged = this.actorService.findByPrincipal();
 		Assert.notNull(actorLogged);
 		this.actorService.checkUserLoginAdministrator(actorLogged);
+		final Administrator adminLogged = (Administrator) actorLogged;
 		final Conference res = new Conference();
-
+		res.setActivities(new ArrayList<Activity>());
+		res.setSubmissions(new ArrayList<Submission>());
+		res.setRegistrations(new ArrayList<Registration>());
+		res.setAdministrator(adminLogged);
 		return res;
 	}
 
