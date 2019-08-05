@@ -10,6 +10,8 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 
 import repositories.ConferenceRepository;
 import domain.Activity;
@@ -28,33 +30,22 @@ public class ConferenceService {
 	@Autowired
 	private ActorService			actorService;
 
-	//Comprueba esto Fran
 	@Autowired
 	private AdministratorService	administratorService;
+
+	@Autowired
+	private Validator				validator;
 
 
 	public Conference create() {
 
-		//		final Actor actorLogged = this.actorService.findByPrincipal();
-		//		Assert.notNull(actorLogged);
-		//		this.actorService.checkUserLoginAdministrator(actorLogged);
-		//		final Administrator adminLogged = (Administrator) actorLogged;
-
 		final Administrator principal = this.administratorService.findByPrincipal();
-
 		final Conference res = new Conference();
-		res.setActivities(new ArrayList<Activity>());
-		res.setSubmissions(new ArrayList<Submission>());
-		res.setRegistrations(new ArrayList<Registration>());
-
-		//		res.setAdministrator(adminLogged);
-		res.setAdministrator(principal);
-
 		return res;
 	}
 
 	public Collection<Conference> findAll() {
-
+		//TODO: Para el list público(incluyendo sin loguear en el sistema) los list de conference solo deben llevar las que estén a final mode
 		final Collection<Conference> res = this.conferenceRepository.findAll();
 		Assert.notNull(res);
 
@@ -63,7 +54,9 @@ public class ConferenceService {
 
 	public Conference findOne(final int id) {
 		//TODO: Probablemente haya que diferenciar los casos en funcion del actor, en función de la fecha que está por cumplirse.
+		this.administratorService.findByPrincipal();
 		Assert.isTrue(id != 0);
+		Assert.notNull(id);
 		final Conference res = this.conferenceRepository.findOne(id);
 		Assert.notNull(res);
 
@@ -80,12 +73,10 @@ public class ConferenceService {
 			final Date startDate = conference.getStartDate();
 			final Date endDate = conference.getEndDate();
 
-			Assert.isTrue(submissionDeadline.before(notificationDeadline) && submissionDeadline.before(cameraReadyDeadline) && submissionDeadline.before(startDate) && submissionDeadline.before(endDate),
-				"The Submission Deathline must be before the notification deathline, before the camera-ready Deadline , before the start date and before de end date. ");
-			Assert.isTrue(notificationDeadline.before(cameraReadyDeadline) && notificationDeadline.before(startDate) && notificationDeadline.before(endDate),
-				"The notification Deathline must be before the camera-ready deathline, before the startDate and before the endDate");
-			Assert.isTrue(cameraReadyDeadline.before(startDate) && cameraReadyDeadline.before(endDate), "The Camera-Ready Deathline must be before the startDate and before the endDate");
-			Assert.isTrue(startDate.before(endDate), " The startDate must be before the endDate");
+			Assert.isTrue(submissionDeadline.before(notificationDeadline) && submissionDeadline.before(cameraReadyDeadline) && submissionDeadline.before(startDate) && submissionDeadline.before(endDate), "SubmissionDeadline");
+			Assert.isTrue(notificationDeadline.before(cameraReadyDeadline) && notificationDeadline.before(startDate) && notificationDeadline.before(endDate), "NotificationDeadline");
+			Assert.isTrue(cameraReadyDeadline.before(startDate) && cameraReadyDeadline.before(endDate), "CameraReadyDeadline");
+			Assert.isTrue(startDate.before(endDate), "StartDate");
 
 		}
 		saved = this.conferenceRepository.save(conference);
@@ -158,6 +149,37 @@ public class ConferenceService {
 		result = this.conferenceRepository.getConferencesStartDateInLessFiveDays();
 		Assert.notNull(result);
 		return result;
+	}
+
+	public Collection<Conference> getAllConferencesFinalMode() {
+		Collection<Conference> result;
+		result = this.conferenceRepository.getAllConferencesFinalMode();
+		Assert.notNull(result);
+		return result;
+	}
+
+	public Conference reconstruct(final Conference conference, final BindingResult binding) {
+		Conference original;
+		final Administrator principal = this.administratorService.findByPrincipal();
+
+		if (conference.getId() == 0) {
+			conference.setActivities(new ArrayList<Activity>());
+			conference.setSubmissions(new ArrayList<Submission>());
+			conference.setRegistrations(new ArrayList<Registration>());
+			conference.setAdministrator(principal);
+		} else {
+			original = this.findOne(conference.getId());
+			conference.setId(original.getId());
+			conference.setVersion(original.getVersion());
+			conference.setActivities(original.getActivities());
+			conference.setSubmissions(original.getSubmissions());
+			conference.setRegistrations(original.getRegistrations());
+			conference.setAdministrator(original.getAdministrator());
+			Assert.isTrue(!(original.getIsFinal()), "The conference in database before saving must not be in final mode in order to modify it");
+		}
+		this.validator.validate(conference, binding);
+		return conference;
+
 	}
 
 }

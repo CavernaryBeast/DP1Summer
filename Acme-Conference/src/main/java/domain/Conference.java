@@ -74,6 +74,7 @@ public class Conference extends DomainEntity {
 		this.venue = venue;
 	}
 
+	@NotNull
 	@Future
 	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern = "yyyy/MM/dd HH:mm")
@@ -85,6 +86,7 @@ public class Conference extends DomainEntity {
 		this.submissionDeadline = submissionDeadline;
 	}
 
+	@NotNull
 	@Future
 	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern = "yyyy/MM/dd HH:mm")
@@ -96,6 +98,7 @@ public class Conference extends DomainEntity {
 		this.notificationDeadline = notificationDeadline;
 	}
 
+	@NotNull
 	@Future
 	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern = "yyyy/MM/dd HH:mm")
@@ -107,6 +110,7 @@ public class Conference extends DomainEntity {
 		this.cameraReadyDeadline = cameraReadyDeadline;
 	}
 
+	@NotNull
 	@Future
 	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern = "yyyy/MM/dd HH:mm")
@@ -118,6 +122,7 @@ public class Conference extends DomainEntity {
 		this.startDate = startDate;
 	}
 
+	@NotNull
 	@Future
 	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern = "yyyy/MM/dd HH:mm")

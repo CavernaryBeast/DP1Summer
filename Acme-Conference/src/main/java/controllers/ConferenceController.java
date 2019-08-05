@@ -26,22 +26,13 @@ public class ConferenceController extends AbstractController {
 	ConferenceService	conferenceService;
 
 
-	@RequestMapping(value = "/create", method = RequestMethod.GET)
-	public ModelAndView create() {
-		ModelAndView result;
-		Conference conference;
-		conference = this.conferenceService.create();
-		result = this.createEditModelAndView(conference);
-		return result;
-	}
-
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ModelAndView list() {
 		ModelAndView result;
 		Collection<Conference> conferences;
 		final FilterConferenceForm filterConferenceForm = new FilterConferenceForm();
 		final String language = LocaleContextHolder.getLocale().getLanguage();
-		conferences = this.conferenceService.findAll();
+		conferences = this.conferenceService.getAllConferencesFinalMode();
 		result = new ModelAndView("conference/list");
 		result.addObject("conferences", conferences);
 		result.addObject("language", language);

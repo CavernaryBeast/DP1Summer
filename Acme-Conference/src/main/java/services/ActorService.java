@@ -85,7 +85,6 @@ public class ActorService {
 		Actor res;
 		final UserAccount ua = LoginService.getPrincipal();
 		Assert.notNull(ua);
-		System.out.println("El id de la cuenta es: " + ua.getId());
 		res = this.findByUserAccountId(ua.getId());
 		System.out.println(res);
 		return res;

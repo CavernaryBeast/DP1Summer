@@ -13,16 +13,16 @@ import domain.Conference;
 public interface ConferenceRepository extends JpaRepository<Conference, Integer> {
 
 	//Cuando se aclare lo de "description" hay que añadir esto al final de la query dentro del paréntesis: or c.description like %?1%
-	@Query("select distinct(c) from Conference c where (c.title like %?1% or c.venue like %?1% or c.summary like %?1%)")
+	@Query("select distinct(c) from Conference c where (c.title like %?1% or c.venue like %?1% or c.summary like %?1%)and c.isFinal = 1")
 	Collection<Conference> getAllConferencesByKeyword(String keyword);
 
-	@Query("select distinct(c) from Conference c where (c.title like %?1% or c.venue like %?1% or c.summary like %?1%) and  c.startDate > CURRENT_TIMESTAMP")
+	@Query("select distinct(c) from Conference c where (c.title like %?1% or c.venue like %?1% or c.summary like %?1%) and  c.startDate > CURRENT_TIMESTAMP and c.isFinal = 1")
 	Collection<Conference> getForthcomingConferencesByKeyword(String keyword);
 
-	@Query("select distinct(c) from Conference c where (c.title like %?1% or c.venue like %?1% or c.summary like %?1%) and  c.startDate < CURRENT_TIMESTAMP and c.endDate > CURRENT_TIMESTAMP")
+	@Query("select distinct(c) from Conference c where (c.title like %?1% or c.venue like %?1% or c.summary like %?1%) and  c.startDate < CURRENT_TIMESTAMP and c.endDate > CURRENT_TIMESTAMP and c.isFinal = 1")
 	Collection<Conference> getRunningConferencesByKeyword(String keyword);
 
-	@Query("select distinct(c) from Conference c where (c.title like %?1% or c.venue like %?1% or c.summary like %?1%) and  c.endDate < CURRENT_TIMESTAMP")
+	@Query("select distinct(c) from Conference c where (c.title like %?1% or c.venue like %?1% or c.summary like %?1%) and  c.endDate < CURRENT_TIMESTAMP and c.isFinal = 1")
 	Collection<Conference> getPastConferencesByKeyword(String keyword);
 
 	@Query("select c from Conference c where datediff(c.submissionDeadline, CURRENT_DATE) between -5 and -1")
@@ -36,5 +36,8 @@ public interface ConferenceRepository extends JpaRepository<Conference, Integer>
 
 	@Query("select c from Conference c where datediff(c.startDate, CURRENT_DATE) between 0 and 4")
 	Collection<Conference> getConferencesStartDateInLessFiveDays();
+
+	@Query("select distinct(c) from Conference c where  c.isFinal = 1")
+	Collection<Conference> getAllConferencesFinalMode();
 
 }

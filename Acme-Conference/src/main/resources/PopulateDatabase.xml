@@ -577,7 +577,7 @@
 		<property name="startDate" value="2019/10/10 12:00" />
 		<property name="endDate" value="2019/10/20 21:00" />
 		<property name="summary" value="Conference1's summary" />
-		<property name="fee" value="200." />
+		<property name="fee" value="200.0" />
 		<property name="administrator" ref="admin" />
 		<property name="registrations">
 			<list>
@@ -614,7 +614,7 @@
 		<property name="startDate" value="2019/10/10 12:00" />
 		<property name="endDate" value="2019/10/20 21:00" />
 		<property name="summary" value="Conference2's summary" />
-		<property name="fee" value="100." />
+		<property name="fee" value="100.0" />
 		<property name="administrator" ref="admin" />
 		<property name="registrations">
 			<list>

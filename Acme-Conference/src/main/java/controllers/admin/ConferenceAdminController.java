@@ -12,13 +12,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import services.ActorService;
+import services.ConferenceService;
 import controllers.AbstractController;
 import domain.Conference;
 import forms.AdministratorFilterConferenceForm;
-import services.ActorService;
-import services.ConferenceService;
 
 @Controller
 @RequestMapping("/conference/administrator")
@@ -81,6 +82,57 @@ public class ConferenceAdminController extends AbstractController {
 		result.addObject("actionFilter", "conference/administrator/adminFilter.do");
 		result.addObject("administratorfilterConferenceForm", administratorfilterConferenceForm);
 		return result;
+	}
+
+	// Edit
+	// ----------------------------------------------------------------------------------
+
+	@RequestMapping(value = "/edit", method = RequestMethod.GET)
+	public ModelAndView edit(@RequestParam final int conferenceId) {
+
+		ModelAndView result;
+
+		Conference conference;
+
+		conference = this.conferenceService.findOne(conferenceId);
+		result = this.createEditModelAndView(conference);
+
+		return result;
+
+	}
+
+	// Save
+	// ----------------------------------------------------------------------------------
+
+	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
+	public ModelAndView save(Conference conference, final BindingResult binding) {
+
+		ModelAndView result;
+
+		conference = this.conferenceService.reconstruct(conference, binding);
+		if (binding.hasErrors())
+			result = this.createEditModelAndView(conference);
+		else
+			try {
+				this.conferenceService.save(conference);
+				result = new ModelAndView("redirect:/conference/administrator/list.do");
+
+			} catch (final Throwable oops) {
+				oops.printStackTrace();
+				if (oops.getMessage().equals("SubmissionDeadline"))
+					result = this.createEditModelAndView(conference, "conference.form.error.submissionDeadline");
+				else if (oops.getMessage().equals("NotificationDeadline"))
+					result = this.createEditModelAndView(conference, "conference.form.error.notificationDeadline");
+				else if (oops.getMessage().equals("CameraReadyDeadline"))
+					result = this.createEditModelAndView(conference, "conference.form.error.cameraReadyDeadline");
+				else if (oops.getMessage().equals("StartDate"))
+					result = this.createEditModelAndView(conference, "conference.form.error.startDate");
+				else
+					result = this.createEditModelAndView(conference, "conference.commit.error");
+			}
+
+		return result;
+
 	}
 
 	protected ModelAndView createEditModelAndView(final Conference conference) {

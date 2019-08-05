@@ -42,13 +42,18 @@
 
 <display:column property="title" titleKey="conference.title" />
 <display:column property="venue" titleKey="conference.venue" />
+<display:column property="submissionDeadline" titleKey="conference.submissionDeadline" />
+<display:column property="notificationDeadline" titleKey="conference.notificationDeadline" />
+<display:column property="cameraReadyDeadline" titleKey="conference.cameraReadyDeadline" />
 <display:column property="startDate" titleKey="conference.startDate" />
 <display:column property="endDate" titleKey="conference.endDate" />		
-
+<display:column property="isFinal" titleKey="conference.isFinal" />	
 	<security:authorize access="hasRole('ADMINISTRATOR')">
 		<display:column titleKey="conference.edit">
-			<a href="conference/edit.do?conferenceId=${row.id}"><spring:message
+		<jstl:if test="${ row.isFinal eq false}">
+			<a href="conference/administrator/edit.do?conferenceId=${row.id}"><spring:message
 					code="conference.edit" /></a>
+					</jstl:if>
 		</display:column>
 
 	</security:authorize>

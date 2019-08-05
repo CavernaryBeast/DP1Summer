@@ -41,22 +41,8 @@
 
 <display:column property="title" titleKey="conference.title" />
 <display:column property="venue" titleKey="conference.venue" />
+<display:column property="summary" titleKey="conference.summary" />
 <display:column property="startDate" titleKey="conference.startDate" />
 <display:column property="endDate" titleKey="conference.endDate" />		
 
-	<security:authorize access="hasRole('ADMINISTRATOR')">
-		<display:column titleKey="conference.edit">
-			<a href="conference/edit.do?conferenceId=${row.id}"><spring:message
-					code="conference.edit" /></a>
-		</display:column>
-
-	</security:authorize>
 </display:table>
-
-<security:authorize access="hasRole('ADMINISTRATOR')">
-
-	<input type="button" name="create"
-		value="<spring:message code = 'conference.create' />" class="btn" 	onclick="javascript: relativeRedir('conference/administrator/create.do');" />
-
-
-</security:authorize>
