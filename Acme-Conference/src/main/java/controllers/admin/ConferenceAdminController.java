@@ -14,23 +14,28 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import services.ConferenceService;
 import controllers.AbstractController;
 import domain.Conference;
 import forms.AdministratorFilterConferenceForm;
+import services.ActorService;
+import services.ConferenceService;
 
 @Controller
 @RequestMapping("/conference/administrator")
 public class ConferenceAdminController extends AbstractController {
 
 	@Autowired
-	ConferenceService	conferenceService;
+	ConferenceService		conferenceService;
+
+	@Autowired
+	private ActorService	actorService;
 
 
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public ModelAndView create() {
 		ModelAndView result;
-		Conference conference;
+		final Conference conference;
+
 		conference = this.conferenceService.create();
 		result = this.createEditModelAndView(conference);
 		return result;

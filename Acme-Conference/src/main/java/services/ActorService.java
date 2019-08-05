@@ -14,7 +14,6 @@ import security.Authority;
 import security.LoginService;
 import security.UserAccount;
 import domain.Actor;
-import domain.Author;
 
 @Service
 @Transactional
@@ -50,6 +49,14 @@ public class ActorService {
 		return res;
 	}
 
+	/**
+	 * 
+	 * @param actor
+	 *            El actor cuya autoridad queremos comprobar
+	 * @param authority
+	 *            Autoridad que queremos comprobar que el actor posee
+	 * @return True si el actor posee la autoridad pasada como parámetro o false si no la posee
+	 */
 	public boolean checkAuthority(final Actor actor, final String authority) {
 
 		Assert.notNull(actor);
@@ -66,6 +73,13 @@ public class ActorService {
 		return authorities.contains(aux);
 	}
 
+	/**
+	 * Este método sirve para sacar el actor logeado en el sistema
+	 * Se usa como método auxiliar para sacar los distintos tipos de actores del sistema y hacer comprobaciones
+	 * respecto a sus authorities
+	 * 
+	 * @return El actor logeado en el sistema
+	 */
 	public Actor findByPrincipal() {
 
 		Actor res;
@@ -77,11 +91,11 @@ public class ActorService {
 		return res;
 	}
 
-	public Author findByUserAccountId(final int id) {
+	public Actor findByUserAccountId(final int id) {
 
 		Assert.isTrue(id != 0);
 
-		final Author res = this.actorRepository.findByUserAccountId(id);
+		final Actor res = this.actorRepository.findByUserAccountId(id);
 		Assert.notNull(res);
 
 		return res;

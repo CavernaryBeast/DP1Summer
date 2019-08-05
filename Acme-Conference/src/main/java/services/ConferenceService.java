@@ -13,7 +13,6 @@ import org.springframework.util.Assert;
 
 import repositories.ConferenceRepository;
 import domain.Activity;
-import domain.Actor;
 import domain.Administrator;
 import domain.Conference;
 import domain.Registration;
@@ -29,17 +28,28 @@ public class ConferenceService {
 	@Autowired
 	private ActorService			actorService;
 
+	//Comprueba esto Fran
+	@Autowired
+	private AdministratorService	administratorService;
+
 
 	public Conference create() {
-		final Actor actorLogged = this.actorService.findByPrincipal();
-		Assert.notNull(actorLogged);
-		this.actorService.checkUserLoginAdministrator(actorLogged);
-		final Administrator adminLogged = (Administrator) actorLogged;
+
+		//		final Actor actorLogged = this.actorService.findByPrincipal();
+		//		Assert.notNull(actorLogged);
+		//		this.actorService.checkUserLoginAdministrator(actorLogged);
+		//		final Administrator adminLogged = (Administrator) actorLogged;
+
+		final Administrator principal = this.administratorService.findByPrincipal();
+
 		final Conference res = new Conference();
 		res.setActivities(new ArrayList<Activity>());
 		res.setSubmissions(new ArrayList<Submission>());
 		res.setRegistrations(new ArrayList<Registration>());
-		res.setAdministrator(adminLogged);
+
+		//		res.setAdministrator(adminLogged);
+		res.setAdministrator(principal);
+
 		return res;
 	}
 
