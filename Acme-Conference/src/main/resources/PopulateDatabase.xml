@@ -647,6 +647,12 @@
 		<property name="status" value="UNDER-REVIEW" />
 		<property name="author" ref="author1" />
 		<property name="paper" ref="paper1" />
+		<property name="reviewer">
+			<list>
+				<ref bean="reviewer1"/>
+				<ref bean="reviewer2"/>
+			</list>
+		</property>
 	</bean>
 
 	<bean id="submission2" class="domain.Submission">
@@ -655,6 +661,13 @@
 		<property name="status" value="UNDER-REVIEW" />
 		<property name="author" ref="author2" />
 		<property name="paper" ref="paper2" />
+				<property name="reviewer">
+			<list>
+				<ref bean="reviewer2"/>
+				<ref bean="reviewer3"/>
+			</list>
+		</property>
+		
 	</bean>
 
 	<bean id="submission3" class="domain.Submission">
@@ -663,6 +676,13 @@
 		<property name="status" value="UNDER-REVIEW" />
 		<property name="author" ref="author3" />
 		<property name="paper" ref="paper3" />
+				<property name="reviewer">
+			<list>
+				<ref bean="reviewer3"/>
+				<ref bean="reviewer4"/>
+			</list>
+		</property>
+		
 	</bean>
 
 	<bean id="submission4" class="domain.Submission">
@@ -671,6 +691,13 @@
 		<property name="status" value="UNDER-REVIEW" />
 		<property name="author" ref="author4" />
 		<property name="paper" ref="paper4" />
+				<property name="reviewer">
+			<list>
+				<ref bean="reviewer4"/>
+				<ref bean="reviewer1"/>
+			</list>
+		</property>
+		
 	</bean>
 	<!-- SUBMISSIONS FINISHED -->
 
