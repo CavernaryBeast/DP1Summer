@@ -15,13 +15,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import controllers.AbstractController;
-import domain.Report;
-import domain.Reviewer;
-import domain.Submission;
 import services.ConfigurationParametersService;
 import services.ReportService;
 import services.ReviewerService;
+import controllers.AbstractController;
+import domain.Report;
+import domain.Reviewer;
 
 @Controller
 @RequestMapping("report/reviewer")
@@ -36,9 +35,9 @@ public class ReportReviewerController extends AbstractController {
 	@Autowired
 	private ReviewerService					reviewerService;
 
+
 	//	@Autowired
 	//	private SubmissionService				submissionService;
-
 
 	//Listing --------------------------------------------------------
 
@@ -68,8 +67,8 @@ public class ReportReviewerController extends AbstractController {
 		ModelAndView res;
 		final Report report = this.reportService.create();
 
-		final Submission submission = this.submissionService.findOne(submissionId);
-		report.setSubmission(submission);
+		//		final Submission submission = this.submissionService.findOne(submissionId);
+		//		report.setSubmission(submission);
 
 		final Reviewer principal = this.reviewerService.findByPrincipal();
 		report.setReviewer(principal);

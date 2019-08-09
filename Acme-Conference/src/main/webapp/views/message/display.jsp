@@ -52,7 +52,7 @@
 <br />
 
 <jstl:if test="${ownMessage == false and m.sender != null}">
-	<acme:button url="/message/reply.do?messageId=<jstl:out value="${m.id}" />" code="message.reply"/>
+	<acme:button url="/message/reply.do?messageId=${m.id}" code="message.reply" />
 </jstl:if>
 
 <acme:button url="/message/list.do" code="message.back" />

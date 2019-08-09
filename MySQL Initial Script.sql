@@ -2,8 +2,8 @@ drop database if exists `acme-conference`;
 
 create database `acme-conference`;
 
-drop user 'acme-user'@'%';
-drop user 'acme-manager'@'%';
+drop user if exists 'acme-user'@'%';
+drop user if exists 'acme-manager'@'%';
 
 flush privileges;
 
