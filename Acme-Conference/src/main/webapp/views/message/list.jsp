@@ -25,7 +25,7 @@
 	<display:column property="moment" titleKey="message.moment" />
 	<display:column property="${lang}" titleKey="message.topic" />
 	<display:column titleKey="message.messages">
-		<a href="message/display.do?messageId=<jstl:out value="${m.id}"/>">
+		<a href="message/display.do?messageId=${m.id}">
 			<spring:message code="message.display" />
 		</a>
 	</display:column>

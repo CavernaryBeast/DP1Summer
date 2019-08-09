@@ -45,7 +45,7 @@
 <br />
 
 <acme:button
-	url="creditcard/author/edit.do?creditcardId=<jstl:out value="${creditcard.id}" />"
+	url="creditcard/author/edit.do?creditcardId=${creditcard.id}"
 	code="creditCard.edit" />
 
 <acme:button url="creditcard/author/list.do" code="creditCard.back" />

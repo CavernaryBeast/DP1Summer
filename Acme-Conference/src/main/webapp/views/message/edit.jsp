@@ -21,16 +21,16 @@
 
 	<acme:textbox code="message.subject" path="subject" />
 
-	<jstl:choose>
-		<jstl:when test="${lang == en}">
-			<jstl:set var="itemLabel" value="name" />
-		</jstl:when>
-		<jstl:otherwise>
-			<jstl:set var="itemLabel" value="nameEs" />
-		</jstl:otherwise>
-	</jstl:choose>
+<%-- 	<jstl:choose> --%>
+<%-- 		<jstl:when test="${lang == en}"> --%>
+<%-- 			<jstl:set var="itemLabel" value="name" /> --%>
+<%-- 		</jstl:when> --%>
+<%-- 		<jstl:otherwise> --%>
+<%-- 			<jstl:set var="itemLabel" value="nameEs" /> --%>
+<%-- 		</jstl:otherwise> --%>
+<%-- 	</jstl:choose> --%>
 
-	<acme:select items="${topics}" itemLabel="${itemLabel}"
+	<acme:select items="${topics}" itemLabel="${lang}"
 		code="message.topics" path="topic" />
 
 	<acme:textarea code="message.body" path="body" />

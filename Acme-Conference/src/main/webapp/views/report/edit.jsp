@@ -27,6 +27,6 @@
 
 	<acme:submit name="save" code="report.save" />
 
-	<acme:button url="/submission/reviewer/display.do?submissionId=<jstl:out value="${report.submission.id}" />" code="report.cancel" />
+	<acme:button url="/submission/reviewer/display.do?submissionId=${report.submission.id}" code="report.cancel" />
 	
 </form:form>

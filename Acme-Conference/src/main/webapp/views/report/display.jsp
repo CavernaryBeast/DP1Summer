@@ -18,7 +18,7 @@
 :
 <a
 	href="submission/<jstl:out value="${role}" />
-	/display.do?submissionId=<jstl:out value="${report.submission.id}" />">
+	/display.do?submissionId=${report.submission.id}">
 	<jstl:out value="${report.submission.ticker}" />
 </a>
 <br />
@@ -47,7 +47,7 @@
 
 	<jstl:when test="${role eq 'AUTHOR'}">
 		<acme:button
-			url="submission/author/display.do?submissionId=<jstl:out value="${report.submission.id}" />"
+			url="submission/author/display.do?submissionId=${report.submission.id}"
 			code="report.back" />
 	</jstl:when>
 

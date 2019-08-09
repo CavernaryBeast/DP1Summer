@@ -20,7 +20,7 @@
 	<display:column property="decision" titleKey="report.decision" />
 	<display:column titleKey="report.reports">
 		<a
-			href="report/reviewer/display.do?reportId=<jstl:out value="${report.id}"/>">
+			href="report/reviewer/display.do?reportId=${report.id}">
 			<spring:message code="report.display" />
 		</a>
 	</display:column>
