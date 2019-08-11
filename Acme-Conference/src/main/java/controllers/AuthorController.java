@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import domain.Author;
 import services.AuthorService;
 import services.ConfigurationParametersService;
+import domain.Author;
 
 @Controller
 @RequestMapping("/author")
@@ -43,7 +43,7 @@ public class AuthorController extends AbstractController {
 	// Save -----------------------------------------------------------
 
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(@ModelAttribute("author") @Valid final Author author, final BindingResult binding) {
+	public ModelAndView save(@ModelAttribute("actor") @Valid final Author author, final BindingResult binding) {
 
 		ModelAndView res;
 

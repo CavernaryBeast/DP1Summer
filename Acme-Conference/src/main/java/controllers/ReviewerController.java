@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import domain.Reviewer;
 import services.ConfigurationParametersService;
 import services.ReviewerService;
+import domain.Reviewer;
 
 @Controller
 @RequestMapping("/reviewer")
@@ -43,7 +43,7 @@ public class ReviewerController extends AbstractController {
 	// Save -----------------------------------------------------------
 
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(@ModelAttribute("reviewer") @Valid final Reviewer reviewer, final BindingResult binding) {
+	public ModelAndView save(@ModelAttribute("actor") @Valid final Reviewer reviewer, final BindingResult binding) {
 		ModelAndView result;
 
 		if (binding.hasErrors())

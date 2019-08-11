@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import domain.Administrator;
 import services.AdministratorService;
 import services.ConfigurationParametersService;
+import domain.Administrator;
 
 @Controller
 @RequestMapping("/administrator")
@@ -42,7 +42,7 @@ public class AdministratorController extends AbstractController {
 	// Save -----------------------------------------------------------
 
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(@ModelAttribute("administrator") @Valid final Administrator administrator, final BindingResult binding) {
+	public ModelAndView save(@ModelAttribute("actor") @Valid final Administrator administrator, final BindingResult binding) {
 		ModelAndView result;
 
 		if (binding.hasErrors())
