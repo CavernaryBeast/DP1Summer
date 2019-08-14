@@ -30,12 +30,11 @@
 			</li>
 		</security:authorize>
 		
-		<security:authorize access="hasRole('CUSTOMER')">
-			<li><a class="fNiv"><spring:message	code="master.page.customer" /></a>
+		<security:authorize access="hasRole('AUTHOR')">
+			<li><a class="fNiv"><spring:message	code="master.page.author" /></a>
 				<ul>
 					<li class="arrow"></li>
-					<li><a href="customer/action-1.do"><spring:message code="master.page.customer.action.1" /></a></li>
-					<li><a href="customer/action-2.do"><spring:message code="master.page.customer.action.2" /></a></li>					
+					<li><a href="submission/author/list.do"><spring:message code="master.page.author.submissions" /></a></li>					
 				</ul>
 			</li>
 		</security:authorize>

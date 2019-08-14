@@ -2,6 +2,7 @@
 package controllers;
 
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashSet;
 
 import javax.validation.Valid;
@@ -33,12 +34,14 @@ public class ConferenceController extends AbstractController {
 		final FilterConferenceForm filterConferenceForm = new FilterConferenceForm();
 		final String language = LocaleContextHolder.getLocale().getLanguage();
 		conferences = this.conferenceService.getAllConferencesFinalMode();
+		final Date now = new Date(System.currentTimeMillis() - 1);
 		result = new ModelAndView("conference/list");
 		result.addObject("conferences", conferences);
 		result.addObject("language", language);
 		result.addObject("requestURI", "conference/list.do");
 		result.addObject("actionFilter", "conference/listFilter.do");
 		result.addObject("filterConferenceForm", filterConferenceForm);
+		result.addObject("now", now);
 		return result;
 	}
 
@@ -48,7 +51,7 @@ public class ConferenceController extends AbstractController {
 		final String language = LocaleContextHolder.getLocale().getLanguage();
 		final String typeDate = filterConferenceForm.getTypeDate();
 		Collection<Conference> conferences = new HashSet<>();
-
+		final Date now = new Date(System.currentTimeMillis() - 1);
 		if (typeDate.equals("FORTHCOMING"))
 			conferences = this.conferenceService.getForthcomingConferencesByKeyword(filterConferenceForm.getKeyWord());
 		else if (typeDate.equals("RUNNING"))
@@ -63,6 +66,7 @@ public class ConferenceController extends AbstractController {
 		result.addObject("requestURI", "conference/list.do");
 		result.addObject("actionFilter", "conference/listFilter.do");
 		result.addObject("filterConferenceForm", filterConferenceForm);
+		result.addObject("now", now);
 		return result;
 	}
 

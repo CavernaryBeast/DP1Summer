@@ -566,7 +566,7 @@
 
 
 	<!-- CONFERENCES -->
-	<bean id="conference1" class="domain.Conference">
+		<bean id="conference1" class="domain.Conference">
 		<property name="title" value="Conference1's title" />
 		<property name="acronym" value="Conference1's acronym" />
 		<property name="venue" value="Conference1's venue" />
@@ -633,8 +633,7 @@
 			</list>
 		</property>
 		<property name="isFinal" value="false" />
-	</bean>
-	<!-- CONFERENCES FINISHED -->
+	</bean>	<!-- CONFERENCES FINISHED -->
 
 
 	<!-- ##################################################################################################### -->

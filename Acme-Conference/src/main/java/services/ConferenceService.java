@@ -57,6 +57,18 @@ public class ConferenceService {
 		this.administratorService.findByPrincipal();
 		Assert.isTrue(id != 0);
 		Assert.notNull(id);
+		Assert.isTrue(this.exist(id));
+		final Conference res = this.conferenceRepository.findOne(id);
+		Assert.notNull(res);
+
+		return res;
+	}
+
+	public Conference findOne2(final int id) {
+		//usado para el submissionService, requiere que el que esté logueado no sea administrator
+		Assert.isTrue(id != 0);
+		Assert.notNull(id);
+		Assert.isTrue(this.exist(id));
 		final Conference res = this.conferenceRepository.findOne(id);
 		Assert.notNull(res);
 
@@ -158,6 +170,13 @@ public class ConferenceService {
 		return result;
 	}
 
+	public Collection<Conference> getConferencesSubmissionDeadlineNotElapsed() {
+		Collection<Conference> result;
+		result = this.conferenceRepository.getConferencesSubmissionDeadlineNotElapsed();
+		Assert.notNull(result);
+		return result;
+	}
+
 	public Conference reconstruct(final Conference conference, final BindingResult binding) {
 		Conference original;
 		final Administrator principal = this.administratorService.findByPrincipal();
@@ -180,6 +199,15 @@ public class ConferenceService {
 		this.validator.validate(conference, binding);
 		return conference;
 
+	}
+
+	public boolean exist(final int id) {
+		Assert.notNull(id);
+		Assert.isTrue(id != 0);
+		final boolean res = this.conferenceRepository.exists(id);
+		Assert.notNull(res);
+
+		return res;
 	}
 
 }

@@ -5,7 +5,7 @@ import java.util.Date;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
-import javax.persistence.Column;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
@@ -15,7 +15,6 @@ import javax.validation.Valid;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Pattern;
 
-import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
@@ -27,15 +26,15 @@ public class Submission extends DomainEntity {
 	private Date	moment;
 	private String	status;
 
-	//Atributos de asociaciï¿½n
+	//Atributos de asociación
 	private Author	author;
 	private Paper	paper;
 
 
 	//Getters and setters
-	@NotBlank
+
 	@Pattern(regexp = "^[A-Z]{3}-[A-Z0-9]{4}$")
-	@Column(unique = true)
+	//@Column(unique = true)
 	public String getTicker() {
 		return this.ticker;
 	}
@@ -55,7 +54,6 @@ public class Submission extends DomainEntity {
 		this.moment = moment;
 	}
 
-	@NotBlank
 	@Pattern(regexp = "^(UNDER-REVIEW|REJECTED|ACCEPTED)$")
 	public String getStatus() {
 		return this.status;
@@ -76,8 +74,7 @@ public class Submission extends DomainEntity {
 	}
 
 	@Valid
-	@OneToOne(optional = false)
-	//@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.ALL)
 	public Paper getPaper() {
 		return this.paper;
 	}

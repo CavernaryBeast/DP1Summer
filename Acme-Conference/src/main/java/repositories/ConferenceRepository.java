@@ -40,4 +40,7 @@ public interface ConferenceRepository extends JpaRepository<Conference, Integer>
 	@Query("select distinct(c) from Conference c where  c.isFinal = 1")
 	Collection<Conference> getAllConferencesFinalMode();
 
+	@Query("select distinct(c) from Conference c where c.submissionDeadline > CURRENT_TIMESTAMP and c.isFinal = 1")
+	Collection<Conference> getConferencesSubmissionDeadlineNotElapsed();
+
 }

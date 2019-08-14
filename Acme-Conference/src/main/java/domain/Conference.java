@@ -183,7 +183,7 @@ public class Conference extends DomainEntity {
 	}
 
 	@Valid
-	@OneToMany
+	@OneToMany(cascade = CascadeType.ALL)
 	@ElementCollection
 	public Collection<Submission> getSubmissions() {
 		return this.submissions;
