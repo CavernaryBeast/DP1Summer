@@ -9,11 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
-import domain.Administrator;
 import repositories.AdministratorRepository;
 import security.Authority;
 import security.LoginService;
 import security.UserAccount;
+import security.UserAccountService;
+import domain.Administrator;
 
 @Service
 @Transactional
@@ -25,12 +26,26 @@ public class AdministratorService {
 	@Autowired
 	private ActorService			actorService;
 
+	@Autowired
+	private UserAccountService		userAccountService;
+
 
 	public Administrator create() {
 
-		final Administrator admin = new Administrator();
+		Administrator res;
+		UserAccount ua;
+		Authority auth;
 
-		return admin;
+		res = new Administrator();
+		ua = this.userAccountService.create();
+
+		auth = new Authority();
+		auth.setAuthority(Authority.ADMINISTRATOR);
+		ua.addAuthority(auth);
+
+		res.setUserAccount(ua);
+
+		return res;
 	}
 
 	public Collection<Administrator> findAll() {
@@ -65,7 +80,7 @@ public class AdministratorService {
 	/**
 	 * This method finds the logged user that is using the application. Apart from this,
 	 * it checks that the user is an Administrator
-	 *
+	 * 
 	 * @return The logged user, an instance of Administrator
 	 */
 	public Administrator findByPrincipal() {

@@ -9,29 +9,35 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
-<form:form action="message/edit.do" modelAttribute="m">
+<form:form action="message/edit.do?type=${type}" modelAttribute="m">
 
 	<form:hidden path="id" />
 	<form:hidden path="version" />
 	<form:hidden path="moment" />
 	<form:hidden path="sender" />
 
+	<jstl:if test="${recipients is empty }">
 	<acme:select items="${recipients}" itemLabel="userAccount.username"
 		code="message.recipients" path="recipients" />
+	</jstl:if>
 
 	<acme:textbox code="message.subject" path="subject" />
 
-<%-- 	<jstl:choose> --%>
-<%-- 		<jstl:when test="${lang == en}"> --%>
-<%-- 			<jstl:set var="itemLabel" value="name" /> --%>
-<%-- 		</jstl:when> --%>
-<%-- 		<jstl:otherwise> --%>
-<%-- 			<jstl:set var="itemLabel" value="nameEs" /> --%>
-<%-- 		</jstl:otherwise> --%>
-<%-- 	</jstl:choose> --%>
+	<jstl:choose>
+		<jstl:when test="${lang eq 'en'}">
 
-	<acme:select items="${topics}" itemLabel="${lang}"
-		code="message.topics" path="topic" />
+			<acme:select items="${topics}" itemLabel="name" code="message.topics"
+				path="topic" />
+
+		</jstl:when>
+		<jstl:when test="${lang eq 'es'}">
+
+			<acme:select items="${topics}" itemLabel="nameEs"
+				code="message.topics" path="topic" />
+
+		</jstl:when>
+	</jstl:choose>
+
 
 	<acme:textarea code="message.body" path="body" />
 

@@ -34,7 +34,16 @@ public class ActorService {
 
 		final Collection<Actor> res = this.actorRepository.findAll();
 
-		Assert.notEmpty(res);
+		Assert.notNull(res);
+
+		return res;
+	}
+
+	public Collection<Actor> findAllAuthors() {
+
+		final Collection<Actor> res = this.actorRepository.findAllAuthors();
+
+		Assert.notNull(res);
 
 		return res;
 	}
@@ -119,6 +128,28 @@ public class ActorService {
 		auth.setAuthority(Authority.ADMINISTRATOR);
 		final Collection<Authority> authorities = actor.getUserAccount().getAuthorities();
 		Assert.isTrue(authorities.contains(auth));
+	}
+
+	public Collection<Actor> findSubmittedByConferenceId(final int conferenceId) {
+
+		Assert.isTrue(conferenceId != 0);
+
+		final Collection<Actor> res = this.actorRepository.findSubmittedByConferenceId(conferenceId);
+
+		Assert.notNull(res);
+
+		return res;
+	}
+
+	public Collection<Actor> findRegisteredByConferenceId(final int conferenceId) {
+
+		Assert.isTrue(conferenceId != 0);
+
+		final Collection<Actor> res = this.actorRepository.findRegisteredByConferenceId(conferenceId);
+
+		Assert.notNull(res);
+
+		return res;
 	}
 
 }

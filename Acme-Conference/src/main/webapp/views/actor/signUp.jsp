@@ -15,9 +15,10 @@
 <acme:button url="actor/createAuthor.do" code="actor.signUp.author" />
 <acme:button url="actor/createReviewer.do" code="actor.signUp.reviewer" />
 
-<security:authorize access="hasRole('ADMIN')">
-	<a href="actor/administrator/createAdministrator.do"><spring:message
-			code="actor.signUp.administrator" /></a>
+<security:authorize access="hasRole('ADMINISTRATOR')">
+
+	<acme:button url="actor/administrator/createAdministrator.do"
+		code="actor.signUp.administrator" />
 </security:authorize>
 <br />
 

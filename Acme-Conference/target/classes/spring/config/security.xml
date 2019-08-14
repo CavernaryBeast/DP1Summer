@@ -52,19 +52,21 @@
 		<security:intercept-url pattern="/reviewer/**"
 			access="permitAll" />
 
+		<security:intercept-url pattern="/administrator/**"
+			access="hasRole('ADMINISTRATOR')" />
 
-		<!-- <security:intercept-url -->
-		<!-- pattern="/actor/signUp.do" access="permitAll" /> -->
+		<security:intercept-url
+		pattern="/actor/signUp.do" access="permitAll" />
 
-		<!-- <security:intercept-url -->
-		<!-- pattern="/actor/createAuthor.do" access="isAnonymous()" /> -->
+		<security:intercept-url
+		pattern="/actor/createAuthor.do" access="isAnonymous()" />
 
-		<!-- <security:intercept-url -->
-		<!-- pattern="/actor/createReviewer.do" access="isAnonymous()" /> -->
+		<security:intercept-url
+		pattern="/actor/createReviewer.do" access="isAnonymous()" />
 
-		<!-- <security:intercept-url -->
-		<!-- pattern="/actor/createAdministrator.do" -->
-		<!-- access="hasRole('ADMINISTRATOR')" /> -->
+		<security:intercept-url
+		pattern="/actor/createAdministrator.do"
+		access="hasRole('ADMINISTRATOR')" />
 
 		<!-- <security:intercept-url -->
 		<!-- pattern="/actor/edit.do" access="isAuthenticated()" /> -->

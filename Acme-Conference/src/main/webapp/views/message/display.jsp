@@ -36,23 +36,23 @@
 <jstl:out value="${m.body}" />
 <br />
 
-<jstl:choose>
-	<jstl:when test="${lang == en}">
-		<jstl:set var="item" value="name" />
-	</jstl:when>
-	<jstl:otherwise>
-		<jstl:set var="item" value="nameEs" />
-	</jstl:otherwise>
-</jstl:choose>
 
 
 <spring:message code="message.topic" />
 :
-<jstl:out value="${m.topic. + item}" />
+<jstl:choose>
+	<jstl:when test="${lang eq 'en'}">
+		<jstl:out value="${m.topic.name}" />
+	</jstl:when>
+	<jstl:when test="${lang eq 'es'}">
+		<jstl:out value="${m.topic.nameEs}" />
+	</jstl:when>
+</jstl:choose>
 <br />
 
 <jstl:if test="${ownMessage == false and m.sender != null}">
-	<acme:button url="/message/reply.do?messageId=${m.id}" code="message.reply" />
+	<acme:button url="/message/reply.do?messageId=${m.id}"
+		code="message.reply" />
 </jstl:if>
 
 <acme:button url="/message/list.do" code="message.back" />

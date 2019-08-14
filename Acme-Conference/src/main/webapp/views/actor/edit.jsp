@@ -23,6 +23,9 @@
 <form:form action="${role}/edit.do" modelAttribute="actor"
 	onsubmit="checkPhoneNumber()">
 	
+	<spring:message code="actor.required" />
+	<br/>
+	
 	<form:hidden path="id" />
 	<form:hidden path="version" />
 	<form:hidden path="userAccount.authorities" />

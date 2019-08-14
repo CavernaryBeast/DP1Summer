@@ -21,12 +21,23 @@
 
 <display:table name="messages" id="m" requestURI="${requestURI}"
 	pagesize="5" class="displaytag">
+
 	<display:column property="subject" titleKey="message.subject" />
 	<display:column property="moment" titleKey="message.moment" />
-	<display:column property="${lang}" titleKey="message.topic" />
+	<display:column property="${lang}" titleKey="message.topic"
+		sortable="true" />
+	<display:column property="sender.userAccount.username"
+		titleKey="message.sender" sortable="true" />
+
+	<display:column titleKey="message.recipients" sortable="true">
+		<jstl:forEach items="${m.recipients}" var="recipient">
+			<jstl:out value="${recipient.userAccount.username}" />
+		</jstl:forEach>
+	</display:column>
+
 	<display:column titleKey="message.messages">
-		<a href="message/display.do?messageId=${m.id}">
-			<spring:message code="message.display" />
+		<a href="message/display.do?messageId=${m.id}"> <spring:message
+				code="message.display" />
 		</a>
 	</display:column>
 </display:table>
