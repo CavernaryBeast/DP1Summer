@@ -17,10 +17,12 @@ import org.springframework.web.servlet.ModelAndView;
 
 import services.AuthorService;
 import services.ConferenceService;
+import services.PaperService;
 import services.SubmissionService;
 import controllers.AbstractController;
 import domain.Author;
 import domain.Conference;
+import domain.Paper;
 import domain.Submission;
 
 @Controller
@@ -35,6 +37,9 @@ public class SubmissionAuthorController extends AbstractController {
 
 	@Autowired
 	private ConferenceService	conferenceService;
+
+	@Autowired
+	private PaperService		paperService;
 
 
 	//Listing --------------------------------------------------------
@@ -119,6 +124,57 @@ public class SubmissionAuthorController extends AbstractController {
 		return res;
 	}
 
+	// Show ----------------------------------------------------------------------------------
+
+	@RequestMapping(value = "/show", method = RequestMethod.GET)
+	public ModelAndView show(@RequestParam final int submissionId) {
+		ModelAndView result;
+		Submission submission;
+
+		submission = this.submissionService.findOne(submissionId);
+		result = new ModelAndView("submission/show");
+		result.addObject("submission", submission);
+
+		return result;
+	}
+
+	// Update ----------------------------------------------------------------------------------
+
+	@RequestMapping(value = "editPaper", method = RequestMethod.GET)
+	public ModelAndView editPaper(@RequestParam final int submissionId) {
+
+		final ModelAndView res;
+		final Submission submission = this.submissionService.findOne(submissionId);
+		final Paper paper = this.paperService.findOne(submission.getPaper().getId());
+
+		res = this.createEditModelAndViewPaper(paper);
+		return res;
+	}
+
+	@RequestMapping(value = "editPaper", method = RequestMethod.POST, params = "save")
+	public ModelAndView savePaper(@ModelAttribute("paper") @Valid Paper paper, final BindingResult binding) {
+
+		ModelAndView res;
+		Paper saved;
+		paper = this.paperService.reconstruct(paper, binding);
+		if (binding.hasErrors()) {
+			System.out.println("Field: " + binding.getFieldError().getField());
+			System.out.println(binding.getGlobalErrorCount());
+			System.out.println(binding.getFieldErrorCount());
+			res = this.createEditModelAndViewPaper(paper);
+		} else
+			try {
+				saved = this.paperService.save(paper);
+				res = new ModelAndView("redirect:/submission/author/list.do");
+
+			} catch (final Throwable oops) {
+				res = this.createEditModelAndViewPaper(paper, "submission.commit.error");
+				System.out.println(oops.getStackTrace());
+				System.out.println(oops.getCause().getMessage());
+			}
+		return res;
+	}
+
 	//Delete --------------------------------------------------------
 
 	@RequestMapping(value = "edit", method = RequestMethod.POST, params = "delete")
@@ -159,6 +215,28 @@ public class SubmissionAuthorController extends AbstractController {
 		res.addObject("submission", submission);
 		res.addObject("authors", authors);
 		res.addObject("conferences", conferences);
+		return res;
+	}
+
+	protected ModelAndView createEditModelAndViewPaper(final Paper paper) {
+
+		ModelAndView res;
+
+		res = this.createEditModelAndViewPaper(paper, null);
+
+		return res;
+	}
+
+	protected ModelAndView createEditModelAndViewPaper(final Paper paper, final String messageCode) {
+
+		ModelAndView res;
+		final Collection<Author> authors = this.authorService.findAll();
+		final Author author = this.authorService.findByPrincipal();
+		authors.remove(author);
+		res = new ModelAndView("submission/editPaper");
+		res.addObject("message", messageCode);
+		res.addObject("paper", paper);
+		res.addObject("authors", authors);
 		return res;
 	}
 

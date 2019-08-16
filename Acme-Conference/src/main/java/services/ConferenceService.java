@@ -18,6 +18,7 @@ import domain.Activity;
 import domain.Administrator;
 import domain.Conference;
 import domain.Registration;
+import domain.Report;
 import domain.Submission;
 
 @Transactional
@@ -32,6 +33,12 @@ public class ConferenceService {
 
 	@Autowired
 	private AdministratorService	administratorService;
+
+	@Autowired
+	private SubmissionService		submissionService;
+
+	@Autowired
+	private ReportService			reportService;
 
 	@Autowired
 	private Validator				validator;
@@ -177,6 +184,23 @@ public class ConferenceService {
 		return result;
 	}
 
+	public Collection<Conference> getConferencesWithUnderReviewSubmissions() {
+		Collection<Conference> result;
+		result = this.conferenceRepository.getConferencesWithUnderReviewSubmissions();
+		Assert.notNull(result);
+		return result;
+	}
+
+	public Conference getConferenceFromSubmissionId(final int submissionId) {
+		Conference result;
+		Submission submission;
+		result = this.conferenceRepository.getConferenceFromSubmissionId(submissionId);
+		submission = this.submissionService.findOne(submissionId);
+		Assert.notNull(result);
+		Assert.isTrue(result.getSubmissions().contains(submission), "La conference debe poseer la submission");
+		return result;
+	}
+
 	public Conference reconstruct(final Conference conference, final BindingResult binding) {
 		Conference original;
 		final Administrator principal = this.administratorService.findByPrincipal();
@@ -208,6 +232,38 @@ public class ConferenceService {
 		Assert.notNull(res);
 
 		return res;
+	}
+
+	public void decideStatus(final int conferenceId) {
+		this.administratorService.findByPrincipal();
+		Assert.isTrue(conferenceId != 0, "Id distinto de 0");
+		Assert.notNull(conferenceId, "Id no nulo");
+		Assert.isTrue(this.exist(conferenceId), "Existe Id");
+		final Conference conference = this.findOne(conferenceId);
+		final Date now = new Date(System.currentTimeMillis() - 1);
+		Assert.isTrue(now.after(conference.getSubmissionDeadline()));
+		Assert.isTrue(conference.getCameraReadyDeadline().after(now));
+		final Collection<Submission> submissionsUnderReview = this.submissionService.findUnderReviewSubmissionsFromConference(conferenceId);
+		for (final Submission submission : submissionsUnderReview) {
+			final Collection<Report> reports = this.reportService.findBySubmissionId(submission.getId());
+			if (!reports.isEmpty()) {
+				int contadorAccept = 0;
+				int contadorReject = 0;
+				//			final int contadorBorderline = 0; -> No hace falta ni tenerlas en cuenta,si empatan automaticamente ganan las accept
+				for (final Report r : reports)
+					if (r.getDecision().equals("ACCEPT"))
+						contadorAccept++;
+					else if (r.getDecision().equals("REJECT"))
+						contadorReject++;
+
+				if (contadorAccept >= contadorReject)
+					submission.setStatus("ACCEPTED");
+				else
+					submission.setStatus("REJECTED");
+			} else
+				submission.setStatus("ACCEPTED");
+			this.submissionService.save2(submission);
+		}
 	}
 
 }

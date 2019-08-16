@@ -56,6 +56,28 @@
 					</jstl:if>
 		</display:column>
 
+		<display:column titleKey="conference.submission.update">
+<jstl:choose>
+<jstl:when test="${fn:contains(conferencesWithUnderReviewSubmissions, row) and now > row.submissionDeadline and now < row.cameraReadyDeadline}">
+	<a href="conference/administrator/update.do?conferenceId=${row.id}"><spring:message
+	code="conference.submission.update" /></a>
+</jstl:when>
+<jstl:when test="${now < row.submissionDeadline}">
+<spring:message code="conference.submissionDeadlineNotElapsed" />
+</jstl:when>
+<jstl:when test="${now > row.cameraReadyDeadline}">
+<spring:message code="conference.cameraReadyDeadlineElapsed" />
+</jstl:when>
+<jstl:otherwise>
+<spring:message code="conference.noSubmissionsToUpdate" />
+</jstl:otherwise>
+</jstl:choose>
+
+		</display:column>
+
+
+
+
 	</security:authorize>
 </display:table>
 

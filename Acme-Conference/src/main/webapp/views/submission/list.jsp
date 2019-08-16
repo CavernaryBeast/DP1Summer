@@ -12,7 +12,7 @@
 <%@taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
-
+<jstl:set var="checkStatus" value ="ACCEPTED"/>
 
 	
 <display:table pagesize="10" name="${submissions}" id="row"
@@ -22,7 +22,31 @@
 <display:column property="moment" titleKey="submission.moment" />
 <display:column property="status" titleKey="submission.status" />
 	
+	<display:column titleKey="submission.show">
+				<a href="submission/author/show.do?submissionId=${row.id}"><spring:message code = "submission.show"/></a>
+		</display:column>
+	
+	
+	
+	<display:column titleKey="submission.update">
+<jstl:choose>
+<jstl:when test="${ row.status eq  checkStatus and  not row.paper.cameraReady}">
+<a href="submission/author/editPaper.do?submissionId=${row.id}"><spring:message code = "submission.update"/></a>
+</jstl:when>
+<jstl:when test="${ row.status eq  checkStatus and row.paper.cameraReady}">
+<spring:message code="submission.paper.isCameraReady" />
+</jstl:when>
+<jstl:otherwise>
+<spring:message code="submission.notUpdatePaper" />
+</jstl:otherwise>
+</jstl:choose>
+		</display:column>
+	
+	
 
+
+
+	
 	
 </display:table>
 

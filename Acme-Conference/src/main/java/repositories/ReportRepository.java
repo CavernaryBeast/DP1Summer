@@ -18,4 +18,7 @@ public interface ReportRepository extends JpaRepository<Report, Integer> {
 	@Query("select report from Report report join report.comments comments where comments.id = ?1")
 	Report findByComment(int commentId);
 
+	@Query("select distinct r from Report r where r.submission.id = ?1")
+	Collection<Report> findBySubmissionId(int submissionId);
+
 }

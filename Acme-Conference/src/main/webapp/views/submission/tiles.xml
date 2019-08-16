@@ -17,7 +17,7 @@
 <tiles-definitions>
 
 	<definition name="submission/edit" extends="master.page">
-		<put-attribute name="title" value="Create or edit submission" />
+		<put-attribute name="title" value="Create submission" />
 		<put-attribute name="body"
 			value="/views/submission/edit.jsp" />
 	</definition>
@@ -33,6 +33,12 @@
 		<put-attribute name="title" value="Show submission" />
 		<put-attribute name="body"
 			value="/views/submission/show.jsp" />
+	</definition>
+		
+	<definition name="submission/editPaper" extends="master.page">
+		<put-attribute name="title" value="Edit Paper" />
+		<put-attribute name="body"
+			value="/views/submission/editPaper.jsp" />
 	</definition>
 		
 </tiles-definitions>

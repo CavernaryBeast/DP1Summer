@@ -15,4 +15,7 @@ public interface SubmissionRepository extends JpaRepository<Submission, Integer>
 	@Query("select distinct s from Submission s where s.author.id = ?1")
 	Collection<Submission> findOwn(int id);
 
+	@Query("select distinct s from Conference c join c.submissions s where c.id = ?1 and s.status like 'UNDER-REVIEW'")
+	Collection<Submission> findUnderReviewSubmissionsFromConference(int conferenceId);
+
 }

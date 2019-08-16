@@ -10,10 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
+import repositories.ReportRepository;
 import domain.Comment;
 import domain.Report;
 import domain.Reviewer;
-import repositories.ReportRepository;
 
 @Service
 @Transactional
@@ -105,6 +105,16 @@ public class ReportService {
 		Assert.isTrue(commentId != 0);
 
 		final Report res = this.reportRepository.findByComment(commentId);
+		Assert.notNull(res);
+
+		return res;
+	}
+
+	public Collection<Report> findBySubmissionId(final int submissionId) {
+		Assert.notNull(submissionId, "SubmissionId nulo");
+		Assert.isTrue(submissionId != 0, "SubmissionId 0");
+		Collection<Report> res;
+		res = this.reportRepository.findBySubmissionId(submissionId);
 		Assert.notNull(res);
 
 		return res;

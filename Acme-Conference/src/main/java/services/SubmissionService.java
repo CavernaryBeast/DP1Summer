@@ -13,9 +13,9 @@ import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
-import repositories.PaperRepository;
 import repositories.SubmissionRepository;
 import domain.Author;
+import domain.Conference;
 import domain.Paper;
 import domain.Submission;
 
@@ -27,13 +27,16 @@ public class SubmissionService {
 	private SubmissionRepository	submissionRepository;
 
 	@Autowired
-	private PaperRepository			paperRepository;
+	private PaperService			paperService;
 
 	@Autowired
 	private AuthorService			authorService;
 
 	@Autowired
 	private ConferenceService		conferenceService;
+
+	@Autowired
+	private ReportService			reportService;
 
 	@Autowired
 	private Validator				validator;
@@ -69,15 +72,28 @@ public class SubmissionService {
 
 		return res;
 	}
+
 	public Submission findOne(final int id) {
-		this.authorService.findByPrincipal();
+		final Author author = this.authorService.findByPrincipal();
 		Assert.isTrue(id != 0);
 		Assert.notNull(id);
+		Assert.isTrue(this.submissionRepository.exists(id));
 		final Submission res = this.submissionRepository.findOne(id);
 		Assert.notNull(res);
-
+		Assert.isTrue(res.getAuthor().equals(author));
 		return res;
 	}
+
+	//	public Submission findOne2(final int id) {
+	//		this.authorService.findByPrincipal();
+	//		Assert.isTrue(id != 0);
+	//		Assert.notNull(id);
+	//		Assert.isTrue(this.submissionRepository.exists(id));
+	//		final Submission res = this.submissionRepository.findOne(id);
+	//		Assert.notNull(res);
+	//
+	//		return res;
+	//	}
 
 	public Submission save(final Submission submission) {
 		Assert.notNull(submission);
@@ -90,9 +106,16 @@ public class SubmissionService {
 		final Collection<Author> autoresSecundarios = paper.getAuthors();
 		autoresSecundarios.add(principal);
 		paper.setAuthors(autoresSecundarios);
-		this.paperRepository.save(paper);
+		this.paperService.save(paper);
 		submission.setPaper(paper);
 
+		saved = this.submissionRepository.saveAndFlush(submission);
+		return saved;
+	}
+
+	public Submission save2(final Submission submission) {
+		Assert.notNull(submission, "Submission Null");
+		Submission saved;
 		saved = this.submissionRepository.saveAndFlush(submission);
 		return saved;
 	}
@@ -136,6 +159,30 @@ public class SubmissionService {
 		this.validator.validate(submission, binding);
 		return submission;
 
+	}
+
+	public void setStatusToAccepted(final int submissionId) {
+		final Author logged = this.authorService.findByPrincipal();
+		Assert.isTrue(submissionId != 0);
+		Assert.notNull(submissionId);
+		Assert.isTrue(this.submissionRepository.exists(submissionId));
+		final Submission submission = this.findOne(submissionId);
+		Assert.isTrue(submission.getAuthor().equals(logged), "El usuario logueado debe ser el author de la submission para poder aceptarla");
+		final Conference conference = this.conferenceService.getConferenceFromSubmissionId(submissionId);
+		final Date now = new Date(System.currentTimeMillis() - 1);
+		Assert.isTrue(conference.getCameraReadyDeadline().after(now));
+		submission.setStatus("ACCEPTED");
+		this.save2(submission);
+	}
+
+	public Collection<Submission> findUnderReviewSubmissionsFromConference(final int conferenceId) {
+		Assert.isTrue(conferenceId != 0, "ConferenceId es 0");
+		Assert.notNull(conferenceId, "ConferenceId es nulo");
+		Assert.isTrue(this.conferenceService.exist(conferenceId));
+		Collection<Submission> result;
+		result = this.submissionRepository.findUnderReviewSubmissionsFromConference(conferenceId);
+		Assert.notNull(result, "No hay submissions en UnderReview");
+		return result;
 	}
 
 }

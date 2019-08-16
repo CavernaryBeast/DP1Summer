@@ -2,6 +2,7 @@
 package controllers.admin;
 
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashSet;
 
 import javax.validation.Valid;
@@ -46,12 +47,17 @@ public class ConferenceAdminController extends AbstractController {
 	public ModelAndView list() {
 		ModelAndView result;
 		Collection<Conference> conferences;
+		Collection<Conference> conferencesWithUnderReviewSubmissions;
 		final AdministratorFilterConferenceForm administratorfilterConferenceForm = new AdministratorFilterConferenceForm();
 		final String language = LocaleContextHolder.getLocale().getLanguage();
 		conferences = this.conferenceService.findAll();
+		conferencesWithUnderReviewSubmissions = this.conferenceService.getConferencesWithUnderReviewSubmissions();
+		final Date now = new Date(System.currentTimeMillis() - 1);
 		result = new ModelAndView("conference/list2");
 		result.addObject("conferences", conferences);
+		result.addObject("conferencesWithUnderReviewSubmissions", conferencesWithUnderReviewSubmissions);
 		result.addObject("language", language);
+		result.addObject("now", now);
 		result.addObject("requestURI", "conference/administrator/list.do");
 		result.addObject("actionFilter", "conference/administrator/adminFilter.do");
 		result.addObject("administratorfilterConferenceForm", administratorfilterConferenceForm);
@@ -133,6 +139,16 @@ public class ConferenceAdminController extends AbstractController {
 
 		return result;
 
+	}
+
+	// Update ----------------------------------------------------------------------------------
+
+	@RequestMapping(value = "/update", method = RequestMethod.GET)
+	public ModelAndView update(@RequestParam final int conferenceId) {
+		ModelAndView result;
+		this.conferenceService.decideStatus(conferenceId);
+		result = new ModelAndView("redirect:/conference/administrator/list.do");
+		return result;
 	}
 
 	protected ModelAndView createEditModelAndView(final Conference conference) {

@@ -15,54 +15,29 @@
 
 <jstl:set var="spanish" value="es"/>
 
-<spring:message code="conference.filter.all" var="allLabel"/>
-<spring:message code="conference.submission5Days" var="submissionLabel"/>
-<spring:message code="conference.notification5Days" var="notificationLabel"/>
-<spring:message code="conference.cameraReady5Days" var="cameraReadyLabel"/>
-<spring:message code="conference.organised5Days" var="organisedLabel"/>
+	<p><spring:message code="submission.ticker" />: <jstl:out value = "${submission.ticker}"/></p>
+	<p><spring:message code="submission.moment" />: <jstl:out value = "${submission.moment}"/></p>
+	<p><spring:message code="submission.status" />: <jstl:out value = "${submission.status}"/></p>
+	<p><spring:message code="submission.author" />: <jstl:out value = "${submission.author.userAccount.username}"/></p>
 
-	<form:form action="${actionFilter}" modelAttribute="administratorfilterConferenceForm" >
 
-			    <form:select path="typeFilter">
-	        <form:option label="${allLabel}" value=""/>
-	        <form:option label="${submissionLabel}" value="SUBMISSION"/>
-	        <form:option label="${notificationLabel}" value="NOTIFICATION"/>
-	        <form:option label="${cameraReadyLabel}" value="CAMERAREADY"/>
-	        <form:option label="${organisedLabel}" value="ORGANISED"/>
-	    </form:select>
-	    <br/>
-		<acme:submit code="conference.filter" name="filter" />
-	</form:form>
+
+	<fieldset>
+		<legend> <spring:message   code="submission.paper"  />   </legend>
 	
+		<p><spring:message code="submission.paper.title" />: <jstl:out value = "${submission.paper.title}"/></p>
+		<p><spring:message code="submission.paper.showAuthors" />:</p>
+		<jstl:forEach  items="${submission.paper.authors }" var="a">
+		
+		 <jstl:out value = "${a.userAccount.username}"/>
+		
+		</jstl:forEach>
+		
+		<p><spring:message code="submission.paper.summary" />: <jstl:out value = "${submission.paper.summary}"/></p>
+		<p><spring:message code="submission.paper.document" />: <jstl:out value = "${submission.paper.document}"/></p>
+		<p><spring:message code="submission.paper.cameraReady" />: <jstl:out value = "${submission.paper.cameraReady}"/></p>
 	
 
-
-<display:table pagesize="10" name="${conferences}" id="row"
-	requestURI="${requestURI}">
-
-<display:column property="title" titleKey="conference.title" />
-<display:column property="venue" titleKey="conference.venue" />
-<display:column property="submissionDeadline" titleKey="conference.submissionDeadline" />
-<display:column property="notificationDeadline" titleKey="conference.notificationDeadline" />
-<display:column property="cameraReadyDeadline" titleKey="conference.cameraReadyDeadline" />
-<display:column property="startDate" titleKey="conference.startDate" />
-<display:column property="endDate" titleKey="conference.endDate" />		
-<display:column property="isFinal" titleKey="conference.isFinal" />	
-	<security:authorize access="hasRole('ADMINISTRATOR')">
-		<display:column titleKey="conference.edit">
-		<jstl:if test="${ row.isFinal eq false}">
-			<a href="conference/administrator/edit.do?conferenceId=${row.id}"><spring:message
-					code="conference.edit" /></a>
-					</jstl:if>
-		</display:column>
-
-	</security:authorize>
-</display:table>
-
-<security:authorize access="hasRole('ADMINISTRATOR')">
-
-	<input type="button" name="create"
-		value="<spring:message code = 'conference.create' />" class="btn" 	onclick="javascript: relativeRedir('conference/administrator/create.do');" />
-
-
-</security:authorize>
+</fieldset>
+	<br />
+<acme:button url="/" code="submission.cancel" />
