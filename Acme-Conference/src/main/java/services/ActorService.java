@@ -1,6 +1,7 @@
 
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.transaction.Transactional;
@@ -9,11 +10,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
+import domain.Actor;
+import domain.Author;
 import repositories.ActorRepository;
 import security.Authority;
 import security.LoginService;
 import security.UserAccount;
-import domain.Actor;
 
 @Service
 @Transactional
@@ -21,6 +23,9 @@ public class ActorService {
 
 	@Autowired
 	private ActorRepository	actorRepository;
+
+	@Autowired
+	private AuthorService	authorService;
 
 
 	public Actor create() {
@@ -34,7 +39,16 @@ public class ActorService {
 
 		final Collection<Actor> res = this.actorRepository.findAll();
 
-		Assert.notEmpty(res);
+		Assert.notNull(res);
+
+		return res;
+	}
+
+	public Collection<Actor> findAllAuthors() {
+
+		final Collection<Actor> res = this.actorRepository.findAllAuthors();
+
+		Assert.notNull(res);
 
 		return res;
 	}
@@ -50,7 +64,7 @@ public class ActorService {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param actor
 	 *            El actor cuya autoridad queremos comprobar
 	 * @param authority
@@ -77,7 +91,7 @@ public class ActorService {
 	 * Este método sirve para sacar el actor logeado en el sistema
 	 * Se usa como método auxiliar para sacar los distintos tipos de actores del sistema y hacer comprobaciones
 	 * respecto a sus authorities
-	 * 
+	 *
 	 * @return El actor logeado en el sistema
 	 */
 	public Actor findByPrincipal() {
@@ -118,6 +132,37 @@ public class ActorService {
 		auth.setAuthority(Authority.ADMINISTRATOR);
 		final Collection<Authority> authorities = actor.getUserAccount().getAuthorities();
 		Assert.isTrue(authorities.contains(auth));
+	}
+
+	public Collection<Actor> findSubmittedByConferenceId(final int conferenceId) {
+
+		Assert.isTrue(conferenceId != 0);
+
+		final Collection<Author> aux = this.authorService.findSubmittedAuthorByConferenceId(conferenceId);
+
+		final Collection<Actor> res = new ArrayList<>();
+
+		for (final Author author : aux)
+			res.add(author);
+
+		Assert.notNull(res);
+
+		return res;
+	}
+	public Collection<Actor> findRegisteredByConferenceId(final int conferenceId) {
+
+		Assert.isTrue(conferenceId != 0);
+
+		final Collection<Author> aux = this.authorService.findRegisteredAuthorByConferenceId(conferenceId);
+
+		final Collection<Actor> res = new ArrayList<>();
+
+		for (final Author author : aux)
+			res.add(author);
+
+		Assert.notNull(res);
+
+		return res;
 	}
 
 }

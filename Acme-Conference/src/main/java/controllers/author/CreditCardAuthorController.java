@@ -6,7 +6,6 @@ import java.util.Collection;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
@@ -67,8 +66,8 @@ public class CreditCardAuthorController extends AbstractController {
 
 		res = this.createEditModelAndView(creditCard);
 
-		final String lang = LocaleContextHolder.getLocale().getLanguage();
-		res.addObject("lang", lang);
+		//		final String lang = LocaleContextHolder.getLocale().getLanguage();
+		//		res.addObject("lang", lang);
 
 		return res;
 	}

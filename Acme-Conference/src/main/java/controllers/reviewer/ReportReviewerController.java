@@ -145,8 +145,11 @@ public class ReportReviewerController extends AbstractController {
 		final Reviewer principal = this.reviewerService.findByPrincipal();
 		Assert.isTrue(principal.equals(report.getReviewer()));
 
+		final String role = "REVIEWER";
+
 		res = new ModelAndView("report/display");
 		res.addObject("report", report);
+		res.addObject("role", role);
 
 		final String banner = this.configurationParametersService.getBanner();
 		res.addObject("banner", banner);

@@ -1,12 +1,14 @@
 
 package domain;
 
+import java.util.Collection;
 import java.util.Date;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
@@ -14,6 +16,7 @@ import javax.persistence.TemporalType;
 import javax.validation.Valid;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -22,13 +25,14 @@ import org.springframework.format.annotation.DateTimeFormat;
 public class Submission extends DomainEntity {
 
 	//Atributos de clase
-	private String	ticker;
-	private Date	moment;
-	private String	status;
+	private String					ticker;
+	private Date					moment;
+	private String					status;
 
-	//Atributos de asociación
-	private Author	author;
-	private Paper	paper;
+	//Atributos de asociaciï¿½n
+	private Author					author;
+	private Paper					paper;
+	private Collection<Reviewer>	reviewers;
 
 
 	//Getters and setters
@@ -81,6 +85,17 @@ public class Submission extends DomainEntity {
 
 	public void setPaper(final Paper paper) {
 		this.paper = paper;
+	}
+
+	@Valid
+	@ManyToMany
+	@Size(min = 1, max = 3)
+	public Collection<Reviewer> getReviewers() {
+		return this.reviewers;
+	}
+
+	public void setReviewers(final Collection<Reviewer> reviewers) {
+		this.reviewers = reviewers;
 	}
 
 }

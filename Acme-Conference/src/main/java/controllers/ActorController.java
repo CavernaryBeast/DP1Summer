@@ -52,7 +52,10 @@ public class ActorController extends AbstractController {
 		ModelAndView result;
 		final Author author = this.authorService.create();
 
+		final String role = "author";
+
 		result = this.createEditModelAndView(author);
+		result.addObject("role", role);
 
 		return result;
 	}
@@ -62,7 +65,10 @@ public class ActorController extends AbstractController {
 		ModelAndView result;
 		final Reviewer reviewer = this.reviewerService.create();
 
+		final String role = "reviewer";
+
 		result = this.createEditModelAndView(reviewer);
+		result.addObject("role", role);
 
 		return result;
 	}
@@ -75,7 +81,10 @@ public class ActorController extends AbstractController {
 
 		final Administrator admin = this.administratorService.create();
 
+		final String role = "administrator";
+
 		result = this.createEditModelAndView(admin);
+		result.addObject("role", role);
 
 		return result;
 	}

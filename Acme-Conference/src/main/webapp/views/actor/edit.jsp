@@ -21,41 +21,47 @@
 </script>
 
 <form:form action="${role}/edit.do" modelAttribute="actor"
-	onsubmit="checkPhoneNumber();">
+	onsubmit="checkPhoneNumber()">
+	
+	<spring:message code="actor.required" />
+	<br/>
+	
 	<form:hidden path="id" />
 	<form:hidden path="version" />
-	<form:hidden path="userAccount" />
+	<form:hidden path="userAccount.authorities" />
 
 	<acme:textbox code="actor.name" path="name" />
-	
+
 	<acme:textbox code="actor.middleName" path="middleName" />
-	
+
 	<acme:textbox code="actor.surname" path="surname" />
-	
+
 	<acme:textbox code="actor.photo" path="photo" />
-	
+
 	<acme:textbox code="actor.email" path="email" />
-	
+
 	<acme:textbox code="actor.phoneNumber" path="phoneNumber" />
-	
+
 	<acme:textbox code="actor.address" path="address" />
-	
+
 	<jstl:if test="${actor.id == 0 }">
-	<acme:textbox code="actor.userAccount.username" path="userAccount.username" />
+		<acme:textbox code="actor.userAccount.username"
+			path="userAccount.username" />
 	</jstl:if>
-	
-	<acme:textbox code="actor.userAccount.password" path="userAccount.password" />
-	
-	<jstl:if test="${role == author }">
+
+	<acme:password code="actor.userAccount.password"
+		path="userAccount.password" />
+
+	<jstl:if test="${role eq 'author'}">
 		<acme:textbox code="author.alias" path="alias" />
 	</jstl:if>
-	
-	<jstl:if test="${role == reviewer }">
+
+	<jstl:if test="${role eq 'reviewer'}">
 		<acme:textarea code="reviewer.expertise" path="expertise" />
 	</jstl:if>
-	
-	<acme:submit name="save" code="actor.save"/>
-	
-	<acme:button url="/" code="actor.cancel"/>
+
+	<acme:submit name="save" code="actor.save" />
+
+	<acme:button url="/" code="actor.cancel" />
 
 </form:form>

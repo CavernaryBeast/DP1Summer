@@ -40,8 +40,11 @@ public class ReportAuthorController {
 		final Author principal = this.authorService.findByPrincipal();
 		Assert.isTrue(principal.equals(report.getSubmission().getAuthor()));
 
+		final String role = "AUTHOR";
+
 		res = new ModelAndView("report/display");
 		res.addObject("report", report);
+		res.addObject("role", role);
 
 		final String banner = this.configurationParametersService.getBanner();
 		res.addObject("banner", banner);

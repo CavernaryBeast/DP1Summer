@@ -17,15 +17,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import domain.Actor;
-import domain.Administrator;
-import domain.Message;
-import domain.Topic;
 import services.ActorService;
 import services.AdministratorService;
 import services.ConfigurationParametersService;
 import services.MessageService;
 import services.TopicService;
+import domain.Actor;
+import domain.Administrator;
+import domain.Message;
+import domain.Topic;
 
 @Controller
 @RequestMapping("/message")
@@ -63,7 +63,11 @@ public class MessageController extends AbstractController {
 		final String banner = this.configurationParametersService.getBanner();
 		res.addObject("banner", banner);
 
-		final String lang = LocaleContextHolder.getLocale().getLanguage();
+		String lang = LocaleContextHolder.getLocale().getLanguage();
+		if (lang == "en")
+			lang = "topic.name";
+		else if (lang == "es")
+			lang = "topic.nameEs";
 		res.addObject("lang", lang);
 
 		return res;
@@ -80,12 +84,19 @@ public class MessageController extends AbstractController {
 		final Actor principal = this.actorService.findByPrincipal();
 		m.setSender(principal);
 
+		String lang = LocaleContextHolder.getLocale().getLanguage();
+		if (lang == "en")
+			lang = "name";
+		else if (lang == "es")
+			lang = "nameEs";
+
 		res = this.createEditModelAndView(m, false, null);
+		res.addObject("lang", lang);
 
 		return res;
 	}
 
-	//Broadcast --------------------------------------------------------
+	//Broadcast to every actor in the system --------------------------------------------------------
 
 	@RequestMapping(value = "/broadcast", method = RequestMethod.GET)
 	public ModelAndView broadcast() {
@@ -98,6 +109,72 @@ public class MessageController extends AbstractController {
 		m.setSender(principal);
 
 		res = this.createEditModelAndView(m, true, null);
+
+		final String lang = LocaleContextHolder.getLocale().getLanguage();
+		res.addObject("lang", lang);
+
+		return res;
+	}
+
+	//Broadcast to all author in the system --------------------------------------------------------
+
+	@RequestMapping(value = "/broadcastToAuthors", method = RequestMethod.GET)
+	public ModelAndView broadcastToAuthors() {
+
+		final Administrator principal = this.administratorService.findByPrincipal();
+
+		final ModelAndView res;
+		final Message m = this.messageService.create();
+
+		m.setSender(principal);
+
+		res = this.createEditModelAndViewToAuthors(m, null);
+
+		final String lang = LocaleContextHolder.getLocale().getLanguage();
+		res.addObject("lang", lang);
+
+		return res;
+	}
+
+	//Message to the authors submitted to a Conference
+	@RequestMapping(value = "/actorsSubmitted", method = RequestMethod.GET)
+	public ModelAndView actorsSubmitted(@RequestParam final int conferenceId) {
+
+		final Administrator principal = this.administratorService.findByPrincipal();
+
+		final ModelAndView res;
+		final Message m = this.messageService.create();
+
+		m.setSender(principal);
+
+		final Collection<Actor> actorsSubmitted = this.actorService.findSubmittedByConferenceId(conferenceId);
+
+		m.setRecipients(actorsSubmitted);
+
+		res = this.createEditModelAndViewAux(m, "submitted");
+
+		final String lang = LocaleContextHolder.getLocale().getLanguage();
+		res.addObject("lang", lang);
+
+		return res;
+	}
+
+	//Message to the authors registered to a Conference
+	@RequestMapping(value = "/actorsRegistered", method = RequestMethod.GET)
+	public ModelAndView actorsRegistered(@RequestParam final int conferenceId) {
+
+		final Administrator principal = this.administratorService.findByPrincipal();
+
+		final ModelAndView res;
+		final Message m = this.messageService.create();
+
+		m.setSender(principal);
+
+		final Collection<Actor> actorsRegistered = this.actorService.findRegisteredByConferenceId(conferenceId);
+
+		m.setRecipients(actorsRegistered);
+
+		res = this.createEditModelAndViewAux(m, "registered");
 
 		final String lang = LocaleContextHolder.getLocale().getLanguage();
 		res.addObject("lang", lang);
@@ -138,9 +215,18 @@ public class MessageController extends AbstractController {
 
 		ModelAndView res = null;
 
-		if (binding.hasErrors())
-			res = this.createEditModelAndView(m, false, null);
-		else
+		if (binding.hasErrors()) {
+			if (type == "edit")
+				res = this.createEditModelAndView(m, false, null);
+			else if (type == "broadcast")
+				res = this.createEditModelAndView(m, true, null);
+			else if (type == "broadcastToAllAuthors")
+				res = this.createEditModelAndViewToAuthors(m, null);
+			else if (type == "reply")
+				res = this.createEditModelAndView(m, false, m.getRecipients(), null);
+			else if (type == "submitted" || type == "registered")
+				res = this.createEditModelAndViewAux(m, type);
+		} else
 			try {
 				final Message saved = this.messageService.save(m);
 				res = new ModelAndView("redirect:display.do?messageId=" + saved.getId());
@@ -151,16 +237,18 @@ public class MessageController extends AbstractController {
 					res = this.createEditModelAndView(m, false, null, "message.commit.error");
 				else if (type == "broadcast")
 					res = this.createEditModelAndView(m, true, null, "message.commit.error");
+				else if (type == "broadcastToAllAuthors")
+					res = this.createEditModelAndViewToAuthors(m, "message.commit.error");
 				else if (type == "reply")
 					res = this.createEditModelAndView(m, false, m.getRecipients(), "message.commit.error");
+				else if (type == "submitted" || type == "registered")
+					res = this.createEditModelAndViewAux(m, type, "message.commit.error");
 			}
-
 		final String lang = LocaleContextHolder.getLocale().getLanguage();
 		res.addObject("lang", lang);
 
 		return res;
 	}
-
 	//Delete --------------------------------------------------------
 
 	@RequestMapping(value = "delete", method = RequestMethod.GET)
@@ -185,7 +273,7 @@ public class MessageController extends AbstractController {
 	//Display --------------------------------------------------------
 
 	@RequestMapping(value = "/display", method = RequestMethod.GET)
-	public ModelAndView dislay(@RequestParam final int messageId) {
+	public ModelAndView display(@RequestParam final int messageId) {
 
 		ModelAndView res;
 		final Message m = this.messageService.findOne(messageId);
@@ -202,6 +290,10 @@ public class MessageController extends AbstractController {
 		res.addObject("banner", banner);
 
 		final String lang = LocaleContextHolder.getLocale().getLanguage();
+		//		if (lang == "en")
+		//			lang = "m.topic.name";
+		//		else if (lang == "es")
+		//			lang = "m.topic.nameEs";
 		res.addObject("lang", lang);
 
 		return res;
@@ -210,7 +302,7 @@ public class MessageController extends AbstractController {
 	//Ancillary methods --------------------------------------------------------
 
 	/**
-	 *
+	 * 
 	 * @param message
 	 *            The message that is going to be created
 	 * @param broadcast
@@ -257,6 +349,66 @@ public class MessageController extends AbstractController {
 		res.addObject("message", messageCode);
 		final String banner = this.configurationParametersService.getBanner();
 		res.addObject("banner", banner);
+
+		return res;
+	}
+
+	//CreateEditModelAndView: Auxiliar method to broadcast to all authors
+	protected ModelAndView createEditModelAndViewToAuthors(final Message message) {
+
+		ModelAndView res;
+
+		res = this.createEditModelAndViewToAuthors(message, null);
+
+		return res;
+	}
+
+	protected ModelAndView createEditModelAndViewToAuthors(final Message message, final String messageCode) {
+
+		final ModelAndView res;
+		final Collection<Actor> allAuthors = this.actorService.findAllAuthors();
+		final Collection<Topic> topics = this.topicService.findAll();
+		final String type = "broadcastToAllAuthors";
+
+		res = new ModelAndView("message/edit");
+
+		message.setRecipients(allAuthors);
+
+		res.addObject("m", message);
+		res.addObject("topics", topics);
+		res.addObject("type", type);
+		res.addObject("message", messageCode);
+		final String banner = this.configurationParametersService.getBanner();
+		res.addObject("banner", banner);
+
+		return res;
+	}
+
+	//Aux method to broadcast to Submmited and registered actors
+	protected ModelAndView createEditModelAndViewAux(final Message message, final String type) {
+
+		ModelAndView res;
+
+		res = this.createEditModelAndViewAux(message, type, null);
+
+		return res;
+	}
+
+	protected ModelAndView createEditModelAndViewAux(final Message message, final String type, final String messageCode) {
+
+		ModelAndView res;
+		final Collection<Topic> topics = this.topicService.findAll();
+
+		res = new ModelAndView("message/edit");
+
+		res.addObject("m", message);
+		res.addObject("topics", topics);
+		res.addObject("message", messageCode);
+
+		final String banner = this.configurationParametersService.getBanner();
+		res.addObject("banner", banner);
+
+		res.addObject("type", type);
 
 		return res;
 	}
