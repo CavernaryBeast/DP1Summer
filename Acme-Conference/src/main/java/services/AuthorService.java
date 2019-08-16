@@ -10,12 +10,12 @@ import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
+import domain.Author;
 import repositories.AuthorRepository;
 import security.Authority;
 import security.LoginService;
 import security.UserAccount;
 import security.UserAccountService;
-import domain.Author;
 
 @Service
 @Transactional
@@ -75,14 +75,19 @@ public class AuthorService {
 		Assert.notNull(author);
 		Author saved;
 
-		//Creación del author
-		if (author.getId() == 0) {
+		Md5PasswordEncoder encoder;
+		encoder = new Md5PasswordEncoder();
 
-			Md5PasswordEncoder encoder;
-			encoder = new Md5PasswordEncoder();
+		author.getUserAccount().setPassword(encoder.encodePassword(author.getUserAccount().getPassword(), null));
 
-			author.getUserAccount().setPassword(encoder.encodePassword(author.getUserAccount().getPassword(), null));
-		}
+		//		//Creación del author
+		//		if (author.getId() == 0) {
+		//
+		//			Md5PasswordEncoder encoder;
+		//			encoder = new Md5PasswordEncoder();
+		//
+		//			author.getUserAccount().setPassword(encoder.encodePassword(author.getUserAccount().getPassword(), null));
+		//		}
 
 		if (author.getPhoneNumber() != null) {
 

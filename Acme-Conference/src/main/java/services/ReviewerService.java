@@ -10,12 +10,12 @@ import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
+import domain.Reviewer;
 import repositories.ReviewerRepository;
 import security.Authority;
 import security.LoginService;
 import security.UserAccount;
 import security.UserAccountService;
-import domain.Reviewer;
 
 @Service
 @Transactional
@@ -75,14 +75,19 @@ public class ReviewerService {
 		Assert.notNull(rev);
 		Reviewer saved;
 
+		Md5PasswordEncoder encoder;
+		encoder = new Md5PasswordEncoder();
+
+		rev.getUserAccount().setPassword(encoder.encodePassword(rev.getUserAccount().getPassword(), null));
+
 		//Creación del author
-		if (rev.getId() == 0) {
-
-			Md5PasswordEncoder encoder;
-			encoder = new Md5PasswordEncoder();
-
-			rev.getUserAccount().setPassword(encoder.encodePassword(rev.getUserAccount().getPassword(), null));
-		}
+		//		if (rev.getId() == 0) {
+		//
+		//			Md5PasswordEncoder encoder;
+		//			encoder = new Md5PasswordEncoder();
+		//
+		//			rev.getUserAccount().setPassword(encoder.encodePassword(rev.getUserAccount().getPassword(), null));
+		//		}
 
 		if (rev.getPhoneNumber() != null) {
 

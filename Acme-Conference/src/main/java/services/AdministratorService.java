@@ -6,15 +6,16 @@ import java.util.Collection;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
+import domain.Administrator;
 import repositories.AdministratorRepository;
 import security.Authority;
 import security.LoginService;
 import security.UserAccount;
 import security.UserAccountService;
-import domain.Administrator;
 
 @Service
 @Transactional
@@ -72,7 +73,12 @@ public class AdministratorService {
 
 		this.findByPrincipal();
 
-		final Administrator saved = this.save(admin);
+		Md5PasswordEncoder encoder;
+		encoder = new Md5PasswordEncoder();
+
+		admin.getUserAccount().setPassword(encoder.encodePassword(admin.getUserAccount().getPassword(), null));
+
+		final Administrator saved = this.administratorRepository.save(admin);
 
 		return saved;
 	}
@@ -80,7 +86,7 @@ public class AdministratorService {
 	/**
 	 * This method finds the logged user that is using the application. Apart from this,
 	 * it checks that the user is an Administrator
-	 * 
+	 *
 	 * @return The logged user, an instance of Administrator
 	 */
 	public Administrator findByPrincipal() {
