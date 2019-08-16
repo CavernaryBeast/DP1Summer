@@ -18,10 +18,10 @@ public interface ActorRepository extends JpaRepository<Actor, Integer> {
 	@Query("select a from Actor a join a.userAccount ua join ua.authorities auths where 'AUTHOR' member of auths")
 	Collection<Actor> findAllAuthors();
 
-	@Query("select author from Conference conf join conf.submissions subs join subs.author author where conf.id = ?1")
-	Collection<Actor> findSubmittedByConferenceId(int conferenceId);
-
-	@Query("select author from Conference conf join conf.registrations regs join reg.author author where conf.id = ?1")
-	Collection<Actor> findRegisteredByConferenceId(int conferenceId);
+	//	@Query("select author from Conference conf join conf.submissions subs join subs.author author where conf.id = ?1")
+	//	Collection<Actor> findSubmittedByConferenceId(int conferenceId);
+	//
+	//	@Query("select author from Conference conf join conf.registrations regs join reg.author author where conf.id = ?1")
+	//	Collection<Actor> findRegisteredByConferenceId(int conferenceId);
 
 }
