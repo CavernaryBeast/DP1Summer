@@ -54,6 +54,10 @@
 		<bean class="converters.SectionToStringConverter" />
 		<bean class="converters.StringToSectionConverter" />
 
+		<bean class="converters.TopicToStringConverter" />
+		<bean class="converters.StringToTopicConverter" />
+
+
 	</util:list>
 
 </beans>

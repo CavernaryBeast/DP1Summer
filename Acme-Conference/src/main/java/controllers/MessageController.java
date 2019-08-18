@@ -84,11 +84,7 @@ public class MessageController extends AbstractController {
 		final Actor principal = this.actorService.findByPrincipal();
 		m.setSender(principal);
 
-		String lang = LocaleContextHolder.getLocale().getLanguage();
-		if (lang == "en")
-			lang = "name";
-		else if (lang == "es")
-			lang = "nameEs";
+		final String lang = LocaleContextHolder.getLocale().getLanguage();
 
 		res = this.createEditModelAndView(m, false, null);
 		res.addObject("lang", lang);
@@ -277,10 +273,11 @@ public class MessageController extends AbstractController {
 
 		ModelAndView res;
 		final Message m = this.messageService.findOne(messageId);
-		final boolean ownMessage;
+		boolean ownMessage = false;
 		final Actor principal = this.actorService.findByPrincipal();
 
-		ownMessage = m.getSender().equals(principal);
+		if (m.getSender() == principal)
+			ownMessage = true;
 
 		res = new ModelAndView("message/display");
 		res.addObject("m", m);
@@ -340,10 +337,9 @@ public class MessageController extends AbstractController {
 		} else if (sender != null) {
 			message.setRecipients(sender);
 			type = "reply";
-		} else
-			res.addObject("recipients", possibleRecipients);
-
+		}
 		res.addObject("m", message);
+		res.addObject("possibleRecipients", possibleRecipients);
 		res.addObject("topics", topics);
 		res.addObject("type", type);
 		res.addObject("message", messageCode);
@@ -352,7 +348,6 @@ public class MessageController extends AbstractController {
 
 		return res;
 	}
-
 	//CreateEditModelAndView: Auxiliar method to broadcast to all authors
 	protected ModelAndView createEditModelAndViewToAuthors(final Message message) {
 

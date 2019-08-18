@@ -16,8 +16,8 @@
 	<form:hidden path="moment" />
 	<form:hidden path="sender" />
 
-	<jstl:if test="${recipients is empty }">
-	<acme:select items="${recipients}" itemLabel="userAccount.username"
+	<jstl:if test="${empty m.recipients}">
+	<acme:select items="${possibleRecipients}" itemLabel="userAccount.username"
 		code="message.recipients" path="recipients" />
 	</jstl:if>
 

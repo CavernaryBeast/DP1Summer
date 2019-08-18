@@ -11,12 +11,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
+import repositories.MessageRepository;
 import domain.Actor;
 import domain.Administrator;
 import domain.Message;
 import domain.Submission;
 import domain.Topic;
-import repositories.MessageRepository;
 
 @Service
 @Transactional
@@ -94,24 +94,19 @@ public class MessageService {
 		Assert.notNull(mes);
 
 		final Actor principal = this.actorService.findByPrincipal();
-		Assert.isTrue(mes.getSender().equals(principal) || mes.getRecipients().contains(principal) || mes.getSender().equals(null));
+		Assert.isTrue(mes.getRecipients().contains(principal));
 
-		if (!mes.getSender().equals(null) || !mes.getRecipients().isEmpty())
-			if (mes.getSender().equals(principal))
-				mes.setSender(null);
-			else if (mes.getRecipients().contains(principal)) {
+		final Collection<Actor> recipients = mes.getRecipients();
+		recipients.remove(principal);
+		mes.setRecipients(recipients);
 
-				final Collection<Actor> recipients = mes.getRecipients();
-				recipients.remove(principal);
-				mes.setRecipients(recipients);
-
-			}
-		if (mes.getSender().equals(null) && mes.getRecipients().isEmpty())
-			this.messageRepository.delete(mes);
-
+		if (mes.getRecipients().isEmpty())
+			mes.setSender(null);
 		saved = this.messageRepository.save(mes);
-	}
 
+		if (saved.getSender() == null && saved.getRecipients().isEmpty())
+			this.messageRepository.delete(saved);
+	}
 	public Collection<Message> listByTopic(final int topicId) {
 
 		Assert.isTrue(topicId != 0);

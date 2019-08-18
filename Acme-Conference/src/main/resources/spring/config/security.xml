@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- * security.xml * * Copyright (C) 2019 Universidad de Sevilla * * The
-	use of this project is hereby constrained to the conditions of the * TDG
+<!-- * security.xml * * Copyright (C) 2019 Universidad de Sevilla * * The 
+	use of this project is hereby constrained to the conditions of the * TDG 
 	Licence, a copy of which you may download from * http://www.tdg-seville.info/License.html -->
 
 <beans xmlns="http://www.springframework.org/schema/beans"
@@ -40,13 +40,18 @@
 		<security:intercept-url pattern="/security/loginFailure.do"
 			access="permitAll" />
 
-		<security:intercept-url pattern="/welcome/index.do" access="permitAll" />
+		<security:intercept-url pattern="/welcome/index.do"
+			access="permitAll" />
 
-			<security:intercept-url pattern="/conference/list.do" access="permitAll" />
-			<security:intercept-url pattern="/conference/listFilter.do" access="permitAll" />
-			
-						<security:intercept-url pattern="/conference/administrator/**" access="hasRole('ADMINISTRATOR')" />
-			<security:intercept-url pattern="/submission/author/**" access="hasRole('AUTHOR')" />
+		<security:intercept-url pattern="/conference/list.do"
+			access="permitAll" />
+		<security:intercept-url pattern="/conference/listFilter.do"
+			access="permitAll" />
+
+		<security:intercept-url pattern="/conference/administrator/**"
+			access="hasRole('ADMINISTRATOR')" />
+		<security:intercept-url pattern="/submission/author/**"
+			access="hasRole('AUTHOR')" />
 
 		<security:intercept-url pattern="/actor/**"
 			access="permitAll" />
@@ -60,29 +65,20 @@
 		<security:intercept-url pattern="/administrator/**"
 			access="hasRole('ADMINISTRATOR')" />
 
-		<security:intercept-url
-		pattern="/actor/signUp.do" access="permitAll" />
+		<security:intercept-url pattern="/actor/signUp.do"
+			access="permitAll" />
 
-		<security:intercept-url
-		pattern="/actor/createAuthor.do" access="isAnonymous()" />
+		<security:intercept-url pattern="/actor/createAuthor.do"
+			access="isAnonymous()" />
 
-		<security:intercept-url
-		pattern="/actor/createReviewer.do" access="isAnonymous()" />
+		<security:intercept-url pattern="/actor/createReviewer.do"
+			access="isAnonymous()" />
 
-		<security:intercept-url
-		pattern="/actor/createAdministrator.do"
-		access="hasRole('ADMINISTRATOR')" />
+		<security:intercept-url pattern="/actor/createAdministrator.do"
+			access="hasRole('ADMINISTRATOR')" />
 
 		<!-- <security:intercept-url -->
 		<!-- pattern="/actor/edit.do" access="isAuthenticated()" /> -->
-
-		<security:intercept-url pattern="/conference/list.do"
-			access="permitAll" />
-		<security:intercept-url pattern="/conference/listFilter.do"
-			access="permitAll" />
-
-		<security:intercept-url pattern="/conference/administrator/**"
-			access="hasRole('ADMINISTRATOR')" />
 
 		<security:intercept-url pattern="/message/**"
 			access="isAuthenticated()" />

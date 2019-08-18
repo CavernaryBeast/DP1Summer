@@ -26,8 +26,16 @@
 	<display:column property="moment" titleKey="message.moment" />
 	<display:column property="${lang}" titleKey="message.topic"
 		sortable="true" />
-	<display:column property="sender.userAccount.username"
-		titleKey="message.sender" sortable="true" />
+	<display:column titleKey="message.sender" sortable="true">
+		<jstl:choose>
+			<jstl:when test="${m.sender != null}">
+				<jstl:out value="${m.sender.userAccount.username}" />
+			</jstl:when>
+			<jstl:otherwise>
+				<spring:message code="message.systemMessage" />
+			</jstl:otherwise>
+		</jstl:choose>
+	</display:column>
 
 	<display:column titleKey="message.recipients" sortable="true">
 		<jstl:forEach items="${m.recipients}" var="recipient">

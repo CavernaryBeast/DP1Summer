@@ -24,7 +24,7 @@ public interface MessageRepository extends JpaRepository<Message, Integer> {
 	@Query("select mes from Message mes join mes.recipients rec where (mes.sender.id = ?2 OR rec.id = ?2) AND rec.id = ?1")
 	Collection<Message> findByRecipientId(int recipientId, int principalId);
 
-	@Query("select mes from Message mes join mes.recipients rec where rec.id=?1 OR mes.sender.id=?1")
+	@Query("select distinct mes from Message mes join mes.recipients rec where rec.id=?1")
 	Collection<Message> findOwn(int id);
 
 }

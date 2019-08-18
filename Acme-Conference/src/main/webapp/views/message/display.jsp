@@ -13,16 +13,18 @@
 :
 <jstl:out value="${m.subject}" />
 <br />
+<spring:message code="message.sender" />
+:
 <jstl:choose>
 	<jstl:when test="${m.sender != null }">
-		<spring:message code="message.sender" />: <jstl:out
-			value="${m.sender.userAccount.username}" />
+		<jstl:out value="${m.sender.userAccount.username}" />
 		<br />
 	</jstl:when>
 	<jstl:otherwise>
 		<spring:message code="message.systemMessage" />
 	</jstl:otherwise>
 </jstl:choose>
+<br />
 
 <spring:message code="message.recipients" />
 :
@@ -54,5 +56,8 @@
 	<acme:button url="/message/reply.do?messageId=${m.id}"
 		code="message.reply" />
 </jstl:if>
+
+<acme:button url="/message/delete.do?messageId=${m.id}"
+	code="message.delete" />
 
 <acme:button url="/message/list.do" code="message.back" />
