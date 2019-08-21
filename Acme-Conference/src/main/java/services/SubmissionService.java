@@ -63,6 +63,7 @@ public class SubmissionService {
 		res.setTicker(ticker);
 		final Paper paper = new Paper();
 		res.setPaper(paper);
+		res.setReviewers(null);
 		return res;
 	}
 
@@ -115,6 +116,7 @@ public class SubmissionService {
 
 	public Submission save2(final Submission submission) {
 		Assert.notNull(submission, "Submission Null");
+		System.out.println("reviewers en save2: " + submission.getReviewers());
 		Submission saved;
 		saved = this.submissionRepository.saveAndFlush(submission);
 		return saved;
@@ -156,6 +158,7 @@ public class SubmissionService {
 		submission.setMoment(now);
 		submission.setStatus("UNDER-REVIEW");
 		submission.setAuthor(principal);
+		submission.setReviewers(null);
 		this.validator.validate(submission, binding);
 		return submission;
 
@@ -182,6 +185,16 @@ public class SubmissionService {
 		Collection<Submission> result;
 		result = this.submissionRepository.findUnderReviewSubmissionsFromConference(conferenceId);
 		Assert.notNull(result, "No hay submissions en UnderReview");
+		return result;
+	}
+
+	public Collection<Submission> findSubmissionsAcceptedWithPaperCameraReadyFromConference(final int conferenceId) {
+		Assert.isTrue(conferenceId != 0, "ConferenceId es 0");
+		Assert.notNull(conferenceId, "ConferenceId es nulo");
+		Assert.isTrue(this.conferenceService.exist(conferenceId));
+		Collection<Submission> result;
+		result = this.submissionRepository.findSubmissionsAcceptedWithPaperCameraReadyFromConference(conferenceId);
+		Assert.notNull(result, "No hay submissions aceptadas con el paper listo");
 		return result;
 	}
 

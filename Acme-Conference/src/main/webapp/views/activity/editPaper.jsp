@@ -9,42 +9,37 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
-<form:form action="submission/author/edit.do" modelAttribute="submission">
+<form:form action="submission/author/editPaper.do" modelAttribute="paper">
 
 	<form:hidden path="id" />
 	<form:hidden path="version" />
-<form:hidden path="reviewers" />
 
 		
 		
 		<fieldset>
 		<legend> <spring:message   code="submission.paper"  />   </legend>
 		
-		<acme:textbox code="submission.paper.title" path="paper.title"/>
+		<acme:textbox code="submission.paper.title" path="title"/>
 		<br />
 		
 		<acme:select items="${authors}" itemLabel="userAccount.username"
-		code="submission.paper.authors" path="paper.authors" />
+		code="submission.paper.authors" path="authors" />
 			<br />
 		
 		
-		<acme:textbox code="submission.paper.summary" path="paper.summary"/>
+		<acme:textbox code="submission.paper.summary" path="summary"/>
 		<br />
 		
-		<acme:textbox code="submission.paper.document" path="paper.document"/>
+		<acme:textbox code="submission.paper.document" path="document"/>
 		<br />
+		
+		
+			<acme:radiobutton code="submission.paper.cameraReady" path="cameraReady"  codeTrue="submission.yes"  codeFalse="submission.no" />
 	
 		</fieldset>
 	<br />
 			
-			<spring:message code="submission.conference" />
-			<select id="conferenceId" name="conferenceId">
-			<jstl:forEach var="c" items="${conferences}">
-				<option value="${c.id}">${c.title}</option>
-			</jstl:forEach>
-		</select>
-			<br />
-	<br />
+	
 	<acme:submit name="save" code="submission.save" />
 
 </form:form>

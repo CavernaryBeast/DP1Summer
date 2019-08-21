@@ -89,7 +89,7 @@ public class Submission extends DomainEntity {
 
 	@Valid
 	@ManyToMany
-	@Size(min = 1, max = 3)
+	@Size(min = 0, max = 3)
 	public Collection<Reviewer> getReviewers() {
 		return this.reviewers;
 	}

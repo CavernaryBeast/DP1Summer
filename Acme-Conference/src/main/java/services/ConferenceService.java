@@ -245,6 +245,7 @@ public class ConferenceService {
 		Assert.isTrue(conference.getCameraReadyDeadline().after(now));
 		final Collection<Submission> submissionsUnderReview = this.submissionService.findUnderReviewSubmissionsFromConference(conferenceId);
 		for (final Submission submission : submissionsUnderReview) {
+			System.out.println("reviewers: " + submission.getReviewers());
 			final Collection<Report> reports = this.reportService.findBySubmissionId(submission.getId());
 			if (!reports.isEmpty()) {
 				int contadorAccept = 0;

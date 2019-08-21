@@ -9,18 +9,37 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
-<form:form action="submission/author/edit.do" modelAttribute="submission">
+<form:form action="activity/administrator/edit.do?conferenceId=${conferenceId}" modelAttribute="activity">
 
 	<form:hidden path="id" />
 	<form:hidden path="version" />
-<form:hidden path="reviewers" />
+<form:hidden path="type"/>
 
+	<acme:textbox code="acivity.title" path="title"/>
+		<br />
+		<acme:textbox code="acivity.title" path="startMoment"/>
+		<br />
+		<acme:textbox code="acivity.title" path="duration"/>
+		<br />
+		<acme:textbox code="acivity.title" path="room"/>
+		<br />
+		<acme:textbox code="acivity.title" path="summary"/>
+		<br />
+		<acme:textarea code="acivity.title" path="attachments"/>
+		<br />
+		
+		<jstl:if test="${activity.type == 'PRESENTATION' }">
+		<acme:select items="${submissions}" itemLabel="userAccount.username"
+		code="activity.paper" path="activity.paper" />
+			<br />
+		
+		</jstl:if>
 		
 		
 		<fieldset>
 		<legend> <spring:message   code="submission.paper"  />   </legend>
 		
-		<acme:textbox code="submission.paper.title" path="paper.title"/>
+		<acme:textbox code="activity.paper.title" path="paper.title"/>
 		<br />
 		
 		<acme:select items="${authors}" itemLabel="userAccount.username"
