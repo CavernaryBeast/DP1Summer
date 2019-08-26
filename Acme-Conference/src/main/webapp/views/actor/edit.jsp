@@ -58,6 +58,7 @@
 
 	<jstl:if test="${role eq 'reviewer'}">
 		<acme:textarea code="reviewer.expertise" path="expertise" />
+		<spring:message code="reviewer.exampleExpertise" />
 	</jstl:if>
 
 	<acme:submit name="save" code="actor.save" />

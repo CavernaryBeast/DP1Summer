@@ -9,7 +9,7 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
-<form:form action="message/edit.do?type=${type}" modelAttribute="m">
+<form:form action="comment/edit.do?type=${type}" modelAttribute="m">
 
 	<form:hidden path="id" />
 	<form:hidden path="version" />

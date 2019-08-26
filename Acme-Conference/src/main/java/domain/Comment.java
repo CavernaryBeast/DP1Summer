@@ -1,9 +1,14 @@
 
 package domain;
 
+import java.util.Date;
+
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
+import javax.validation.Valid;
+import javax.validation.constraints.Past;
 
 import org.hibernate.validator.constraints.NotBlank;
 
@@ -12,19 +17,50 @@ import org.hibernate.validator.constraints.NotBlank;
 public class Comment extends DomainEntity {
 
 	//Atributos de clase
-	private String comment;
+	private String	title;
+	private Date	moment;
+	private String	text;
 
 	//Atributos de asociación
+	private Actor	author;
 
 
 	//Getters and setters
 	@NotBlank
-	public String getComment() {
-		return this.comment;
+	public String getTitle() {
+		return this.title;
 	}
 
-	public void setComment(final String comment) {
-		this.comment = comment;
+	public void setTitle(final String title) {
+		this.title = title;
+	}
+
+	@Past
+	public Date getMoment() {
+		return this.moment;
+	}
+
+	public void setMoment(final Date moment) {
+		this.moment = moment;
+	}
+
+	@NotBlank
+	public String getText() {
+		return this.text;
+	}
+
+	public void setText(final String text) {
+		this.text = text;
+	}
+
+	@Valid
+	@ManyToMany
+	public Actor getAuthor() {
+		return this.author;
+	}
+
+	public void setAuthor(final Actor author) {
+		this.author = author;
 	}
 
 }

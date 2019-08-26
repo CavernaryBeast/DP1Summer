@@ -94,7 +94,7 @@ public class MessageController extends AbstractController {
 
 	//Broadcast to every actor in the system --------------------------------------------------------
 
-	@RequestMapping(value = "/broadcast", method = RequestMethod.GET)
+	@RequestMapping(value = "/administrator/broadcast", method = RequestMethod.GET)
 	public ModelAndView broadcast() {
 
 		final Administrator principal = this.administratorService.findByPrincipal();
@@ -114,7 +114,7 @@ public class MessageController extends AbstractController {
 
 	//Broadcast to all author in the system --------------------------------------------------------
 
-	@RequestMapping(value = "/broadcastToAuthors", method = RequestMethod.GET)
+	@RequestMapping(value = "/administrator/broadcastToAuthors", method = RequestMethod.GET)
 	public ModelAndView broadcastToAuthors() {
 
 		final Administrator principal = this.administratorService.findByPrincipal();
@@ -133,7 +133,7 @@ public class MessageController extends AbstractController {
 	}
 
 	//Message to the authors submitted to a Conference
-	@RequestMapping(value = "/actorsSubmitted", method = RequestMethod.GET)
+	@RequestMapping(value = "/administrator/actorsSubmitted", method = RequestMethod.GET)
 	public ModelAndView actorsSubmitted(@RequestParam final int conferenceId) {
 
 		final Administrator principal = this.administratorService.findByPrincipal();
@@ -156,7 +156,7 @@ public class MessageController extends AbstractController {
 	}
 
 	//Message to the authors registered to a Conference
-	@RequestMapping(value = "/actorsRegistered", method = RequestMethod.GET)
+	@RequestMapping(value = "/administrator/actorsRegistered", method = RequestMethod.GET)
 	public ModelAndView actorsRegistered(@RequestParam final int conferenceId) {
 
 		final Administrator principal = this.administratorService.findByPrincipal();
@@ -224,8 +224,8 @@ public class MessageController extends AbstractController {
 				res = this.createEditModelAndViewAux(m, type);
 		} else
 			try {
-				final Message saved = this.messageService.save(m);
-				res = new ModelAndView("redirect:display.do?messageId=" + saved.getId());
+				this.messageService.save(m);
+				res = new ModelAndView("redirect:list.do");
 				final String banner = this.configurationParametersService.getBanner();
 				res.addObject("banner", banner);
 			} catch (final Throwable oops) {

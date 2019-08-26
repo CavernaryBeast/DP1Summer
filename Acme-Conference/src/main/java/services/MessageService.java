@@ -13,7 +13,6 @@ import org.springframework.util.Assert;
 
 import repositories.MessageRepository;
 import domain.Actor;
-import domain.Administrator;
 import domain.Message;
 import domain.Submission;
 import domain.Topic;
@@ -36,6 +35,9 @@ public class MessageService {
 
 	@Autowired
 	private TopicService					topicService;
+
+	@Autowired
+	private SubmissionService				submissionService;
 
 
 	//El sender se asignara mas adelante
@@ -166,7 +168,7 @@ public class MessageService {
 	public void notifyAuthor(final Submission submission) {
 
 		Assert.isTrue(submission.getId() != 0);
-		final Administrator admin = this.administratorService.findByPrincipal();
+		this.administratorService.findByPrincipal();
 
 		final Topic topic = this.topicService.findByName("DECISION");
 
@@ -188,6 +190,8 @@ public class MessageService {
 		notification.setTopic(topic);
 
 		this.messageRepository.save(notification);
+		submission.setNotified(true);
+		this.submissionService.save2(submission);
 	}
 
 }

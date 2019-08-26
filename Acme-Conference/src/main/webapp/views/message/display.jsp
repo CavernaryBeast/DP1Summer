@@ -22,9 +22,9 @@
 	</jstl:when>
 	<jstl:otherwise>
 		<spring:message code="message.systemMessage" />
+		<br />
 	</jstl:otherwise>
 </jstl:choose>
-<br />
 
 <spring:message code="message.recipients" />
 :

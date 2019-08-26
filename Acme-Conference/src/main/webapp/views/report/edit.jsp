@@ -15,7 +15,7 @@
 	<form:hidden path="version" />
 	<form:hidden path="submission" />
 	<form:hidden path="reviewer" />
-	<form:hidden path="comments"/>
+	<form:hidden path="comments" />
 
 	<acme:textbox code="report.originalityScore" path="originalityScore" />
 
@@ -27,6 +27,8 @@
 
 	<acme:submit name="save" code="report.save" />
 
-	<acme:button url="/submission/reviewer/display.do?submissionId=${report.submission.id}" code="report.cancel" />
-	
+	<acme:button
+		url="/submission/reviewer/show.do?submissionId=${report.submission.id}"
+		code="report.cancel" />
+
 </form:form>

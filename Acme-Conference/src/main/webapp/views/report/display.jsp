@@ -17,8 +17,8 @@
 <spring:message code="report.submission" />
 :
 <a
-	href="submission/<jstl:out value="${role}" />
-	/display.do?submissionId=${report.submission.id}">
+	href="submission/${role}
+	/show.do?submissionId=${report.submission.id}">
 	<jstl:out value="${report.submission.ticker}" />
 </a>
 <br />
@@ -43,11 +43,25 @@
 <jstl:out value="${report.decision}" />
 <br />
 
+<jstl:if test="${not empty report.comments}">
+	<display:table name="report.comments" id="comment"
+		requestURI="${requestURI}" pagesize="5" class="displaytag">
+
+		<display:column property="comment" titleKey="report.comments" />
+
+	</display:table>
+</jstl:if>
+
+<security:authorize access="hasRole('REVIEWER')">
+	<acme:button url="comment/reviewer/create.do?reportId=${report.id}"
+		code="report.addComment" />
+</security:authorize>
+
 <jstl:choose>
 
 	<jstl:when test="${role eq 'AUTHOR'}">
 		<acme:button
-			url="submission/author/display.do?submissionId=${report.submission.id}"
+			url="submission/author/show.do?submissionId=${report.submission.id}"
 			code="report.back" />
 	</jstl:when>
 

@@ -18,9 +18,11 @@ import org.springframework.web.servlet.ModelAndView;
 import services.ConfigurationParametersService;
 import services.ReportService;
 import services.ReviewerService;
+import services.SubmissionService;
 import controllers.AbstractController;
 import domain.Report;
 import domain.Reviewer;
+import domain.Submission;
 
 @Controller
 @RequestMapping("report/reviewer")
@@ -35,9 +37,9 @@ public class ReportReviewerController extends AbstractController {
 	@Autowired
 	private ReviewerService					reviewerService;
 
+	@Autowired
+	private SubmissionService				submissionService;
 
-	//	@Autowired
-	//	private SubmissionService				submissionService;
 
 	//Listing --------------------------------------------------------
 
@@ -67,8 +69,8 @@ public class ReportReviewerController extends AbstractController {
 		ModelAndView res;
 		final Report report = this.reportService.create();
 
-		//		final Submission submission = this.submissionService.findOne(submissionId);
-		//		report.setSubmission(submission);
+		final Submission submission = this.submissionService.findOne(submissionId);
+		report.setSubmission(submission);
 
 		final Reviewer principal = this.reviewerService.findByPrincipal();
 		report.setReviewer(principal);
@@ -150,6 +152,7 @@ public class ReportReviewerController extends AbstractController {
 		res = new ModelAndView("report/display");
 		res.addObject("report", report);
 		res.addObject("role", role);
+		res.addObject("requestURI", "report/reviewer/display.do?reportId=" + reportId);
 
 		final String banner = this.configurationParametersService.getBanner();
 		res.addObject("banner", banner);

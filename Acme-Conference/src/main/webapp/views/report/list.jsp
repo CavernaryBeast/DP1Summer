@@ -11,7 +11,7 @@
 
 <display:table name="reports" id="report" requestURI="${requestURI}"
 	pagesize="5" class="displaytag">
-	<display:column property="submission" titleKey="report.submission" />
+	<display:column property="submission.ticker" titleKey="report.submission" />
 	<display:column property="originalityScore"
 		titleKey="report.originalityScore" />
 	<display:column property="qualityScore" titleKey="report.qualityScore" />

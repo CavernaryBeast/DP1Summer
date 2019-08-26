@@ -13,11 +13,12 @@ import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
-import repositories.SubmissionRepository;
 import domain.Author;
 import domain.Conference;
 import domain.Paper;
+import domain.Reviewer;
 import domain.Submission;
+import repositories.SubmissionRepository;
 
 @Transactional
 @Service
@@ -36,7 +37,7 @@ public class SubmissionService {
 	private ConferenceService		conferenceService;
 
 	@Autowired
-	private ReportService			reportService;
+	private ReviewerService			reviewerService;
 
 	@Autowired
 	private Validator				validator;
@@ -63,6 +64,9 @@ public class SubmissionService {
 		res.setTicker(ticker);
 		final Paper paper = new Paper();
 		res.setPaper(paper);
+
+		res.setReviewers(null);
+
 		return res;
 	}
 
@@ -74,13 +78,13 @@ public class SubmissionService {
 	}
 
 	public Submission findOne(final int id) {
-		final Author author = this.authorService.findByPrincipal();
+		//		final Author author = this.authorService.findByPrincipal();
 		Assert.isTrue(id != 0);
 		Assert.notNull(id);
 		Assert.isTrue(this.submissionRepository.exists(id));
 		final Submission res = this.submissionRepository.findOne(id);
 		Assert.notNull(res);
-		Assert.isTrue(res.getAuthor().equals(author));
+		//		Assert.isTrue(res.getAuthor().equals(author));
 		return res;
 	}
 
@@ -108,6 +112,7 @@ public class SubmissionService {
 		paper.setAuthors(autoresSecundarios);
 		this.paperService.save(paper);
 		submission.setPaper(paper);
+		submission.setNotified(false);
 
 		saved = this.submissionRepository.saveAndFlush(submission);
 		return saved;
@@ -183,6 +188,19 @@ public class SubmissionService {
 		result = this.submissionRepository.findUnderReviewSubmissionsFromConference(conferenceId);
 		Assert.notNull(result, "No hay submissions en UnderReview");
 		return result;
+	}
+
+	public Collection<Submission> findSubmissionsToReview() {
+
+		final Reviewer principal = this.reviewerService.findByPrincipal();
+
+		final int reviewerId = principal.getId();
+
+		final Collection<Submission> res = this.submissionRepository.findSubmissionsToReview(reviewerId);
+
+		Assert.notNull(res);
+
+		return res;
 	}
 
 }

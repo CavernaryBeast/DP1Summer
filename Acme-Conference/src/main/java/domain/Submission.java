@@ -28,6 +28,7 @@ public class Submission extends DomainEntity {
 	private String					ticker;
 	private Date					moment;
 	private String					status;
+	private boolean					notified;
 
 	//Atributos de asociaci�n
 	private Author					author;
@@ -67,6 +68,14 @@ public class Submission extends DomainEntity {
 		this.status = status;
 	}
 
+	public boolean isNotified() {
+		return this.notified;
+	}
+
+	public void setNotified(final boolean notified) {
+		this.notified = notified;
+	}
+
 	@Valid
 	@ManyToOne(optional = false)
 	public Author getAuthor() {
@@ -89,7 +98,7 @@ public class Submission extends DomainEntity {
 
 	@Valid
 	@ManyToMany
-	@Size(min = 1, max = 3)
+	@Size(min = 0, max = 3)
 	public Collection<Reviewer> getReviewers() {
 		return this.reviewers;
 	}
@@ -97,5 +106,4 @@ public class Submission extends DomainEntity {
 	public void setReviewers(final Collection<Reviewer> reviewers) {
 		this.reviewers = reviewers;
 	}
-
 }

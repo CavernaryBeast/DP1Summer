@@ -2,6 +2,7 @@
 package services;
 
 import java.util.Collection;
+import java.util.Date;
 
 import javax.transaction.Transactional;
 
@@ -9,7 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
+import domain.Activity;
 import domain.Comment;
+import domain.Conference;
 import domain.Report;
 import repositories.CommentRepository;
 
@@ -23,10 +26,20 @@ public class CommentService {
 	@Autowired
 	private ReportService		reportService;
 
+	@Autowired
+	private ConferenceService	conferenceService;
+
+	@Autowired
+	private ActivityService		activityService;
+
 
 	public Comment create() {
 
 		final Comment res = new Comment();
+
+		final Date moment = new Date(System.currentTimeMillis() - 1);
+
+		res.setMoment(moment);
 
 		return res;
 	}
@@ -50,12 +63,16 @@ public class CommentService {
 	}
 
 	//We check that who wants to save the comment is the owner of the comment's Report
-	public Comment save(final Comment comment, final int reportId) {
+	public Comment saveToReport(final Comment comment, final int reportId) {
 
 		Assert.notNull(comment);
 		Assert.isTrue(reportId != 0);
 
 		Comment saved;
+
+		final Date moment = new Date(System.currentTimeMillis() - 1);
+
+		comment.setMoment(moment);
 
 		final Report report = this.reportService.findOne(reportId);
 
@@ -67,8 +84,52 @@ public class CommentService {
 		return saved;
 	}
 
+	//We check that who wants to save the comment is the owner of the comment's Report
+	public Comment saveToConference(final Comment comment, final int conferenceId) {
+
+		Assert.notNull(comment);
+		Assert.isTrue(conferenceId != 0);
+
+		Comment saved;
+
+		final Date moment = new Date(System.currentTimeMillis() - 1);
+
+		comment.setMoment(moment);
+
+		final Conference conference = this.conferenceService.findOne(conferenceId);
+
+		//Lets see if this work
+		saved = this.commentRepository.save(comment);
+		conference.getComments().add(saved);
+		this.conferenceService.save(conference);
+
+		return saved;
+	}
+
+	//We check that who wants to save the comment is the owner of the comment's Report
+	public Comment saveToActivity(final Comment comment, final int activityId) {
+
+		Assert.notNull(comment);
+		Assert.isTrue(activityId != 0);
+
+		Comment saved;
+
+		final Date moment = new Date(System.currentTimeMillis() - 1);
+
+		comment.setMoment(moment);
+
+		final Activity activity = this.activityService.findOne(activityId);
+
+		//Lets see if this work
+		saved = this.commentRepository.save(comment);
+		activity.getComments().add(saved);
+		this.activityService.save(activity);
+
+		return saved;
+	}
+
 	//We check that who wants to delete the comment is the owner of the comment's Report
-	public void delete(final Comment comment) {
+	public void deleteFromReport(final Comment comment) {
 
 		Assert.notNull(comment);
 

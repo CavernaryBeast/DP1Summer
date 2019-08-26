@@ -1,8 +1,6 @@
 
 package controllers.reviewer;
 
-import java.util.Collection;
-
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +14,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import controllers.AbstractController;
 import domain.Comment;
-import domain.Report;
 import services.CommentService;
 import services.ConfigurationParametersService;
 import services.ReportService;
@@ -34,28 +31,28 @@ public class CommentReviewerController extends AbstractController {
 	@Autowired
 	private ReportService					reportService;
 
+	//	//Listing --------------------------------------------------------
+	//
+	//	@RequestMapping(value = "/list", method = RequestMethod.GET)
+	//	public ModelAndView list(@RequestParam final int reportId) {
+	//
+	//		final ModelAndView res;
+	//
+	//		final Report report = this.reportService.findOne(reportId);
+	//
+	//		final Collection<Comment> comments = report.getComments();
+	//
+	//		res = new ModelAndView("comment/list");
+	//
+	//		res.addObject("comments", comments);
+	//		res.addObject("requestURI", "comment/reviewer/list.do");
+	//
+	//		final String banner = this.configurationParametersService.getBanner();
+	//		res.addObject("banner", banner);
+	//
+	//		return res;
+	//	}
 
-	//Listing --------------------------------------------------------
-
-	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public ModelAndView list(@RequestParam final int reportId) {
-
-		final ModelAndView res;
-
-		final Report report = this.reportService.findOne(reportId);
-
-		final Collection<Comment> comments = report.getComments();
-
-		res = new ModelAndView("comment/list");
-
-		res.addObject("comments", comments);
-		res.addObject("requestURI", "comment/reviewer/list.do");
-
-		final String banner = this.configurationParametersService.getBanner();
-		res.addObject("banner", banner);
-
-		return res;
-	}
 
 	//Creation --------------------------------------------------------
 
@@ -79,13 +76,12 @@ public class CommentReviewerController extends AbstractController {
 	public ModelAndView save(@ModelAttribute("comment") @Valid final Comment comment, final BindingResult binding, @RequestParam final int reportId) {
 
 		ModelAndView res;
-		Comment saved;
 
 		if (binding.hasErrors())
 			res = this.createEditModelAndView(comment);
 		else
 			try {
-				saved = this.commentService.save(comment, reportId);
+				this.commentService.saveToReport(comment, reportId);
 
 				res = new ModelAndView("redirect:display.do?reportId=" + reportId);
 				final String banner = this.configurationParametersService.getBanner();
