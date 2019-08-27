@@ -75,10 +75,14 @@
 
 		</display:column>
 
+	<display:column titleKey="conference.submissionList">
+		<a href="conference/administrator/listSubmissions.do?conferenceId=${row.id}"><spring:message
+	code="conference.submissionList" /></a>
+	</display:column>
+
 	<display:column titleKey="conference.activities">
 		<a href="activity/administrator/list.do?conferenceId=${row.id}"><spring:message
 	code="conference.activities" /></a>
-	
 	</display:column>
 
 

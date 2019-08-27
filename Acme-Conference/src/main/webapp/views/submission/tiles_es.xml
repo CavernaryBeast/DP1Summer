@@ -16,11 +16,22 @@
 			value="/views/submission/edit.jsp" />
 	</definition>
 
+<definition name="submission/add" extends="master.page">
+		<put-attribute name="title" value="Añade un revisor" />
+		<put-attribute name="body"
+			value="/views/submission/add.jsp" />
+	</definition>
 
 	<definition name="submission/list" extends="master.page">
 		<put-attribute name="title" value="Lista de presentaciones" />
 		<put-attribute name="body"
 			value="/views/submission/list.jsp" />
+	</definition>
+	
+		<definition name="submission/listGeneral" extends="master.page">
+		<put-attribute name="title" value="Lista  de las sumisiones de la conferencia" />
+		<put-attribute name="body"
+			value="/views/submission/listGeneral.jsp" />
 	</definition>
 	
 		<definition name="submission/show" extends="master.page">

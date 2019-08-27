@@ -38,8 +38,11 @@ function showHideDiv(ele) {
 <display:column property="type" titleKey="activity.type" />
 <display:column property="paper.title" titleKey="activity.paper.title" />
 	<display:column titleKey="activity.show">
-				<a href="activity/admin/show.do?activityId=${row.id}"><spring:message code = "activity.show"/></a>
+				<a href="activity/administrator/show.do?activityId=${row.id}"><spring:message code = "activity.show"/></a>
 		</display:column>
+				<display:column titleKey="activity.delete">
+				<a href="activity/administrator/delete.do?activityId=${row.id}&conferenceId=${conference.id}"><spring:message code = "activity.delete"/></a>
+		</display:column>	
 </display:table>
 </fieldset>
 
@@ -52,8 +55,24 @@ function showHideDiv(ele) {
 <display:column property="summary" titleKey="activity.summary" />
 <display:column property="type" titleKey="activity.type" />
 	<display:column titleKey="activity.show">
-				<a href="activity/admin/show.do?activityId=${row.id}"><spring:message code = "activity.show"/></a>
+				<a href="activity/administrator/show.do?activityId=${row.id}"><spring:message code = "activity.show"/></a>
 		</display:column>
+		<display:column titleKey="activity.addSections">
+		<jstl:choose>
+		<jstl:when test="${now < conference.startDate}">
+		<a href="activity/administrator/addSection.do?activityId=${row.id}"><spring:message code = "activity.addSections"/></a>
+		</jstl:when>
+		<jstl:otherwise>
+		<spring:message code="activity.cantAddSections" />
+		</jstl:otherwise>
+		</jstl:choose>
+		
+				
+		</display:column>	
+		
+		<display:column titleKey="activity.delete">
+				<a href="activity/administrator/delete.do?activityId=${row.id}&conferenceId=${conference.id}"><spring:message code = "activity.delete"/></a>
+		</display:column>	
 </display:table>
 </fieldset>
 
@@ -66,17 +85,36 @@ function showHideDiv(ele) {
 <display:column property="summary" titleKey="activity.summary" />
 <display:column property="type" titleKey="activity.type" />
 	<display:column titleKey="activity.show">
-				<a href="activity/admin/show.do?activityId=${row.id}"><spring:message code = "activity.show"/></a>
+				<a href="activity/administrator/show.do?activityId=${row.id}"><spring:message code = "activity.show"/></a>
 		</display:column>
+<display:column titleKey="activity.delete">
+				<a href="activity/administrator/delete.do?activityId=${row.id}&conferenceId=${conference.id}"><spring:message code = "activity.delete"/></a>
+</display:column>	
 </display:table>
 </fieldset>
+<jstl:choose>
+<jstl:when test="${now < conference.startDate}">
 
-	<input type="button" name="presentation"
-		value="<spring:message code = 'activity.create.presentation' />" class="btn" 	onclick="javascript: relativeRedir('activity/administrator/create.do?conferenceId=${conferenceId}');" />
+<jstl:choose>
+<jstl:when test="${fn:contains(conferencesWithPosiblePapers, conference)}">
+<input type="button" 
+		value="<spring:message code = 'activity.create.presentation' />" class="btn" 	onclick="javascript: relativeRedir('activity/administrator/createPresentation.do?conferenceId=${conferenceId}');" />
 		<br>
+</jstl:when>
+<jstl:otherwise>
+<spring:message code="activity.noPapers" />
+	<br>
+</jstl:otherwise>
+</jstl:choose>
 		<input type="button" name="tutorial"
-		value="<spring:message code = 'activity.create.tutorial' />" class="btn" 	onclick="javascript: relativeRedir('activity/administrator/create.do?conferenceId=${conferenceId}');" />
+		value="<spring:message code = 'activity.create.tutorial' />" class="btn" 	onclick="javascript: relativeRedir('activity/administrator/createTutorial.do?conferenceId=${conferenceId}');" />
 		<br>
 		<input type="button" name="panel"
-		value="<spring:message code = 'activity.create.panel' />" class="btn" 	onclick="javascript: relativeRedir('activity/administrator/create.do?conferenceId=${conferenceId}');" />
+		value="<spring:message code = 'activity.create.panel' />" class="btn" 	onclick="javascript: relativeRedir('activity/administrator/createPanel.do?conferenceId=${conferenceId}');" />
 		<br>
+		
+</jstl:when>
+<jstl:otherwise>
+	<spring:message code="activity.cantAddActivities" />	
+</jstl:otherwise>
+</jstl:choose>

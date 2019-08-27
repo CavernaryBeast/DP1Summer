@@ -20,13 +20,16 @@ import domain.Paper;
 public class PaperService {
 
 	@Autowired
-	private PaperRepository	paperRepository;
+	private PaperRepository		paperRepository;
 
 	@Autowired
-	private AuthorService	authorService;
+	private AuthorService		authorService;
 
 	@Autowired
-	private Validator		validator;
+	private ConferenceService	conferenceService;
+
+	@Autowired
+	private Validator			validator;
 
 
 	public Paper save(final Paper paper) {
@@ -59,6 +62,16 @@ public class PaperService {
 		this.validator.validate(paper, binding);
 		return paper;
 
+	}
+
+	public Collection<Paper> findPapersSubmissionsAcceptedWithPaperCameraReadyFromConference(final int conferenceId) {
+		Assert.isTrue(conferenceId != 0, "ConferenceId es 0");
+		Assert.notNull(conferenceId, "ConferenceId es nulo");
+		Assert.isTrue(this.conferenceService.exist(conferenceId));
+		Collection<Paper> result;
+		result = this.paperRepository.findPapersSubmissionsAcceptedWithPaperCameraReadyFromConference(conferenceId);
+		Assert.notNull(result, "No hay submissions aceptadas con el paper listo");
+		return result;
 	}
 
 }

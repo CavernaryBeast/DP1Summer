@@ -562,8 +562,8 @@
 		<property name="submissionDeadline" value="2019/10/01 21:00" />
 		<property name="notificationDeadline" value="2019/10/02 21:00" />
 		<property name="cameraReadyDeadline" value="2019/10/03 21:00" />
-		<property name="startDate" value="2019/10/10 12:00" />
-		<property name="endDate" value="2019/10/20 21:00" />
+		<property name="startDate" value="2019/10/10 21:00" />
+		<property name="endDate" value="2019/10/11 21:00" />
 		<property name="summary" value="Conference1's summary" />
 		<property name="fee" value="200.0" />
 		<property name="administrator" ref="admin" />
@@ -598,7 +598,7 @@
 		<property name="submissionDeadline" value="2019/10/01 21:00" />
 		<property name="notificationDeadline" value="2019/10/02 21:00" />
 		<property name="cameraReadyDeadline" value="2019/10/03 21:00" />
-		<property name="startDate" value="2019/10/10 12:00" />
+		<property name="startDate" value="2019/10/10 21:00" />
 		<property name="endDate" value="2019/10/20 21:00" />
 		<property name="summary" value="Conference2's summary" />
 		<property name="fee" value="100.0" />
@@ -916,7 +916,8 @@
 		</property>
 		<property name="speakers">
 			<list>
-				<ref bean="author1" />
+			<value>Eduardo García Valles</value>
+			<value>Pepita Pérez Galdós</value>
 			</list>
 		</property>
 	</bean>
@@ -945,8 +946,8 @@
 		</property>
 		<property name="speakers">
 			<list>
-				<ref bean="author2" />
-				<ref bean="author3" />
+			<value>Romualdo Garrido López</value>
+			<value>Clara Gaitán Llanos</value>
 			</list>
 		</property>
 	</bean>
@@ -973,7 +974,8 @@
 		</property>
 		<property name="speakers">
 			<list>
-				<ref bean="author4" />
+			<value>Paz Almuhedano Roldán</value>
+			<value>Raimundo Flores Cabra</value>
 			</list>
 		</property>
 	</bean>

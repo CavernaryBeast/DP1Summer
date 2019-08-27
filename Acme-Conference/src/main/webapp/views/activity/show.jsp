@@ -14,30 +14,43 @@
 
 
 <jstl:set var="spanish" value="es"/>
-
-	<p><spring:message code="submission.ticker" />: <jstl:out value = "${submission.ticker}"/></p>
-	<p><spring:message code="submission.moment" />: <jstl:out value = "${submission.moment}"/></p>
-	<p><spring:message code="submission.status" />: <jstl:out value = "${submission.status}"/></p>
-	<p><spring:message code="submission.author" />: <jstl:out value = "${submission.author.userAccount.username}"/></p>
-
-
-
-	<fieldset>
-		<legend> <spring:message   code="submission.paper"  />   </legend>
-	
-		<p><spring:message code="submission.paper.title" />: <jstl:out value = "${submission.paper.title}"/></p>
-		<p><spring:message code="submission.paper.showAuthors" />:</p>
-		<jstl:forEach  items="${submission.paper.authors }" var="a">
-		
-		 <jstl:out value = "${a.userAccount.username}"/>
-		
+<fmt:formatDate value="${schedule}" pattern="yyyy-MM-dd HH:mm:ss.S" var="scheduleDate" /> 
+	<p><spring:message code="acivity.title" />: <jstl:out value = "${activity.title}"/></p>
+	<p><spring:message code="activity.startMoment" />: <jstl:out value = "${activity.startMoment}"/></p>
+		<fieldset>
+		<legend> <spring:message   code="activity.schedule"  />   </legend>
+			<p><spring:message code="activity.startMoment" />: <jstl:out value = "${activity.startMoment}"/></p>
+				<p><spring:message code="activity.duration" />: <jstl:out value = "${activity.duration}"/></p>
+		<p><spring:message code="activity.finishHour" />: <jstl:out value = "${scheduleDate}"/></p>
+		</fieldset>
+	<p><spring:message code="activity.room" />: <jstl:out value = "${activity.room}"/></p>
+	<p><spring:message code="activity.summary" />: <jstl:out value = "${activity.summary}"/></p>
+<p><spring:message code="activity.attachments" />: <jstl:out value = "${activity.attachments}"/></p>
+<p><spring:message code="activity.type" />: <jstl:out value = "${activity.type}"/></p>
+<p><spring:message code="activity.summary" />: <jstl:out value = "${activity.summary}"/></p>
+<jstl:if test="${activity.type eq 'TUTORIAL' }">
+<p><spring:message code="activity.sections" />: 
+		<jstl:forEach  items="${activity.sections}" var="s">
+		 <jstl:out value = "${s.title}"/>
+		 <br>
 		</jstl:forEach>
-		
-		<p><spring:message code="submission.paper.summary" />: <jstl:out value = "${submission.paper.summary}"/></p>
-		<p><spring:message code="submission.paper.document" />: <jstl:out value = "${submission.paper.document}"/></p>
-		<p><spring:message code="submission.paper.cameraReady" />: <jstl:out value = "${submission.paper.cameraReady}"/></p>
-	
+</jstl:if>
 
+<br>
+
+<jstl:if test="${activity.type eq 'PRESENTATION' }">
+	<fieldset>
+		<legend> <spring:message   code="activity.showPaper"  />   </legend>
+		<p><spring:message code="activity.paper.title" />: <jstl:out value = "${activity.paper.title}"/></p>
+		<p><spring:message code="activity.paper.showAuthors" />:</p>
+		<jstl:forEach  items="${activity.paper.authors }" var="a">
+		 <jstl:out value = "${a.userAccount.username}"/>
+		</jstl:forEach>
+		<p><spring:message code="activity.paper.summary" />: <jstl:out value = "${activity.paper.summary}"/></p>
+		<p><spring:message code="activity.paper.document" />: <jstl:out value = "${activity.paper.document}"/></p>
+		<p><spring:message code="activity.paper.cameraReady" />: <jstl:out value = "${activity.paper.cameraReady}"/></p>
+	
 </fieldset>
 	<br />
+	</jstl:if>
 <acme:button url="/" code="submission.cancel" />

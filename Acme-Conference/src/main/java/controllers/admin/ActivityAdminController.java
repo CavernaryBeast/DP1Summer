@@ -2,9 +2,14 @@
 package controllers.admin;
 
 import java.util.Collection;
+import java.util.Date;
+import java.util.HashSet;
+
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -17,9 +22,9 @@ import services.PaperService;
 import services.SubmissionService;
 import controllers.AbstractController;
 import domain.Activity;
-import domain.Author;
+import domain.Conference;
 import domain.Paper;
-import domain.Submission;
+import domain.Section;
 
 @Controller
 @RequestMapping("/activity/administrator")
@@ -51,20 +56,25 @@ public class ActivityAdminController extends AbstractController {
 		final Collection<Activity> presentations = this.activityService.findPresentationsFromConference(conferenceId);
 		final Collection<Activity> tutorials = this.activityService.findTutorialsFromConference(conferenceId);
 		final Collection<Activity> panels = this.activityService.findPanelsFromConference(conferenceId);
+		final Collection<Conference> conferencesWithPosiblePapers = this.conferenceService.getConferencesavailablePapersForPresentations();
+		final Conference conference = this.conferenceService.findOne(conferenceId);
+		final Date now = new Date(System.currentTimeMillis() - 1);
 		res = new ModelAndView("activity/list");
 
 		res.addObject("presentations", presentations);
 		res.addObject("tutorials", tutorials);
 		res.addObject("panels", panels);
 		res.addObject("conferenceId", conferenceId);
+		res.addObject("conferencesWithPosiblePapers", conferencesWithPosiblePapers);
+		res.addObject("conference", conference);
+		res.addObject("now", now);
 		res.addObject("requestURI", "activity/administrator/list.do?conferenceId=" + conferenceId);
 
 		return res;
 	}
-
 	//Creation --------------------------------------------------------
 
-	@RequestMapping(value = "/create", method = RequestMethod.GET, params = "presentation")
+	@RequestMapping(value = "/createPresentation", method = RequestMethod.GET)
 	public ModelAndView createPresentation(@RequestParam final int conferenceId) {
 
 		ModelAndView res;
@@ -73,7 +83,7 @@ public class ActivityAdminController extends AbstractController {
 		return res;
 	}
 
-	@RequestMapping(value = "/create", method = RequestMethod.GET, params = "tutorial")
+	@RequestMapping(value = "/createTutorial", method = RequestMethod.GET)
 	public ModelAndView createTutorial(@RequestParam final int conferenceId) {
 
 		ModelAndView res;
@@ -82,7 +92,7 @@ public class ActivityAdminController extends AbstractController {
 		return res;
 	}
 
-	@RequestMapping(value = "/create", method = RequestMethod.GET, params = "panel")
+	@RequestMapping(value = "/createPanel", method = RequestMethod.GET)
 	public ModelAndView createPanel(@RequestParam final int conferenceId) {
 
 		ModelAndView res;
@@ -106,35 +116,94 @@ public class ActivityAdminController extends AbstractController {
 
 	//Save --------------------------------------------------------
 
-	//	@RequestMapping(value = "edit", method = RequestMethod.POST, params = "save")
-	//	public ModelAndView save(@Valid Activity activity, final BindingResult binding, final Integer conferenceId) {
-	//
-	//		ModelAndView res;
-	//		Submission saved;
-	//		activity = this.activityService.reconstruct(activity, binding);
-	//		if (binding.hasErrors()) {
-	//			System.out.println("Field: " + binding.getFieldError().getField());
-	//			System.out.println(binding.getGlobalErrorCount());
-	//			System.out.println(binding.getFieldErrorCount());
-	//			res = this.createEditModelAndView(submission);
-	//		} else
-	//			try {
-	//
-	//				final Conference conference = this.conferenceService.findOne2(conferenceId);
-	//				final Collection<Submission> submissionsOfConference = conference.getSubmissions();
-	//				submissionsOfConference.add(submission);
-	//				conference.setSubmissions(submissionsOfConference);
-	//				saved = this.submissionService.save(submission);
-	//				this.conferenceService.save(conference);
-	//				res = new ModelAndView("redirect:/submission/author/list.do");
-	//
-	//			} catch (final Throwable oops) {
-	//				res = this.createEditModelAndView(submission, "submission.commit.error");
-	//				System.out.println(oops.getStackTrace());
-	//				System.out.println(oops.getCause().getMessage());
-	//			}
-	//		return res;
-	//	}
+	@RequestMapping(value = "/editPresentation", method = RequestMethod.POST, params = "save")
+	public ModelAndView savePresentation(@Valid Activity activity, final BindingResult binding, final Integer conferenceId) {
+
+		ModelAndView res;
+		Activity saved;
+		activity = this.activityService.reconstructPresentation(activity, binding);
+		if (binding.hasErrors()) {
+			System.out.println("Field: " + binding.getFieldError().getField());
+			System.out.println(binding.getGlobalErrorCount());
+			System.out.println(binding.getFieldErrorCount());
+			res = this.createEditModelAndView(activity, conferenceId);
+		} else
+			try {
+				final Conference conference = this.conferenceService.findOne2(conferenceId);
+				final Collection<Activity> activities = conference.getActivities();
+				activities.add(activity);
+				conference.setActivities(activities);
+				saved = this.activityService.save(activity);
+				this.conferenceService.save2(conference);
+				res = new ModelAndView("redirect:/activity/administrator/list.do?conferenceId=" + conferenceId);
+
+			} catch (final Throwable oops) {
+				res = this.createEditModelAndView(activity, conferenceId, "activity.commit.error");
+				System.out.println(oops.getStackTrace());
+				System.out.println(oops.getCause().getMessage());
+			}
+		return res;
+	}
+
+	@RequestMapping(value = "/editTutorial", method = RequestMethod.POST, params = "save")
+	public ModelAndView saveTutorial(Activity activity, final BindingResult binding, final Integer conferenceId) {
+
+		ModelAndView res;
+		Activity saved;
+		activity = this.activityService.reconstructTutorial(activity, binding);
+		if (binding.hasErrors()) {
+			System.out.println("Field: " + binding.getFieldError().getField());
+			System.out.println(binding.getGlobalErrorCount());
+			System.out.println(binding.getFieldErrorCount());
+			res = this.createEditModelAndView(activity, conferenceId);
+		} else
+			try {
+				final Conference conference = this.conferenceService.findOne2(conferenceId);
+				final Collection<Activity> activities = new HashSet<>(conference.getActivities());
+				saved = this.activityService.save(activity);
+				activities.add(saved);
+				conference.setActivities(activities);
+				this.conferenceService.save2(conference);
+				res = new ModelAndView("redirect:/activity/administrator/list.do?conferenceId=" + conferenceId);
+
+			} catch (final Throwable oops) {
+				System.out.println(oops.getLocalizedMessage());
+				res = this.createEditModelAndView(activity, conferenceId, "activity.commit.error");
+
+				System.out.println(oops.getStackTrace());
+				System.out.println(oops.getCause().getMessage());
+			}
+		return res;
+	}
+
+	@RequestMapping(value = "/editPanel", method = RequestMethod.POST, params = "save")
+	public ModelAndView savePanel(@Valid Activity activity, final BindingResult binding, final Integer conferenceId) {
+
+		ModelAndView res;
+		Activity saved;
+		activity = this.activityService.reconstructPanel(activity, binding);
+		if (binding.hasErrors()) {
+			System.out.println("Field: " + binding.getFieldError().getField());
+			System.out.println(binding.getGlobalErrorCount());
+			System.out.println(binding.getFieldErrorCount());
+			res = this.createEditModelAndView(activity, conferenceId);
+		} else
+			try {
+				final Conference conference = this.conferenceService.findOne2(conferenceId);
+				final Collection<Activity> activities = conference.getActivities();
+				activities.add(activity);
+				conference.setActivities(activities);
+				saved = this.activityService.save(activity);
+				this.conferenceService.save2(conference);
+				res = new ModelAndView("redirect:/activity/administrator/list.do?conferenceId=" + conferenceId);
+
+			} catch (final Throwable oops) {
+				res = this.createEditModelAndView(activity, conferenceId, "activity.commit.error");
+				System.out.println(oops.getStackTrace());
+				System.out.println(oops.getCause().getMessage());
+			}
+		return res;
+	}
 
 	// Show ----------------------------------------------------------------------------------
 
@@ -144,30 +213,78 @@ public class ActivityAdminController extends AbstractController {
 		Activity activity;
 
 		activity = this.activityService.findOne(activityId);
+		//To convert the duration(in hours) to miliseconds(the unit of getTime() method),we must know that 1 hour = 3600000 miliseconds
+		final long scheduleDuration = (long) (activity.getStartMoment().getTime() + (activity.getDuration() * 3600000));
+		final Date schedule = new Date(scheduleDuration);
 		result = new ModelAndView("activity/show");
 		result.addObject("activity", activity);
-
+		result.addObject("schedule", schedule);
 		return result;
 	}
 
 	// Update ----------------------------------------------------------------------------------
 
+	@RequestMapping(value = "/addSection", method = RequestMethod.GET)
+	public ModelAndView addSection(@RequestParam final int activityId) {
+
+		ModelAndView res;
+		//		Activity activity;
+		//		activity = this.activityService.findOne(activityId);
+		final Conference conference = this.conferenceService.getConferenceFromActivityId(activityId);
+		try {
+			final Section section = this.activityService.createSection(activityId);
+			res = new ModelAndView("activity/addSection");
+			res.addObject("section", section);
+			res.addObject("activityId", activityId);
+		} catch (final Throwable oops) {
+			res = new ModelAndView("redirect:/activity/administrator/list.do?conferenceId=" + conference.getId());
+			System.out.println(oops.getStackTrace());
+			System.out.println(oops.getCause().getMessage());
+		}
+
+		return res;
+	}
+
+	@RequestMapping(value = "/saveSection", method = RequestMethod.POST, params = "save")
+	public ModelAndView saveSection(@Valid final Section section, final BindingResult binding, final Integer activityId) {
+
+		ModelAndView res;
+		final Section saved;
+		//		activity = this.activityService.reconstructPanel(activity, binding);
+		if (binding.hasErrors()) {
+			System.out.println("Field: " + binding.getFieldError().getField());
+			System.out.println(binding.getGlobalErrorCount());
+			System.out.println(binding.getFieldErrorCount());
+			res = this.createEditModelAndViewSection(section, activityId);
+		} else
+			try {
+				saved = this.activityService.saveSection(section, activityId);
+				res = new ModelAndView("redirect:/activity/administrator/show.do?acitivityId=" + activityId);
+				res.addObject("activityId", activityId);
+			} catch (final Throwable oops) {
+				res = this.createEditModelAndViewSection(section, activityId, "activity.commit.error");
+				System.out.println(oops.getStackTrace());
+				System.out.println(oops.getCause().getMessage());
+			}
+		return res;
+	}
+
 	//Delete --------------------------------------------------------
 
-	//	@RequestMapping(value = "edit", method = RequestMethod.GET, params = "delete")
-	//	public ModelAndView delete(final Submission submission, final BindingResult binding) {
-	//
-	//		ModelAndView res;
-	//
-	//		try {
-	//			this.activityService.delete(submission);
-	//			res = new ModelAndView("redirect:list.do");
-	//
-	//		} catch (final Throwable oops) {
-	//			res = this.createEditModelAndView(submission, "creditcard.commit.error");
-	//		}
-	//		return res;
-	//	}
+	@RequestMapping(value = "/delete", method = RequestMethod.GET)
+	public ModelAndView delete(@RequestParam final int activityId, @RequestParam final int conferenceId) {
+
+		ModelAndView res;
+
+		try {
+			this.activityService.delete(activityId, conferenceId);
+			res = new ModelAndView("redirect:/activity/administrator/list.do?conferenceId=" + conferenceId);
+
+		} catch (final Throwable oops) {
+			res = new ModelAndView("redirect:/activity/administrator/list.do?conferenceId=" + conferenceId);
+		}
+		return res;
+	}
 
 	//Ancillary methods --------------------------------------------------------
 
@@ -181,40 +298,40 @@ public class ActivityAdminController extends AbstractController {
 	}
 
 	protected ModelAndView createEditModelAndView(final Activity activity, final int conferenceId, final String messageCode) {
-
 		ModelAndView res;
-		//final Collection<Conference> conferences = this.conferenceService.getConferencesSubmissionDeadlineNotElapsed();
-		res = new ModelAndView("activity/edit");
-		res.addObject("message", messageCode);
-		res.addObject("activity", activity);
-		res.addObject("conferenceId", conferenceId);
 		if (activity.getType().equals("PRESENTATION")) {
-			final Collection<Submission> submissions = this.submissionService.findSubmissionsAcceptedWithPaperCameraReadyFromConference(conferenceId);
-			res.addObject("submissions", submissions);
+			final Collection<Paper> papers = this.paperService.findPapersSubmissionsAcceptedWithPaperCameraReadyFromConference(conferenceId);
+			res = new ModelAndView("activity/editPresentation");
+			res.addObject("papers", papers);
+			res.addObject("presentation", activity);
+		} else if (activity.getType().equals("TUTORIAL")) {
+			res = new ModelAndView("activity/editTutorial");
+			res.addObject("tutorial", activity);
+		} else {
+			res = new ModelAndView("activity/editPanel");
+			res.addObject("panel", activity);
 		}
-
-		return res;
-	}
-
-	protected ModelAndView createEditModelAndViewPaper(final Paper paper) {
-
-		ModelAndView res;
-
-		res = this.createEditModelAndViewPaper(paper, null);
-
-		return res;
-	}
-
-	protected ModelAndView createEditModelAndViewPaper(final Paper paper, final String messageCode) {
-
-		ModelAndView res;
-		final Collection<Author> authors = this.authorService.findAll();
-		final Author author = this.authorService.findByPrincipal();
-		authors.remove(author);
-		res = new ModelAndView("submission/editPaper");
 		res.addObject("message", messageCode);
-		res.addObject("paper", paper);
-		res.addObject("authors", authors);
+		res.addObject("conferenceId", conferenceId);
+		return res;
+	}
+
+	protected ModelAndView createEditModelAndViewSection(final Section section, final int activityId) {
+
+		ModelAndView res;
+
+		res = this.createEditModelAndViewSection(section, activityId, null);
+
+		return res;
+	}
+
+	protected ModelAndView createEditModelAndViewSection(final Section section, final int activityId, final String messageCode) {
+		ModelAndView res;
+
+		res = new ModelAndView("activity/editTutorial");
+		res.addObject("section", section);
+		res.addObject("message", messageCode);
+		res.addObject("activityId", activityId);
 		return res;
 	}
 
