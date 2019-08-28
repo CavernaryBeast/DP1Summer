@@ -1,8 +1,21 @@
 
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.transaction.Transactional;
 
@@ -13,12 +26,12 @@ import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
+import repositories.SubmissionRepository;
 import domain.Author;
 import domain.Conference;
 import domain.Paper;
 import domain.Reviewer;
 import domain.Submission;
-import repositories.SubmissionRepository;
 
 @Transactional
 @Service
@@ -34,10 +47,13 @@ public class SubmissionService {
 	private AuthorService			authorService;
 
 	@Autowired
-	private ConferenceService		conferenceService;
+	private AdministratorService	administratorService;
 
 	@Autowired
 	private ReviewerService			reviewerService;
+
+	@Autowired
+	private ConferenceService		conferenceService;
 
 	@Autowired
 	private Validator				validator;
@@ -88,16 +104,14 @@ public class SubmissionService {
 		return res;
 	}
 
-	//	public Submission findOne2(final int id) {
-	//		this.authorService.findByPrincipal();
-	//		Assert.isTrue(id != 0);
-	//		Assert.notNull(id);
-	//		Assert.isTrue(this.submissionRepository.exists(id));
-	//		final Submission res = this.submissionRepository.findOne(id);
-	//		Assert.notNull(res);
-	//
-	//		return res;
-	//	}
+	public Submission findOne2(final int id) {
+		Assert.isTrue(id != 0);
+		Assert.notNull(id);
+		Assert.isTrue(this.submissionRepository.exists(id));
+		final Submission res = this.submissionRepository.findOne(id);
+		Assert.notNull(res);
+		return res;
+	}
 
 	public Submission save(final Submission submission) {
 		Assert.notNull(submission);
@@ -120,6 +134,7 @@ public class SubmissionService {
 
 	public Submission save2(final Submission submission) {
 		Assert.notNull(submission, "Submission Null");
+		System.out.println("reviewers en save2: " + submission.getReviewers());
 		Submission saved;
 		saved = this.submissionRepository.saveAndFlush(submission);
 		return saved;
@@ -161,6 +176,29 @@ public class SubmissionService {
 		submission.setMoment(now);
 		submission.setStatus("UNDER-REVIEW");
 		submission.setAuthor(principal);
+		submission.setReviewers(null);
+		this.validator.validate(submission, binding);
+		return submission;
+
+	}
+	public Submission reconstructAddReviewer(final Submission submission, final int reviewerId, final BindingResult binding) {
+
+		Assert.isTrue(submission.getId() != 0);
+
+		this.administratorService.findByPrincipal();
+
+		final Submission original = this.findOne2(submission.getId());
+		submission.setId(original.getId());
+		submission.setVersion(original.getVersion());
+		submission.setAuthor(original.getAuthor());
+		submission.setMoment(original.getMoment());
+		submission.setPaper(original.getPaper());
+		submission.setTicker(original.getTicker());
+		submission.setStatus(original.getStatus());
+		final Reviewer reviewer = this.reviewerService.findOne(reviewerId);
+		submission.setReviewers(original.getReviewers());
+		submission.getReviewers().add(reviewer);
+
 		this.validator.validate(submission, binding);
 		return submission;
 
@@ -201,6 +239,126 @@ public class SubmissionService {
 		Assert.notNull(res);
 
 		return res;
+	}
+
+	public Collection<Submission> findAcceptedSubmissionsFromConference(final int conferenceId) {
+		Assert.isTrue(conferenceId != 0, "ConferenceId es 0");
+		Assert.notNull(conferenceId, "ConferenceId es nulo");
+		Assert.isTrue(this.conferenceService.exist(conferenceId));
+		Collection<Submission> result;
+		result = this.submissionRepository.findAcceptedSubmissionsFromConference(conferenceId);
+		Assert.notNull(result, "No hay submissions en Accepted");
+		return result;
+	}
+
+	public Collection<Submission> findRejectedSubmissionsFromConference(final int conferenceId) {
+		Assert.isTrue(conferenceId != 0, "ConferenceId es 0");
+		Assert.notNull(conferenceId, "ConferenceId es nulo");
+		Assert.isTrue(this.conferenceService.exist(conferenceId));
+		Collection<Submission> result;
+		result = this.submissionRepository.findRejectedSubmissionsFromConference(conferenceId);
+		Assert.notNull(result, "No hay submissions en Rejected");
+		return result;
+	}
+
+	public Collection<Submission> findSubmissionsAcceptedWithPaperCameraReadyFromConference(final int conferenceId) {
+		Assert.isTrue(conferenceId != 0, "ConferenceId es 0");
+		Assert.notNull(conferenceId, "ConferenceId es nulo");
+		Assert.isTrue(this.conferenceService.exist(conferenceId));
+		Collection<Submission> result;
+		result = this.submissionRepository.findSubmissionsAcceptedWithPaperCameraReadyFromConference(conferenceId);
+		Assert.notNull(result, "No hay submissions aceptadas con el paper listo");
+		return result;
+	}
+
+	public Submission assignSubmission(final int submissionId) {
+		Submission submission;
+		submission = this.findOne2(submissionId);
+		final Collection<Reviewer> posibleReviewers;
+		final Collection<Reviewer> reviewersAsignados = new HashSet<Reviewer>();
+		Assert.isTrue(submission.getReviewers().size() <= 3, "Maximo 3 reviewers");
+		posibleReviewers = this.reviewerService.selectAvailableAuthorsToAssingToSubmission(submissionId);
+		final Map<Reviewer, Integer> matchesPerActor = new HashMap<>();
+		Matcher matchesTitle, matchesSummary;
+		final Conference conference = this.conferenceService.getConferenceFromSubmissionId(submissionId);
+
+		for (final Reviewer r : posibleReviewers) {
+			Integer countMatches = 0;
+			matchesTitle = this.patternKeywords(r).matcher(conference.getTitle().toLowerCase());
+			matchesSummary = this.patternKeywords(r).matcher(conference.getSummary().toLowerCase());
+
+			while (matchesTitle.find())
+				countMatches++;
+			while (matchesSummary.find())
+				countMatches++;
+			if (countMatches > 0)
+				matchesPerActor.put(r, countMatches);
+		}
+
+		final List<Entry<Reviewer, Integer>> matchesSorted = new ArrayList<>(SubmissionService.sortByValue(matchesPerActor).entrySet());
+		System.out.println(matchesSorted);
+		final int cantidadPorAñadir = 3 - submission.getReviewers().size();
+
+		if (cantidadPorAñadir > 0)
+			if (matchesSorted.size() > cantidadPorAñadir)
+				for (int i = 0; i < cantidadPorAñadir; i++) {
+					final Reviewer r = matchesSorted.get(i).getKey();
+					submission.getReviewers().add(r);
+				}
+			else if (!matchesSorted.isEmpty())
+				for (int i = 0; i < matchesSorted.size(); i++) {
+					final Reviewer r = matchesSorted.get(i).getKey();
+					submission.getReviewers().add(r);
+				}
+		Assert.isTrue(submission.getReviewers().size() <= 3, "Máximo 3 tras el proceso");
+		this.save2(submission);
+		return submission;
+	}
+	private Pattern patternKeywords(final Reviewer reviewer) {
+		final Collection<String> keywords = reviewer.getExpertise();
+		String pattern = "";
+		for (final String kw : keywords)
+			pattern = pattern + (kw.toLowerCase() + "|");
+		pattern = pattern.substring(0, pattern.length() - 1);
+		final Pattern result = Pattern.compile(pattern);
+		return result;
+	}
+
+	private static <K, V> Map<K, V> sortByValue(final Map<K, V> map) {
+		final List<Entry<K, V>> list = new LinkedList<>(map.entrySet());
+		Collections.sort(list, new Comparator<Object>() {
+
+			@Override
+			@SuppressWarnings("unchecked")
+			public int compare(final Object o1, final Object o2) {
+				return ((Comparable<V>) ((Map.Entry<K, V>) (o1)).getValue()).compareTo(((Map.Entry<K, V>) (o2)).getValue());
+			}
+		});
+
+		final Map<K, V> result = new LinkedHashMap<>();
+		for (final Iterator<Entry<K, V>> it = list.iterator(); it.hasNext();) {
+			final Map.Entry<K, V> entry = it.next();
+			result.put(entry.getKey(), entry.getValue());
+		}
+
+		return result;
+	}
+
+	public boolean exist(final int id) {
+		Assert.notNull(id);
+		Assert.isTrue(id != 0);
+		final boolean res = this.submissionRepository.exists(id);
+		Assert.notNull(res);
+
+		return res;
+	}
+
+	public String getSubmissionsPerConferenceStats() {
+		String result;
+		this.administratorService.findByPrincipal();
+		result = this.submissionRepository.getSubmissionsPerConferenceStats();
+		Assert.notNull(result);
+		return result;
 	}
 
 }

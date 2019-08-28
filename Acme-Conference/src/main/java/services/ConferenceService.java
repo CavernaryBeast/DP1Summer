@@ -4,6 +4,7 @@ package services;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashSet;
 
 import javax.transaction.Transactional;
 
@@ -41,6 +42,9 @@ public class ConferenceService {
 	private ReportService			reportService;
 
 	@Autowired
+	private ActivityService			activityService;
+
+	@Autowired
 	private Validator				validator;
 
 
@@ -48,6 +52,7 @@ public class ConferenceService {
 
 		final Administrator principal = this.administratorService.findByPrincipal();
 		final Conference res = new Conference();
+		res.setActivities(new HashSet<Activity>());
 		return res;
 	}
 
@@ -85,20 +90,29 @@ public class ConferenceService {
 	public Conference save(final Conference conference) {
 		Assert.notNull(conference);
 		Conference saved;
-		if (conference.getId() == 0) {
-			final Date submissionDeadline = conference.getSubmissionDeadline();
-			final Date notificationDeadline = conference.getNotificationDeadline();
-			final Date cameraReadyDeadline = conference.getCameraReadyDeadline();
-			final Date startDate = conference.getStartDate();
-			final Date endDate = conference.getEndDate();
 
-			Assert.isTrue(submissionDeadline.before(notificationDeadline) && submissionDeadline.before(cameraReadyDeadline) && submissionDeadline.before(startDate) && submissionDeadline.before(endDate), "SubmissionDeadline");
-			Assert.isTrue(notificationDeadline.before(cameraReadyDeadline) && notificationDeadline.before(startDate) && notificationDeadline.before(endDate), "NotificationDeadline");
-			Assert.isTrue(cameraReadyDeadline.before(startDate) && cameraReadyDeadline.before(endDate), "CameraReadyDeadline");
-			Assert.isTrue(startDate.before(endDate), "StartDate");
+		final Date submissionDeadline = conference.getSubmissionDeadline();
+		final Date notificationDeadline = conference.getNotificationDeadline();
+		final Date cameraReadyDeadline = conference.getCameraReadyDeadline();
+		final Date startDate = conference.getStartDate();
+		final Date endDate = conference.getEndDate();
+		final Date now = new Date(System.currentTimeMillis() - 1);
+		Assert.isTrue(submissionDeadline.after(now) && submissionDeadline.before(notificationDeadline) && submissionDeadline.before(cameraReadyDeadline) && submissionDeadline.before(startDate) && submissionDeadline.before(endDate), "SubmissionDeadline");
+		Assert.isTrue(notificationDeadline.after(now) && notificationDeadline.before(cameraReadyDeadline) && notificationDeadline.before(startDate) && notificationDeadline.before(endDate), "NotificationDeadline");
+		Assert.isTrue(cameraReadyDeadline.after(now) && cameraReadyDeadline.before(startDate) && cameraReadyDeadline.before(endDate), "CameraReadyDeadline");
+		Assert.isTrue(startDate.after(now) && startDate.before(endDate), "StartDate");
+		Assert.isTrue(endDate.after(now), "EndDate");
 
-		}
 		saved = this.conferenceRepository.save(conference);
+
+		return saved;
+	}
+
+	public Conference save2(final Conference conference) {
+		Assert.notNull(conference);
+		Conference saved;
+		saved = this.conferenceRepository.save(conference);
+		Assert.notNull(saved);
 		return saved;
 	}
 
@@ -184,9 +198,30 @@ public class ConferenceService {
 		return result;
 	}
 
+	public Collection<Conference> getConferencesStartDateNotElapsed() {
+		Collection<Conference> result;
+		result = this.conferenceRepository.getConferencesStartDateNotElapsed();
+		Assert.notNull(result);
+		return result;
+	}
+
+	public Collection<Conference> getConferencesStartDateNotElapsed2() {
+		Collection<Conference> result;
+		result = this.conferenceRepository.getConferencesStartDateNotElapsed();
+		Assert.notNull(result);
+		return result;
+	}
+
 	public Collection<Conference> getConferencesWithUnderReviewSubmissions() {
 		Collection<Conference> result;
 		result = this.conferenceRepository.getConferencesWithUnderReviewSubmissions();
+		Assert.notNull(result);
+		return result;
+	}
+
+	public Collection<Conference> getConferencesavailablePapersForPresentations() {
+		Collection<Conference> result;
+		result = this.conferenceRepository.getConferencesAvailablePapersForPresentations();
 		Assert.notNull(result);
 		return result;
 	}
@@ -195,7 +230,7 @@ public class ConferenceService {
 		Conference result;
 		Submission submission;
 		result = this.conferenceRepository.getConferenceFromSubmissionId(submissionId);
-		submission = this.submissionService.findOne(submissionId);
+		submission = this.submissionService.findOne2(submissionId);
 		Assert.notNull(result);
 		Assert.isTrue(result.getSubmissions().contains(submission), "La conference debe poseer la submission");
 		return result;
@@ -245,6 +280,7 @@ public class ConferenceService {
 		Assert.isTrue(conference.getCameraReadyDeadline().after(now));
 		final Collection<Submission> submissionsUnderReview = this.submissionService.findUnderReviewSubmissionsFromConference(conferenceId);
 		for (final Submission submission : submissionsUnderReview) {
+			System.out.println("reviewers: " + submission.getReviewers());
 			final Collection<Report> reports = this.reportService.findBySubmissionId(submission.getId());
 			if (!reports.isEmpty()) {
 				int contadorAccept = 0;
@@ -264,6 +300,30 @@ public class ConferenceService {
 				submission.setStatus("ACCEPTED");
 			this.submissionService.save2(submission);
 		}
+	}
+
+	public Conference getConferenceFromActivityId(final int activityId) {
+		Conference result;
+		Activity activity;
+		result = this.conferenceRepository.getConferenceFromActivityId(activityId);
+		activity = this.activityService.findOne(activityId);
+		Assert.notNull(result);
+		Assert.isTrue(result.getActivities().contains(activity), "La conference debe poseer la activity");
+		return result;
+	}
+
+	public String getFeesPerConferenceStats() {
+		String result;
+		result = this.conferenceRepository.getFeesPerConferenceStats();
+		Assert.notNull(result);
+		return result;
+	}
+
+	public String getDaysPerConferenceStats() {
+		String result;
+		result = this.conferenceRepository.getDaysPerConferenceStats();
+		Assert.notNull(result);
+		return result;
 	}
 
 }

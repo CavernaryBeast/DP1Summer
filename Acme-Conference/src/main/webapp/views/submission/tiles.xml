@@ -22,11 +22,22 @@
 			value="/views/submission/edit.jsp" />
 	</definition>
 
+<definition name="submission/add" extends="master.page">
+		<put-attribute name="title" value="Add a Reviewer" />
+		<put-attribute name="body"
+			value="/views/submission/add.jsp" />
+	</definition>
 
 	<definition name="submission/list" extends="master.page">
 		<put-attribute name="title" value="List of submissions" />
 		<put-attribute name="body"
 			value="/views/submission/list.jsp" />
+	</definition>
+	
+		<definition name="submission/listGeneral" extends="master.page">
+		<put-attribute name="title" value="List of submissions from the conference" />
+		<put-attribute name="body"
+			value="/views/submission/listGeneral.jsp" />
 	</definition>
 	
 		<definition name="submission/show" extends="master.page">

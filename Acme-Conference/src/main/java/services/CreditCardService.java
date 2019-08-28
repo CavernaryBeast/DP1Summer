@@ -61,13 +61,10 @@ public class CreditCardService {
 	public CreditCard save(final CreditCard card) {
 
 		Assert.notNull(card);
-
 		CreditCard saved;
-
 		final Collection<String> makes = this.configurationParametersService.getCreditCardMakes();
 		Assert.isTrue(makes.contains(card.getMake()));
-
-		saved = this.creditCardRepository.save(card);
+		saved = this.creditCardRepository.saveAndFlush(card);
 
 		return saved;
 	}

@@ -43,10 +43,25 @@ public interface ConferenceRepository extends JpaRepository<Conference, Integer>
 	@Query("select distinct(c) from Conference c where c.submissionDeadline > CURRENT_TIMESTAMP and c.isFinal = 1")
 	Collection<Conference> getConferencesSubmissionDeadlineNotElapsed();
 
+	@Query("select distinct(c) from Conference c where c.startDate > CURRENT_TIMESTAMP and c.isFinal = 1")
+	Collection<Conference> getConferencesStartDateNotElapsed();
+
 	@Query("select distinct c from Conference c join c.submissions s where s.id = ?1")
 	Conference getConferenceFromSubmissionId(int submissionId);
 
 	@Query("select distinct c from Conference c join c.submissions s where s.status like 'UNDER-REVIEW'")
 	Collection<Conference> getConferencesWithUnderReviewSubmissions();
+
+	@Query("select distinct c from Conference c join c.submissions s where s.paper.cameraReady = 1 and s.paper.id NOT IN (select a.paper.id from Activity a where a.type like 'PRESENTATION' and a.id IN (select a1.id from Conference c1 join c1.activities a1 ))")
+	Collection<Conference> getConferencesAvailablePapersForPresentations();
+
+	@Query("select distinct c from Conference c join c.activities a where a.id = ?1")
+	Conference getConferenceFromActivityId(int activityId);
+
+	@Query("select min(c.fee), max(c.fee), avg(c.fee), stddev(c.fee) from Conference c")
+	String getFeesPerConferenceStats();
+
+	@Query("select min((c.endDate - c.startDate)/1000000), max((c.endDate - c.startDate)/1000000), avg((c.endDate - c.startDate)/1000000), stddev((c.endDate - c.startDate)/1000000) from Conference c")
+	String getDaysPerConferenceStats();
 
 }

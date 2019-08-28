@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import services.CommentService;
 import services.ConferenceService;
 import services.ConfigurationParametersService;
+import domain.Comment;
 
 @Controller
 @RequestMapping("/comment")
@@ -24,6 +25,7 @@ public class CommentController extends AbstractController {
 
 	//	@Autowired
 	//	private ActivityService					activityService;
+
 
 	//	//	//Listing comments of a Conference--------------------------------------------------------
 	//

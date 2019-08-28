@@ -17,9 +17,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import services.ActorService;
+import services.AdministratorService;
 import services.ConferenceService;
+import services.ReviewerService;
+import services.SubmissionService;
 import controllers.AbstractController;
 import domain.Conference;
+import domain.Reviewer;
+import domain.Submission;
 import forms.AdministratorFilterConferenceForm;
 
 @Controller
@@ -28,6 +33,15 @@ public class ConferenceAdminController extends AbstractController {
 
 	@Autowired
 	ConferenceService		conferenceService;
+
+	@Autowired
+	SubmissionService		submissionService;
+
+	@Autowired
+	AdministratorService	administratorService;
+
+	@Autowired
+	ReviewerService			reviewerService;
 
 	@Autowired
 	private ActorService	actorService;
@@ -133,6 +147,8 @@ public class ConferenceAdminController extends AbstractController {
 					result = this.createEditModelAndView(conference, "conference.form.error.cameraReadyDeadline");
 				else if (oops.getMessage().equals("StartDate"))
 					result = this.createEditModelAndView(conference, "conference.form.error.startDate");
+				else if (oops.getMessage().equals("EndDate"))
+					result = this.createEditModelAndView(conference, "conference.form.error.endDate");
 				else
 					result = this.createEditModelAndView(conference, "conference.commit.error");
 			}
@@ -166,6 +182,109 @@ public class ConferenceAdminController extends AbstractController {
 		result.addObject("conference", conference);
 		result.addObject("message", messageCode);
 		return result;
+	}
+
+	@RequestMapping(value = "/listSubmissions", method = RequestMethod.GET)
+	public ModelAndView listSubmissions(@RequestParam final int conferenceId) {
+		ModelAndView result;
+		Conference conference;
+		conference = this.conferenceService.findOne(conferenceId);
+		Collection<Submission> accepted;
+		Collection<Submission> underReview;
+		Collection<Submission> rejected;
+
+		accepted = this.submissionService.findAcceptedSubmissionsFromConference(conferenceId);
+		underReview = this.submissionService.findUnderReviewSubmissionsFromConference(conferenceId);
+		rejected = this.submissionService.findRejectedSubmissionsFromConference(conferenceId);
+		final Date now = new Date(System.currentTimeMillis() - 1);
+		result = new ModelAndView("submission/listGeneral");
+		result.addObject("accepted", accepted);
+		result.addObject("underReview", underReview);
+		result.addObject("rejected", rejected);
+		result.addObject("now", now);
+		return result;
+	}
+
+	@RequestMapping(value = "/assignSubmissionAutomatic", method = RequestMethod.GET)
+	public ModelAndView assignSubmission(@RequestParam final int submissionId) {
+		ModelAndView result;
+		Conference conference;
+		final Submission submission;
+		this.submissionService.assignSubmission(submissionId);
+		conference = this.conferenceService.getConferenceFromSubmissionId(submissionId);
+		result = new ModelAndView("redirect:/conference/administrator/listSubmissions.do?conferenceId=" + conference.getId());
+		return result;
+	}
+
+	@RequestMapping(value = "/addReviewer", method = RequestMethod.GET)
+	public ModelAndView addReviewer(@RequestParam final int submissionId) {
+
+		ModelAndView result;
+		Submission submission;
+
+		submission = this.submissionService.findOne2(submissionId);
+		result = this.createEditModelAndViewAddReviewer(submission);
+
+		return result;
+
+	}
+
+	@RequestMapping(value = "saveReviewer", method = RequestMethod.POST, params = "save")
+	public ModelAndView savePaper(final Submission submission, final BindingResult binding, final Integer reviewerId) {
+
+		ModelAndView res;
+		Submission saved;
+		Conference conference;
+		//submission = this.submissionService.reconstructAddReviewer(submission, reviewerId, binding);
+		final Reviewer reviewer = this.reviewerService.findOne(reviewerId);
+		final Submission original = this.submissionService.findOne2(submission.getId());
+		submission.setId(original.getId());
+		submission.setVersion(original.getVersion());
+		submission.setAuthor(original.getAuthor());
+		submission.setMoment(original.getMoment());
+		submission.setPaper(original.getPaper());
+		submission.setTicker(original.getTicker());
+		submission.setStatus(original.getStatus());
+		submission.setReviewers(original.getReviewers());
+		submission.getReviewers().add(reviewer);
+		if (binding.hasErrors()) {
+			System.out.println("Field: " + binding.getFieldError().getField());
+			System.out.println(binding.getGlobalErrorCount());
+			System.out.println(binding.getFieldErrorCount());
+			res = this.createEditModelAndViewAddReviewer(submission);
+		} else
+			try {
+				saved = this.submissionService.save2(submission);
+				conference = this.conferenceService.getConferenceFromSubmissionId(submission.getId());
+				res = new ModelAndView("redirect:/conference/administrator/listSubmissions.do?conferenceId=" + conference.getId());
+			} catch (final Throwable oops) {
+				res = this.createEditModelAndViewAddReviewer(submission, "submission.commit.error");
+				System.out.println(oops.getStackTrace());
+				System.out.println(oops.getCause().getMessage());
+			}
+		return res;
+	}
+
+	protected ModelAndView createEditModelAndViewAddReviewer(final Submission submission, final String messageCode) {
+
+		ModelAndView res;
+		this.administratorService.findByPrincipal();
+		final Collection<Reviewer> posibleReviewers = this.reviewerService.selectAvailableAuthorsToAssingToSubmission(submission.getId());
+		res = new ModelAndView("submission/add");
+		res.addObject("message", messageCode);
+		res.addObject("submission", submission);
+		res.addObject("reviewers", posibleReviewers);
+
+		return res;
+	}
+
+	protected ModelAndView createEditModelAndViewAddReviewer(final Submission submission) {
+
+		ModelAndView res;
+
+		res = this.createEditModelAndViewAddReviewer(submission, null);
+
+		return res;
 	}
 
 }
