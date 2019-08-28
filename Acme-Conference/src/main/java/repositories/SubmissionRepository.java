@@ -18,8 +18,9 @@ public interface SubmissionRepository extends JpaRepository<Submission, Integer>
 	@Query("select distinct s from Conference c join c.submissions s where c.id = ?1 and s.status like 'UNDER-REVIEW'")
 	Collection<Submission> findUnderReviewSubmissionsFromConference(int conferenceId);
 
-	@Query("select sub from Submission sub join sub.reviewers revs where revs.id = ?1 AND sub not in (select sub1 from Report r join r.submission sub1 where r.reviewer.id = ?1")
+	@Query("select sub from Submission sub join sub.reviewers revs where revs.id = ?1 AND sub not in (select sub1 from Report r join r.submission sub1 where r.reviewer.id = ?1)")
 	Collection<Submission> findSubmissionsToReview(int reviewerId);
+
 	@Query("select distinct s from Conference c join c.submissions s where c.id = ?1 and s.status like 'ACCEPTED'")
 	Collection<Submission> findAcceptedSubmissionsFromConference(int conferenceId);
 

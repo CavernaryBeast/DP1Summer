@@ -6,7 +6,7 @@ import java.util.Date;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.validation.Valid;
 import javax.validation.constraints.Past;
 
@@ -54,7 +54,7 @@ public class Comment extends DomainEntity {
 	}
 
 	@Valid
-	@ManyToMany
+	@ManyToOne(optional = true)
 	public Actor getAuthor() {
 		return this.author;
 	}
