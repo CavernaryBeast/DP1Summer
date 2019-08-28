@@ -27,9 +27,13 @@
 	<acme:textbox code="creditCard.cvv" path="cvv" />
 
 	<form:label path="make">
-		<spring:message code="creditCard.make" />: </form:label>
+		<spring:message code="creditCard.make" />: 
+	</form:label>
+
 	<form:select id="makes" path="make">
-		<form:options path="make" items="${makes}" />
+		<jstl:forEach items="${makes}" var="make">
+			<form:option value="${make}" />
+		</jstl:forEach>
 	</form:select>
 
 	<acme:submit name="save" code="creditCard.save" />

@@ -48,4 +48,8 @@
 	url="creditcard/author/edit.do?creditcardId=${creditcard.id}"
 	code="creditCard.edit" />
 
+<acme:button
+	url="creditcard/author/delete.do?creditcardId=${creditcard.id}"
+	code="creditCard.delete" />
+
 <acme:button url="creditcard/author/list.do" code="creditCard.back" />

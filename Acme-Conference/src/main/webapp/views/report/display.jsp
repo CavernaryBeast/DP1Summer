@@ -43,14 +43,12 @@
 <jstl:out value="${report.decision}" />
 <br />
 
-<jstl:if test="${not empty report.comments}">
-	<display:table name="report.comments" id="comment"
-		requestURI="${requestURI}" pagesize="5" class="displaytag">
-
-		<display:column property="comment" titleKey="report.comments" />
-
-	</display:table>
-</jstl:if>
+<security:authorize access="hasRole('REVIEWER')">
+	<jstl:if test="${not empty report.comments}">
+		<acme:button url="comment/reviewer/list.do?reportId=${report.id}"
+			code="report.listComments" />
+	</jstl:if>
+</security:authorize>
 
 <security:authorize access="hasRole('REVIEWER')">
 	<acme:button url="comment/reviewer/create.do?reportId=${report.id}"

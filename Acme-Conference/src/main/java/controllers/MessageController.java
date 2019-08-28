@@ -17,15 +17,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import domain.Actor;
+import domain.Administrator;
+import domain.Message;
+import domain.Topic;
 import services.ActorService;
 import services.AdministratorService;
 import services.ConfigurationParametersService;
 import services.MessageService;
 import services.TopicService;
-import domain.Actor;
-import domain.Administrator;
-import domain.Message;
-import domain.Topic;
 
 @Controller
 @RequestMapping("/message")
@@ -219,7 +219,7 @@ public class MessageController extends AbstractController {
 			else if (type == "broadcastToAllAuthors")
 				res = this.createEditModelAndViewToAuthors(m, null);
 			else if (type == "reply")
-				res = this.createEditModelAndView(m, false, m.getRecipients(), null);
+				res = this.createEditModelAndView(m, false, m.getRecipients());
 			else if (type == "submitted" || type == "registered")
 				res = this.createEditModelAndViewAux(m, type);
 		} else
@@ -299,7 +299,7 @@ public class MessageController extends AbstractController {
 	//Ancillary methods --------------------------------------------------------
 
 	/**
-	 * 
+	 *
 	 * @param message
 	 *            The message that is going to be created
 	 * @param broadcast

@@ -1,6 +1,8 @@
 
 package controllers.reviewer;
 
+import java.util.Collection;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import controllers.AbstractController;
 import domain.Comment;
+import domain.Report;
 import services.CommentService;
 import services.ConfigurationParametersService;
 import services.ReportService;
@@ -31,28 +34,31 @@ public class CommentReviewerController extends AbstractController {
 	@Autowired
 	private ReportService					reportService;
 
-	//	//Listing --------------------------------------------------------
-	//
-	//	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	//	public ModelAndView list(@RequestParam final int reportId) {
-	//
-	//		final ModelAndView res;
-	//
-	//		final Report report = this.reportService.findOne(reportId);
-	//
-	//		final Collection<Comment> comments = report.getComments();
-	//
-	//		res = new ModelAndView("comment/list");
-	//
-	//		res.addObject("comments", comments);
-	//		res.addObject("requestURI", "comment/reviewer/list.do");
-	//
-	//		final String banner = this.configurationParametersService.getBanner();
-	//		res.addObject("banner", banner);
-	//
-	//		return res;
-	//	}
 
+	//Listing --------------------------------------------------------
+
+	@RequestMapping(value = "/list", method = RequestMethod.GET)
+	public ModelAndView list(@RequestParam final int reportId) {
+
+		final ModelAndView res;
+
+		final Report report = this.reportService.findOne(reportId);
+
+		final Collection<Comment> comments = report.getComments();
+
+		res = new ModelAndView("comment/list");
+
+		res.addObject("comments", comments);
+
+		final String banner = this.configurationParametersService.getBanner();
+		res.addObject("banner", banner);
+
+		final String object = "report";
+		res.addObject("object", object);
+		res.addObject("reportId", reportId);
+
+		return res;
+	}
 
 	//Creation --------------------------------------------------------
 

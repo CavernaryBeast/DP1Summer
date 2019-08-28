@@ -33,3 +33,32 @@
 	<jstl:out value="${comment-text}" />
 
 </jstl:forEach>
+<br />
+
+<jstl:choose>
+	<jstl:when test="${object eq 'report'}">
+		<acme:button url="comment/reviewer/create.do?reportId=${reportId}"
+			code="report.addComment" />
+
+		<acme:button url="report/reviewer/display.do?reportId=${reportId}"
+			code="report.display" />
+	</jstl:when>
+
+	<jstl:when test="${object eq 'conference'}">
+		<acme:button
+			url="comment/createToConference.do?conferenceId=${conferenceId}"
+			code="conference.addComment" />
+
+		<acme:button url="conference/show.do?conferenceId=${conferenceId}"
+			code="conference.show" />
+	</jstl:when>
+
+	<jstl:when test="${object eq 'activity'}">
+		<acme:button
+			url="comment/createToActivity.do?activityId=${activityId}"
+			code="activity.addComment" />
+
+		<acme:button url="activity/show.do?activityId=${activityId}"
+			code="activity.show" />
+	</jstl:when>
+</jstl:choose>

@@ -14,9 +14,11 @@
 
 	<!-- CONFIGURATION PARAMETERS -->
 
-	<bean id="configurationParameters" class="domain.ConfigurationParameters">
+	<bean id="configurationParameters"
+		class="domain.ConfigurationParameters">
 		<property name="sysName" value="Acme Conference" />
-		<property name="banner" value="https://i.ibb.co/GVpZCtM/acme-conference.png" />
+		<property name="banner"
+			value="https://i.ibb.co/GVpZCtM/acme-conference.png" />
 		<property name="message"
 			value="Welcome to Acme Conference! Your scientific event manager" />
 		<property name="messageEs"
@@ -88,7 +90,8 @@
 
 	<bean id="userAccount1" class="security.UserAccount">
 		<property name="username" value="admin" />
-		<property name="password" value="21232f297a57a5a743894a0e4a801fc3" />
+		<property name="password"
+			value="21232f297a57a5a743894a0e4a801fc3" />
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
@@ -106,7 +109,8 @@
 
 	<bean id="userAccount2" class="security.UserAccount">
 		<property name="username" value="author1" />
-		<property name="password" value="b312ba4ffd5245fa2a1ab819ec0d0347" />
+		<property name="password"
+			value="b312ba4ffd5245fa2a1ab819ec0d0347" />
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
@@ -118,7 +122,8 @@
 
 	<bean id="userAccount3" class="security.UserAccount">
 		<property name="username" value="author2" />
-		<property name="password" value="9bd97baef2b853ec00cc3cffd269f679" />
+		<property name="password"
+			value="9bd97baef2b853ec00cc3cffd269f679" />
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
@@ -130,7 +135,8 @@
 
 	<bean id="userAccount4" class="security.UserAccount">
 		<property name="username" value="author3" />
-		<property name="password" value="c59a474d5ade296a15ebc40d6c4e8e11" />
+		<property name="password"
+			value="c59a474d5ade296a15ebc40d6c4e8e11" />
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
@@ -142,7 +148,8 @@
 
 	<bean id="userAccount5" class="security.UserAccount">
 		<property name="username" value="author4" />
-		<property name="password" value="9c479f8cda01e6c46195dd03adc2b9a1" />
+		<property name="password"
+			value="9c479f8cda01e6c46195dd03adc2b9a1" />
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
@@ -160,7 +167,8 @@
 
 	<bean id="userAccount6" class="security.UserAccount">
 		<property name="username" value="reviewer1" />
-		<property name="password" value="6ce19528a40dde9521d97cf7ba264eca" />
+		<property name="password"
+			value="6ce19528a40dde9521d97cf7ba264eca" />
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
@@ -172,7 +180,8 @@
 
 	<bean id="userAccount7" class="security.UserAccount">
 		<property name="username" value="reviewer2" />
-		<property name="password" value="2693b57f0f59df94caacefb811e99851" />
+		<property name="password"
+			value="2693b57f0f59df94caacefb811e99851" />
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
@@ -185,7 +194,8 @@
 
 	<bean id="userAccount8" class="security.UserAccount">
 		<property name="username" value="reviewer3" />
-		<property name="password" value="315d31e7c8f3a136610aafa220d689be" />
+		<property name="password"
+			value="315d31e7c8f3a136610aafa220d689be" />
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
@@ -198,7 +208,8 @@
 
 	<bean id="userAccount9" class="security.UserAccount">
 		<property name="username" value="reviewer4" />
-		<property name="password" value="5293e8663cbb7c157ff83eeae25177d3" />
+		<property name="password"
+			value="5293e8663cbb7c157ff83eeae25177d3" />
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
@@ -555,12 +566,13 @@
 
 
 	<!-- CONFERENCES -->
-		<bean id="conference1" class="domain.Conference">
+	<bean id="conference1" class="domain.Conference">
 		<property name="title" value="Conference1's title" />
 		<property name="acronym" value="Conference1's acronym" />
 		<property name="venue" value="Conference1's venue" />
 		<property name="submissionDeadline" value="2019/10/01 21:00" />
-		<property name="notificationDeadline" value="2019/10/02 21:00" />
+		<property name="notificationDeadline"
+			value="2019/10/02 21:00" />
 		<property name="cameraReadyDeadline" value="2019/10/03 21:00" />
 		<property name="startDate" value="2019/10/10 12:00" />
 		<property name="endDate" value="2019/10/20 21:00" />
@@ -596,7 +608,8 @@
 		<property name="acronym" value="Conference2's acronym" />
 		<property name="venue" value="Conference2's venue" />
 		<property name="submissionDeadline" value="2019/10/01 21:00" />
-		<property name="notificationDeadline" value="2019/10/02 21:00" />
+		<property name="notificationDeadline"
+			value="2019/10/02 21:00" />
 		<property name="cameraReadyDeadline" value="2019/10/03 21:00" />
 		<property name="startDate" value="2019/10/10 12:00" />
 		<property name="endDate" value="2019/10/20 21:00" />
@@ -694,7 +707,8 @@
 			</list>
 		</property>
 		<property name="summary" value="Paper1's summary" />
-		<property name="document" value="http://google.com/paperdoc1.html" />
+		<property name="document"
+			value="http://google.com/paperdoc1.html" />
 		<property name="cameraReady" value="false" />
 	</bean>
 
@@ -707,7 +721,8 @@
 			</list>
 		</property>
 		<property name="summary" value="Paper2's summary" />
-		<property name="document" value="http://google.com/paperdoc2.html" />
+		<property name="document"
+			value="http://google.com/paperdoc2.html" />
 		<property name="cameraReady" value="false" />
 	</bean>
 
@@ -720,7 +735,8 @@
 			</list>
 		</property>
 		<property name="summary" value="Paper3's summary" />
-		<property name="document" value="http://google.com/paperdoc3.html" />
+		<property name="document"
+			value="http://google.com/paperdoc3.html" />
 		<property name="cameraReady" value="false" />
 	</bean>
 
@@ -733,7 +749,8 @@
 			</list>
 		</property>
 		<property name="summary" value="Paper4's summary" />
-		<property name="document" value="http://google.com/paperdoc4.html" />
+		<property name="document"
+			value="http://google.com/paperdoc4.html" />
 		<property name="cameraReady" value="false" />
 	</bean>
 	<!-- PAPERS FINISHED -->
@@ -1009,7 +1026,261 @@
 
 	<!-- ##################################################################################################### -->
 
+	<!-- B REQUIREMENTS -->
 
+	<!-- CATEGORIES -->
+
+	<bean id="category1" class="domain.Category">
+		<property name="name" value="CONFERENCE" />
+		<property name="nameEs" value="CONFERENCIA" />
+		<property name="father">
+			<null></null>
+		</property>
+		<property name="conferences">
+			<list>
+
+			</list>
+		</property>
+	</bean>
+
+	<bean id="category2" class="domain.Category">
+		<property name="name" value="Computer Science" />
+		<property name="nameEs" value="Ciencia computacional" />
+		<property name="father">
+			<ref bean="category1" />
+		</property>
+		<property name="conferences">
+			<list>
+
+			</list>
+		</property>
+	</bean>
+
+	<bean id="category3" class="domain.Category">
+		<property name="name" value="Artificial Intelligence" />
+		<property name="nameEs" value="Inteligencia Artificial" />
+		<property name="father">
+			<ref bean="category2" />
+		</property>
+		<property name="conferences">
+			<list>
+
+			</list>
+		</property>
+	</bean>
+
+	<bean id="category4" class="domain.Category">
+		<property name="name" value="Deep Learning" />
+		<property name="nameEs" value="Aprendizaje Profundo" />
+		<property name="father">
+			<ref bean="category3" />
+		</property>
+		<property name="conferences">
+			<list>
+
+			</list>
+		</property>
+	</bean>
+
+	<bean id="category5" class="domain.Category">
+		<property name="name" value="Instance-based learning" />
+		<property name="nameEs"
+			value="Aprendizaje basado en instancias" />
+		<property name="father">
+			<ref bean="category3" />
+		</property>
+		<property name="conferences">
+			<list>
+
+			</list>
+		</property>
+	</bean>
+
+	<bean id="category6" class="domain.Category">
+		<property name="name" value="Regression" />
+		<property name="nameEs" value="Regresión" />
+		<property name="father">
+			<ref bean="category3" />
+		</property>
+		<property name="conferences">
+			<list>
+
+			</list>
+		</property>
+	</bean>
+
+	<bean id="category7" class="domain.Category">
+		<property name="name" value="Software Engineering" />
+		<property name="nameEs" value="Ingeniería del Software" />
+		<property name="father">
+			<ref bean="category1" />
+		</property>
+		<property name="conferences">
+			<list>
+
+			</list>
+		</property>
+	</bean>
+
+	<bean id="category8" class="domain.Category">
+		<property name="name" value="Big Data" />
+		<property name="nameEs" value="Macrodatos" />
+		<property name="father">
+			<ref bean="category7" />
+		</property>
+		<property name="conferences">
+			<list>
+
+			</list>
+		</property>
+	</bean>
+
+	<bean id="category9" class="domain.Category">
+		<property name="name" value="Big Processing" />
+		<property name="nameEs" value="Macroprocesamiento" />
+		<property name="father">
+			<ref bean="category7" />
+		</property>
+		<property name="conferences">
+			<list>
+
+			</list>
+		</property>
+	</bean>
+
+	<bean id="category10" class="domain.Category">
+		<property name="name" value="Methods" />
+		<property name="nameEs" value="Métodos" />
+		<property name="father">
+			<ref bean="category7" />
+		</property>
+		<property name="conferences">
+			<list>
+
+			</list>
+		</property>
+	</bean>
+
+	<bean id="category11" class="domain.Category">
+		<property name="name" value="Tools" />
+		<property name="nameEs" value="Herramientas" />
+		<property name="father">
+			<ref bean="category7" />
+		</property>
+		<property name="conferences">
+			<list>
+
+			</list>
+		</property>
+	</bean>
+
+	<bean id="category12" class="domain.Category">
+		<property name="name" value="Physics" />
+		<property name="nameEs" value="Física" />
+		<property name="father">
+			<ref bean="category1" />
+		</property>
+		<property name="conferences">
+			<list>
+
+			</list>
+		</property>
+	</bean>
+
+	<bean id="category13" class="domain.Category">
+		<property name="name" value="Cinematic" />
+		<property name="nameEs" value="Cinemática" />
+		<property name="father">
+			<ref bean="category12" />
+		</property>
+		<property name="conferences">
+			<list>
+
+			</list>
+		</property>
+	</bean>
+
+	<bean id="category14" class="domain.Category">
+		<property name="name" value="Electricity" />
+		<property name="nameEs" value="Electricidad" />
+		<property name="father">
+			<ref bean="category12" />
+		</property>
+		<property name="conferences">
+			<list>
+
+			</list>
+		</property>
+	</bean>
+
+	<bean id="category15" class="domain.Category">
+		<property name="name" value="Electronics" />
+		<property name="nameEs" value="Electrónica" />
+		<property name="father">
+			<ref bean="category12" />
+		</property>
+		<property name="conferences">
+			<list>
+
+			</list>
+		</property>
+	</bean>
+
+	<bean id="category16" class="domain.Category">
+		<property name="name" value="Biology" />
+		<property name="nameEs" value="Biología" />
+		<property name="father">
+			<ref bean="category1" />
+		</property>
+		<property name="conferences">
+			<list>
+
+			</list>
+		</property>
+	</bean>
+
+	<bean id="category17" class="domain.Category">
+		<property name="name" value="Animals" />
+		<property name="nameEs" value="Animales" />
+		<property name="father">
+			<ref bean="category16" />
+		</property>
+		<property name="conferences">
+			<list>
+
+			</list>
+		</property>
+	</bean>
+
+	<bean id="category18" class="domain.Category">
+		<property name="name" value="Plants" />
+		<property name="nameEs" value="Plantas" />
+		<property name="father">
+			<ref bean="category16" />
+		</property>
+		<property name="conferences">
+			<list>
+
+			</list>
+		</property>
+	</bean>
+
+	<bean id="category19" class="domain.Category">
+		<property name="name" value="Fungi" />
+		<property name="nameEs" value="Hongos" />
+		<property name="father">
+			<ref bean="category16" />
+		</property>
+		<property name="conferences">
+			<list>
+
+			</list>
+		</property>
+	</bean>
+
+	<!-- CATEGORIES FINISHED -->
+
+	<!-- ##################################################################################################### -->
 
 	<!-- Other domain beans come here -->
 
