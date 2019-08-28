@@ -198,6 +198,20 @@ public class ConferenceService {
 		return result;
 	}
 
+	public Collection<Conference> getConferencesStartDateNotElapsed() {
+		Collection<Conference> result;
+		result = this.conferenceRepository.getConferencesStartDateNotElapsed();
+		Assert.notNull(result);
+		return result;
+	}
+
+	public Collection<Conference> getConferencesStartDateNotElapsed2() {
+		Collection<Conference> result;
+		result = this.conferenceRepository.getConferencesStartDateNotElapsed();
+		Assert.notNull(result);
+		return result;
+	}
+
 	public Collection<Conference> getConferencesWithUnderReviewSubmissions() {
 		Collection<Conference> result;
 		result = this.conferenceRepository.getConferencesWithUnderReviewSubmissions();
