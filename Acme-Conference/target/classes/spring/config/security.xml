@@ -65,6 +65,8 @@
 
 		<security:intercept-url pattern="/report/reviewer/**"
 			access="hasRole('REVIEWER')" />
+			<security:intercept-url pattern="/conference/list.do" access="permitAll" />
+			<security:intercept-url pattern="/conference/listFilter.do" access="permitAll" />
 			
 						<security:intercept-url pattern="/conference/administrator/**" access="hasRole('ADMINISTRATOR')" />
 						<security:intercept-url pattern="/activity/administrator/**" access="hasRole('ADMINISTRATOR')" />
@@ -98,11 +100,6 @@
 
 		<!-- <security:intercept-url -->
 		<!-- pattern="/actor/edit.do" access="isAuthenticated()" /> -->
-
-		<security:intercept-url pattern="/conference/list.do"
-			access="permitAll" />
-		<security:intercept-url pattern="/conference/listFilter.do"
-			access="permitAll" />
 
 		<security:intercept-url pattern="/message/**"
 			access="isAuthenticated()" />

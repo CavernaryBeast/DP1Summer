@@ -26,12 +26,12 @@ import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
+import repositories.SubmissionRepository;
 import domain.Author;
 import domain.Conference;
 import domain.Paper;
 import domain.Reviewer;
 import domain.Submission;
-import repositories.SubmissionRepository;
 
 @Transactional
 @Service
@@ -54,9 +54,6 @@ public class SubmissionService {
 
 	@Autowired
 	private ConferenceService		conferenceService;
-
-	@Autowired
-	private ReviewerService			reviewerService;
 
 	@Autowired
 	private Validator				validator;
@@ -244,8 +241,6 @@ public class SubmissionService {
 		return res;
 	}
 
-
-
 	public Collection<Submission> findAcceptedSubmissionsFromConference(final int conferenceId) {
 		Assert.isTrue(conferenceId != 0, "ConferenceId es 0");
 		Assert.notNull(conferenceId, "ConferenceId es nulo");
@@ -302,11 +297,11 @@ public class SubmissionService {
 
 		final List<Entry<Reviewer, Integer>> matchesSorted = new ArrayList<>(SubmissionService.sortByValue(matchesPerActor).entrySet());
 		System.out.println(matchesSorted);
-		final int cantidadPorAï¿½adir = 3 - submission.getReviewers().size();
+		final int cantidadPorAñadir = 3 - submission.getReviewers().size();
 
-		if (cantidadPorAï¿½adir > 0)
-			if (matchesSorted.size() > cantidadPorAï¿½adir)
-				for (int i = 0; i < cantidadPorAï¿½adir; i++) {
+		if (cantidadPorAñadir > 0)
+			if (matchesSorted.size() > cantidadPorAñadir)
+				for (int i = 0; i < cantidadPorAñadir; i++) {
 					final Reviewer r = matchesSorted.get(i).getKey();
 					submission.getReviewers().add(r);
 				}
@@ -315,11 +310,10 @@ public class SubmissionService {
 					final Reviewer r = matchesSorted.get(i).getKey();
 					submission.getReviewers().add(r);
 				}
-		Assert.isTrue(submission.getReviewers().size() <= 3, "Mï¿½ximo 3 tras el proceso");
+		Assert.isTrue(submission.getReviewers().size() <= 3, "Máximo 3 tras el proceso");
 		this.save2(submission);
 		return submission;
 	}
-
 	private Pattern patternKeywords(final Reviewer reviewer) {
 		final Collection<String> keywords = reviewer.getExpertise();
 		String pattern = "";

@@ -12,10 +12,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import domain.Comment;
+import services.ActivityService;
 import services.CommentService;
 import services.ConferenceService;
 import services.ConfigurationParametersService;
+import domain.Comment;
 
 @Controller
 @RequestMapping("/comment")
@@ -32,6 +33,7 @@ public class CommentController extends AbstractController {
 
 	@Autowired
 	private ActivityService					activityService;
+
 
 	//	//	//Listing comments of a Conference--------------------------------------------------------
 	//
@@ -74,7 +76,6 @@ public class CommentController extends AbstractController {
 	//
 	//		return res;
 	//	}
-
 
 	//Creation to Conference--------------------------------------------------------
 
