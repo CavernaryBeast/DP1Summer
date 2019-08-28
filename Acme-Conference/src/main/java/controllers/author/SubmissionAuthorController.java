@@ -99,7 +99,9 @@ public class SubmissionAuthorController extends AbstractController {
 
 		ModelAndView res;
 		Submission saved;
+		System.out.println("reviewers en controller: " + submission.getReviewers());
 		submission = this.submissionService.reconstruct(submission, binding);
+		System.out.println("reviewers en tras reconstruct: " + submission.getReviewers());
 		if (binding.hasErrors()) {
 			System.out.println("Field: " + binding.getFieldError().getField());
 			System.out.println(binding.getGlobalErrorCount());

@@ -10,12 +10,12 @@ import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
-import domain.Reviewer;
 import repositories.ReviewerRepository;
 import security.Authority;
 import security.LoginService;
 import security.UserAccount;
 import security.UserAccountService;
+import domain.Reviewer;
 
 @Service
 @Transactional
@@ -29,6 +29,9 @@ public class ReviewerService {
 
 	@Autowired
 	private UserAccountService				userAccountService;
+
+	@Autowired
+	private SubmissionService				submissionService;
 
 	@Autowired
 	private ConfigurationParametersService	configurationParametersService;
@@ -129,6 +132,16 @@ public class ReviewerService {
 		Assert.notNull(res);
 
 		return res;
+	}
+
+	public Collection<Reviewer> selectAvailableAuthorsToAssingToSubmission(final int submissionId) {
+		Assert.isTrue(submissionId != 0, "submissionId es 0");
+		Assert.notNull(submissionId, "submissionId es nulo");
+		Assert.isTrue(this.submissionService.exist(submissionId), "Existe submissionId");
+		Collection<Reviewer> result;
+		result = this.reviewerRepository.selectAvailableAuthorsToAssingToSubmission(submissionId);
+		Assert.notNull(result, "reviewers no nulo");
+		return result;
 	}
 
 }

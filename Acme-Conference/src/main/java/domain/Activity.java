@@ -9,7 +9,6 @@ import javax.persistence.AccessType;
 import javax.persistence.CascadeType;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
@@ -21,7 +20,6 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.NotBlank;
-import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
@@ -36,11 +34,11 @@ public class Activity extends DomainEntity {
 	private String				summary;
 	private Collection<String>	attachments;
 	private String				type;
+	private Collection<String>	speakers;
 
 	//Atributos de asociación
 	private Paper				paper;
 	private Collection<Section>	sections;
-	private Collection<Author>	speakers;
 
 
 	//Getters and setters
@@ -134,13 +132,13 @@ public class Activity extends DomainEntity {
 		this.sections = sections;
 	}
 
-	@NotEmpty
-	@ManyToMany
-	public Collection<Author> getSpeakers() {
+	@NotNull
+	@ElementCollection
+	public Collection<String> getSpeakers() {
 		return this.speakers;
 	}
 
-	public void setSpeakers(final Collection<Author> speakers) {
+	public void setSpeakers(final Collection<String> speakers) {
 		this.speakers = speakers;
 	}
 

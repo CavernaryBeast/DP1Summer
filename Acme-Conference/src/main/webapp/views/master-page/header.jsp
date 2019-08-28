@@ -25,7 +25,8 @@
 			<li><a class="fNiv"><spring:message	code="master.page.administrator" /></a>
 				<ul>
 					<li class="arrow"></li>
-				<li><a href="conference/administrator/list.do"><spring:message code="master.page.admin.conferences" /></a></li>				
+				<li><a href="conference/administrator/list.do"><spring:message code="master.page.admin.conferences" /></a></li>	
+				<li><a href="dashboard/administrator/show.do"><spring:message code="master.page.administrator.dashboard" /></a></li>				
 				</ul>
 			</li>
 		</security:authorize>
@@ -34,7 +35,8 @@
 			<li><a class="fNiv"><spring:message	code="master.page.author" /></a>
 				<ul>
 					<li class="arrow"></li>
-					<li><a href="submission/author/list.do"><spring:message code="master.page.author.submissions" /></a></li>					
+					<li><a href="submission/author/list.do"><spring:message code="master.page.author.submissions" /></a></li>				
+					<li><a href="registration/author/list.do"><spring:message code="master.page.author.registrations" /></a></li>		
 				</ul>
 			</li>
 		</security:authorize>

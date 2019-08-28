@@ -93,6 +93,14 @@ public class ConfigurationParametersService {
 		return res;
 	}
 
+	public Collection<String> getCreditCardMakes2() {
+
+		final Collection<String> res = this.configurationParametersRepository.getCreditCardMakes();
+		Assert.notEmpty(res);
+
+		return res;
+	}
+
 	public String checkPhoneNumber(String phoneNumber) {
 
 		if (!phoneNumber.startsWith("+") && phoneNumber.length() > 4)
