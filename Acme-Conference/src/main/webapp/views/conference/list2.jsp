@@ -50,10 +50,15 @@
 <display:column property="isFinal" titleKey="conference.isFinal" />	
 	<security:authorize access="hasRole('ADMINISTRATOR')">
 		<display:column titleKey="conference.edit">
-		<jstl:if test="${ row.isFinal eq false}">
+		<jstl:choose>
+		<jstl:when test="${ row.isFinal eq false}">
 			<a href="conference/administrator/edit.do?conferenceId=${row.id}"><spring:message
 					code="conference.edit" /></a>
-					</jstl:if>
+		</jstl:when>
+		<jstl:otherwise>
+		<spring:message code="conference.cantEditFinal" />
+		</jstl:otherwise>
+		</jstl:choose>			
 		</display:column>
 
 		<display:column titleKey="conference.submission.update">

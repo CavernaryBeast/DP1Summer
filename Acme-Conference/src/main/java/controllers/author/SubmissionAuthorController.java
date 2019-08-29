@@ -65,15 +65,37 @@ public class SubmissionAuthorController extends AbstractController {
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public ModelAndView create() {
 
-		ModelAndView res;
-		final Submission submission = this.submissionService.create();
+		ModelAndView result;
 
-		res = this.createEditModelAndView(submission);
+		try {
+			final Submission submission = this.submissionService.create();
+			result = this.createEditModelAndView(submission);
+			final String lang = LocaleContextHolder.getLocale().getLanguage();
+			result.addObject("lang", lang);
+		} catch (final Throwable oops) {
+			oops.printStackTrace();
+			if (oops.getMessage().equals("It must be conferences in final mode to create a submission"))
+				result = this.ListModelAndView("submission.error.noConferences");
+			else
+				result = this.ListModelAndView();
+		}
 
-		final String lang = LocaleContextHolder.getLocale().getLanguage();
-		res.addObject("lang", lang);
+		return result;
+	}
 
-		return res;
+	protected ModelAndView ListModelAndView() {
+		ModelAndView result;
+
+		result = this.ListModelAndView(null);
+
+		return result;
+	}
+
+	protected ModelAndView ListModelAndView(final String messageCode) {
+		ModelAndView result;
+		result = this.list();
+		result.addObject("message", messageCode);
+		return result;
 	}
 
 	//Edition --------------------------------------------------------
@@ -115,7 +137,7 @@ public class SubmissionAuthorController extends AbstractController {
 				submissionsOfConference.add(submission);
 				conference.setSubmissions(submissionsOfConference);
 				saved = this.submissionService.save(submission);
-				this.conferenceService.save(conference);
+				this.conferenceService.save2(conference);
 				res = new ModelAndView("redirect:/submission/author/list.do");
 
 			} catch (final Throwable oops) {

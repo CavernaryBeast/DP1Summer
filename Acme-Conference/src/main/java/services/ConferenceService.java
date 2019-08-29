@@ -76,6 +76,19 @@ public class ConferenceService {
 		return res;
 	}
 
+	public Conference findOneEditable(final int id) {
+		//TODO: Probablemente haya que diferenciar los casos en funcion del actor, en función de la fecha que está por cumplirse.
+		this.administratorService.findByPrincipal();
+		Assert.isTrue(id != 0);
+		Assert.notNull(id);
+		Assert.isTrue(this.exist(id));
+		final Conference res = this.conferenceRepository.findOne(id);
+		Assert.notNull(res);
+		Assert.isTrue(!(res.getIsFinal()), "The conference in database before saving must not be in final mode in order to modify it");
+
+		return res;
+	}
+
 	public Conference findOne2(final int id) {
 		//usado para el submissionService, requiere que el que esté logueado no sea administrator
 		Assert.isTrue(id != 0);
@@ -103,6 +116,10 @@ public class ConferenceService {
 		Assert.isTrue(startDate.after(now) && startDate.before(endDate), "StartDate");
 		Assert.isTrue(endDate.after(now), "EndDate");
 
+		if (conference.getId() != 0) {
+			final Conference original = this.findOne(conference.getId());
+			Assert.isTrue(!(original.getIsFinal()), "The conference in database before saving must not be in final mode in order to modify it");
+		}
 		saved = this.conferenceRepository.save(conference);
 
 		return saved;
@@ -253,7 +270,7 @@ public class ConferenceService {
 			conference.setSubmissions(original.getSubmissions());
 			conference.setRegistrations(original.getRegistrations());
 			conference.setAdministrator(original.getAdministrator());
-			Assert.isTrue(!(original.getIsFinal()), "The conference in database before saving must not be in final mode in order to modify it");
+
 		}
 		this.validator.validate(conference, binding);
 		return conference;

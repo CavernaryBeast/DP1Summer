@@ -76,6 +76,7 @@ public class ConferenceAdminController extends AbstractController {
 		result.addObject("actionFilter", "conference/administrator/adminFilter.do");
 		result.addObject("administratorfilterConferenceForm", administratorfilterConferenceForm);
 		return result;
+
 	}
 
 	@RequestMapping(value = "/adminFilter", method = RequestMethod.POST, params = "filter")
@@ -112,13 +113,35 @@ public class ConferenceAdminController extends AbstractController {
 
 		ModelAndView result;
 
-		Conference conference;
+		try {
+			Conference conference;
+			conference = this.conferenceService.findOneEditable(conferenceId);
+			result = this.createEditModelAndView(conference);
 
-		conference = this.conferenceService.findOne(conferenceId);
-		result = this.createEditModelAndView(conference);
+		} catch (final Throwable oops) {
+			oops.printStackTrace();
+			if (oops.getMessage().equals("The conference in database before saving must not be in final mode in order to modify it"))
+				result = this.ListModelAndView("conference.form.error.alreadyFinalMode");
+			else
+				result = this.ListModelAndView();
+		}
 
 		return result;
 
+	}
+	protected ModelAndView ListModelAndView() {
+		ModelAndView result;
+
+		result = this.ListModelAndView(null);
+
+		return result;
+	}
+
+	protected ModelAndView ListModelAndView(final String messageCode) {
+		ModelAndView result;
+		result = this.list();
+		result.addObject("message", messageCode);
+		return result;
 	}
 
 	// Save
@@ -149,6 +172,8 @@ public class ConferenceAdminController extends AbstractController {
 					result = this.createEditModelAndView(conference, "conference.form.error.startDate");
 				else if (oops.getMessage().equals("EndDate"))
 					result = this.createEditModelAndView(conference, "conference.form.error.endDate");
+				else if (oops.getMessage().equals("The conference in database before saving must not be in final mode in order to modify it"))
+					result = this.createEditModelAndView(conference, "conference.form.error.alreadyFinalMode");
 				else
 					result = this.createEditModelAndView(conference, "conference.commit.error");
 			}

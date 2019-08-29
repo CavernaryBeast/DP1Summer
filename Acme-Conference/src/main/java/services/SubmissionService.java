@@ -14,6 +14,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -79,9 +80,13 @@ public class SubmissionService {
 
 		res.setTicker(ticker);
 		final Paper paper = new Paper();
+		paper.setAuthors(new HashSet<Author>());
 		res.setPaper(paper);
 
 		res.setReviewers(null);
+
+		final Collection<Conference> conferences = this.conferenceService.getConferencesSubmissionDeadlineNotElapsed();
+		Assert.notEmpty(conferences, "It must be conferences in final mode to create a submission");
 
 		return res;
 	}
@@ -116,16 +121,22 @@ public class SubmissionService {
 	public Submission save(final Submission submission) {
 		Assert.notNull(submission);
 		Submission saved;
+		Paper savedP;
 		Assert.isTrue(submission.getId() == 0);//Only create available,not edit
 		final Author principal = this.authorService.findByPrincipal();
 		Assert.isTrue(!submission.getPaper().isCameraReady(), "The submission must include a paper to review only, not a camera-ready version");
 		final Paper paper = submission.getPaper();
 		paper.setCameraReady(false);
-		final Collection<Author> autoresSecundarios = paper.getAuthors();
+		final Set<Author> autoresSecundarios = new HashSet<>();
+		for (final Author a : paper.getAuthors())
+			if (a != null)
+				autoresSecundarios.add(a);
+
 		autoresSecundarios.add(principal);
 		paper.setAuthors(autoresSecundarios);
-		this.paperService.save(paper);
-		submission.setPaper(paper);
+		savedP = this.paperService.save(paper);
+		submission.setAuthor(principal);
+		submission.setPaper(savedP);
 		submission.setNotified(false);
 
 		saved = this.submissionRepository.saveAndFlush(submission);
