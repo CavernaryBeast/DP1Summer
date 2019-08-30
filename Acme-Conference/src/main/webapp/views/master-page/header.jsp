@@ -2,9 +2,9 @@
  * header.jsp
  *
  * Copyright (C) 2019 Universidad de Sevilla
- * 
- * The use of this project is hereby constrained to the conditions of the 
- * TDG Licence, a copy of which you may download from 
+ *
+ * The use of this project is hereby constrained to the conditions of the
+ * TDG Licence, a copy of which you may download from
  * http://www.tdg-seville.info/License.html
  --%>
 
@@ -32,6 +32,10 @@
 								code="master.page.admin.conferences" /></a></li>
 					<li><a href="dashboard/administrator/show.do"><spring:message
 								code="master.page.administrator.dashboard" /></a></li>
+					<li><a href="configurationparameters/administrator/display.do"><spring:message
+								code="master.page.administrator.confParams" /></a></li>
+					<li><a href="topic/administrator/list.do"><spring:message
+								code="master.page.administrator.topics" /></a></li>
 				</ul></li>
 			<li><a class="fNiv"> <spring:message
 						code="master.page.adminMessage" />
@@ -134,4 +138,3 @@
 <div>
 	<a href="?language=en">en</a> | <a href="?language=es">es</a>
 </div>
-

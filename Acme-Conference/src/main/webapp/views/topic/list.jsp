@@ -24,6 +24,10 @@
 		<a href="topic/administrator/delete.do?topicId=${row.id}"><spring:message
 				code="topic.delete" /></a>
 	</display:column>
+	<display:column>
+		<a href="topic/administrator/display.do?topicId=${row.id}"><spring:message
+				code="topic.display" /></a>
+	</display:column>
 </display:table>
 
 <acme:button url="topic/administrator/create.do" code="topic.create" />
