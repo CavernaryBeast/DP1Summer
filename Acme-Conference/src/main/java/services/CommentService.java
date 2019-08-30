@@ -74,6 +74,8 @@ public class CommentService {
 
 		final Report report = this.reportService.findOne(reportId);
 
+		Assert.isTrue(comment.getAuthor().equals(report.getReviewer()));
+
 		//Lets see if this work
 		saved = this.commentRepository.save(comment);
 		report.getComments().add(saved);

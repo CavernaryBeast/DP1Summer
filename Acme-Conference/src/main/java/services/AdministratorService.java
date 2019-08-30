@@ -22,13 +22,16 @@ import security.UserAccountService;
 public class AdministratorService {
 
 	@Autowired
-	private AdministratorRepository	administratorRepository;
+	private AdministratorRepository			administratorRepository;
 
 	@Autowired
-	private ActorService			actorService;
+	private ActorService					actorService;
 
 	@Autowired
-	private UserAccountService		userAccountService;
+	private UserAccountService				userAccountService;
+
+	@Autowired
+	private ConfigurationParametersService	configurationParametersService;
 
 
 	public Administrator create() {
@@ -77,6 +80,12 @@ public class AdministratorService {
 		encoder = new Md5PasswordEncoder();
 
 		admin.getUserAccount().setPassword(encoder.encodePassword(admin.getUserAccount().getPassword(), null));
+
+		if (admin.getPhoneNumber() != null) {
+
+			final String editedPhone = this.configurationParametersService.checkPhoneNumber(admin.getPhoneNumber());
+			admin.setPhoneNumber(editedPhone);
+		}
 
 		final Administrator saved = this.administratorRepository.save(admin);
 

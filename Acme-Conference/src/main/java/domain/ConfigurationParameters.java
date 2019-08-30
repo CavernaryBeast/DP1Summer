@@ -7,6 +7,7 @@ import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import javax.validation.Valid;
 import javax.validation.constraints.Pattern;
 
@@ -18,17 +19,17 @@ import org.hibernate.validator.constraints.NotEmpty;
 public class ConfigurationParameters extends DomainEntity {
 
 	//Atributos de clase
-	private String				sysName;
-	private String				banner;
-	private String				message;
-	private String				messageEs;
+	private String				sysName; //
+	private String				banner; //
+	private String				message; //
+	private String				messageEs; //
 	private String				countryCode;
-	private String				defaultCountry;
-	private Collection<String>	creditCardMakes;
+	private String				defaultCountry; //
+	private Collection<String>	creditCardMakes; //
 	private Collection<Topic>	topics;
 
-
 	//Atributos de asociación
+
 
 	//Getters and setters
 
@@ -102,6 +103,7 @@ public class ConfigurationParameters extends DomainEntity {
 	@Valid
 	@NotEmpty
 	@ElementCollection
+	@OneToMany()
 	public Collection<Topic> getTopics() {
 		return this.topics;
 	}
