@@ -39,6 +39,7 @@ public class Activity extends DomainEntity {
 	//Atributos de asociación
 	private Paper				paper;
 	private Collection<Section>	sections;
+	private Collection<Comment>	comments;
 
 
 	//Getters and setters
@@ -140,6 +141,18 @@ public class Activity extends DomainEntity {
 
 	public void setSpeakers(final Collection<String> speakers) {
 		this.speakers = speakers;
+	}
+
+	@Valid
+	@NotNull
+	@OneToMany(cascade = CascadeType.ALL)
+	@ElementCollection
+	public Collection<Comment> getComments() {
+		return this.comments;
+	}
+
+	public void setComments(final Collection<Comment> comments) {
+		this.comments = comments;
 	}
 
 }

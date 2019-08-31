@@ -134,4 +134,14 @@ public class CategoryService {
 			this.categoryRepository.delete(c);
 	}
 
+	public Collection<Double> findAvgMinMaxStddevConferencesPerCategory() {
+
+		final Collection<Double> res = this.categoryRepository.findAvgMinMaxStddevConferencesPerCategory();
+
+		Assert.notNull(res);
+		Assert.notEmpty(res);
+
+		return res;
+	}
+
 }

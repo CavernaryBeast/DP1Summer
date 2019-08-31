@@ -87,7 +87,7 @@ public class TopicAdministratorController extends AbstractController {
 
 	//Save --------------------------------------------------------
 
-	@RequestMapping(value = "edit", method = RequestMethod.POST, params = "save")
+	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
 	public ModelAndView save(@ModelAttribute("topic") @Valid final Topic topic, final BindingResult binding) {
 
 		ModelAndView res;
@@ -110,7 +110,7 @@ public class TopicAdministratorController extends AbstractController {
 
 	//Delete --------------------------------------------------------
 
-	@RequestMapping(value = "delete", method = RequestMethod.GET)
+	@RequestMapping(value = "/delete", method = RequestMethod.GET)
 	public ModelAndView delete(@RequestParam final int topicId) {
 
 		final ModelAndView res;
@@ -127,7 +127,7 @@ public class TopicAdministratorController extends AbstractController {
 
 	//Display --------------------------------------------------------
 
-	@RequestMapping(value = "display", method = RequestMethod.GET)
+	@RequestMapping(value = "/display", method = RequestMethod.GET)
 	public ModelAndView display(@RequestParam final int topicId) {
 
 		ModelAndView res;

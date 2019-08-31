@@ -42,6 +42,7 @@ public class Conference extends DomainEntity {
 	private Collection<Registration>	registrations;
 	private Collection<Submission>		submissions;
 	private Collection<Activity>		activities;
+	private Collection<Comment>			comments;
 
 
 	//Getters and setters
@@ -196,6 +197,18 @@ public class Conference extends DomainEntity {
 
 	public void setActivities(final Collection<Activity> activities) {
 		this.activities = activities;
+	}
+
+	@Valid
+	@NotNull
+	@OneToMany(cascade = CascadeType.ALL)
+	@ElementCollection
+	public Collection<Comment> getComments() {
+		return this.comments;
+	}
+
+	public void setComments(final Collection<Comment> comments) {
+		this.comments = comments;
 	}
 
 }

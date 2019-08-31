@@ -74,7 +74,7 @@ public class CreditCardAuthorController extends AbstractController {
 
 	//Edition --------------------------------------------------------
 
-	@RequestMapping(value = "edit", method = RequestMethod.GET)
+	@RequestMapping(value = "/edit", method = RequestMethod.GET)
 	public ModelAndView edit(@RequestParam final int creditcardId) {
 
 		final ModelAndView res;
@@ -90,7 +90,7 @@ public class CreditCardAuthorController extends AbstractController {
 
 	//Save --------------------------------------------------------
 
-	@RequestMapping(value = "edit", method = RequestMethod.POST, params = "save")
+	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
 	public ModelAndView save(@ModelAttribute("creditcard") @Valid final CreditCard creditCard, final BindingResult binding) {
 
 		ModelAndView res;
@@ -113,25 +113,29 @@ public class CreditCardAuthorController extends AbstractController {
 
 	//Delete --------------------------------------------------------
 
-	@RequestMapping(value = "edit", method = RequestMethod.POST, params = "delete")
-	public ModelAndView delete(final CreditCard creditCard, final BindingResult binding) {
+	@RequestMapping(value = "/edit", method = RequestMethod.GET)
+	public ModelAndView delete(@RequestParam final int creditcardId) {
 
 		ModelAndView res;
+		final CreditCard toDelete = this.creditCardService.findOne(creditcardId);
 
 		try {
-			this.creditCardService.delete(creditCard);
+			this.creditCardService.delete(toDelete);
 			res = new ModelAndView("redirect:list.do");
-			final String banner = this.configurationParametersService.getBanner();
-			res.addObject("banner", banner);
 		} catch (final Throwable oops) {
-			res = this.createEditModelAndView(creditCard, "creditcard.commit.error");
+			res = new ModelAndView("redirect:list.do");
+			final String error = "Cannot delete this message";
+			res.addObject("error", error);
 		}
+		final String banner = this.configurationParametersService.getBanner();
+		res.addObject("banner", banner);
+
 		return res;
 	}
 
 	//Display --------------------------------------------------------
 
-	@RequestMapping(value = "display", method = RequestMethod.GET)
+	@RequestMapping(value = "/display", method = RequestMethod.GET)
 	public ModelAndView display(@RequestParam final int creditcardId) {
 
 		ModelAndView res;

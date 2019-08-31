@@ -21,4 +21,7 @@ public interface CategoryRepository extends JpaRepository<Category, Integer> {
 	@Query("select c from Category c where c.father is null")
 	Category findRoot();
 
+	@Query("select min(c.conferences.size), max(c.conferences.size), avg(c.conferences.size), stddev(c.conferences.size) from Category c")
+	Collection<Double> findAvgMinMaxStddevConferencesPerCategory();
+
 }

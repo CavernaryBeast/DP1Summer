@@ -39,7 +39,7 @@ public class ConfigurationParametersAdmincontroller extends AbstractController {
 
 	}
 
-	@RequestMapping(value = "edit", method = RequestMethod.POST, params = "save")
+	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
 	public ModelAndView save(@ModelAttribute("confParams") @Valid final ConfigurationParameters confParams, final BindingResult binding) {
 
 		ModelAndView res;
@@ -64,7 +64,7 @@ public class ConfigurationParametersAdmincontroller extends AbstractController {
 
 	//Display --------------------------------------------------------
 
-	@RequestMapping(value = "display", method = RequestMethod.GET)
+	@RequestMapping(value = "/display", method = RequestMethod.GET)
 	public ModelAndView display() {
 
 		ModelAndView res;
