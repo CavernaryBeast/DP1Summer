@@ -30,10 +30,12 @@
 		<br />
 		<acme:textarea code="activity.speakers" path="speakers"/>
 		<br />
+		
+		<jstl:if test="${  presentation.paper eq null  }">
 		<acme:selectNotOptional items="${papers}" itemLabel="title"
 		code="activity.paper" path="paper" />
 			<br />
-
+		</jstl:if>
 		
 
 		

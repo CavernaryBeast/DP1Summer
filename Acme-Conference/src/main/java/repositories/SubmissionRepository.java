@@ -33,4 +33,10 @@ public interface SubmissionRepository extends JpaRepository<Submission, Integer>
 	@Query("select distinct s.paper from Conference c join c.submissions s where c.id = ?1 and s.paper.cameraReady = 1 and s.paper.id NOT IN (select a.paper.id from Activity a where a.type like 'PRESENTATION' and a.id IN (select a1.id from Conference c1 join c1.activities a1 where c1.id= ?1 ))")
 	Collection<Submission> findSubmissionsAcceptedWithPaperCameraReadyFromConference(int conferenceId);
 
+	@Query("select distinct s from Submission s where s.paper.id  = ?1")
+	Submission findSubmissionFromPaperId(int paperId);
+
+	@Query(" select distinct s from Conference c join c.submissions s where s.status like 'ACCEPTED' and c.cameraReadyDeadline > CURRENT_TIMESTAMP and s.paper.cameraReady = 0")
+	Collection<Submission> findSubmissionsWithEditablePapers();
+
 }

@@ -40,8 +40,27 @@ function showHideDiv(ele) {
 	<display:column titleKey="activity.show">
 				<a href="activity/administrator/show.do?activityId=${row.id}"><spring:message code = "activity.show"/></a>
 		</display:column>
-				<display:column titleKey="activity.delete">
-				<a href="activity/administrator/delete.do?activityId=${row.id}&conferenceId=${conference.id}"><spring:message code = "activity.delete"/></a>
+		
+		<display:column titleKey="activity.edit">
+		<jstl:choose>
+		<jstl:when test="${row.startMoment > now}">
+		<a href="activity/administrator/edit.do?activityId=${row.id}&conferenceId=${conference.id}"><spring:message code = "activity.edit"/></a>
+		</jstl:when>
+		<jstl:otherwise>
+		<spring:message code="activity.alreadyTakenPlace" />
+		</jstl:otherwise>
+		</jstl:choose>
+		</display:column>	
+		
+		<display:column titleKey="activity.delete">
+		<jstl:choose>
+		<jstl:when test="${row.startMoment > now}">
+		<a href="activity/administrator/delete.do?activityId=${row.id}&conferenceId=${conference.id}"><spring:message code = "activity.delete"/></a>
+		</jstl:when>
+		<jstl:otherwise>
+		<spring:message code="activity.alreadyTakenPlace" />
+		</jstl:otherwise>
+		</jstl:choose>
 		</display:column>	
 </display:table>
 </fieldset>
@@ -66,12 +85,31 @@ function showHideDiv(ele) {
 		<spring:message code="activity.cantAddSections" />
 		</jstl:otherwise>
 		</jstl:choose>
-		
-				
 		</display:column>	
 		
+		<display:column titleKey="activity.edit">
+		<jstl:choose>
+		<jstl:when test="${now < conference.startDate}">
+		<a href="activity/administrator/edit.do?activityId=${row.id}&conferenceId=${conference.id}"><spring:message code = "activity.edit"/></a>
+		</jstl:when>
+		<jstl:otherwise>
+		<spring:message code="activity.alreadyTakenPlace" />
+		</jstl:otherwise>
+		</jstl:choose>
+		</display:column>
+		
 		<display:column titleKey="activity.delete">
-				<a href="activity/administrator/delete.do?activityId=${row.id}&conferenceId=${conference.id}"><spring:message code = "activity.delete"/></a>
+		<jstl:choose>
+		<jstl:when test="${now < conference.startDate}">
+		<a href="activity/administrator/delete.do?activityId=${row.id}&conferenceId=${conference.id}"><spring:message code = "activity.delete"/></a>
+		</jstl:when>
+		<jstl:otherwise>
+		<spring:message code="activity.alreadyTakenPlace" />
+		</jstl:otherwise>
+		</jstl:choose>
+		
+		
+				
 		</display:column>	
 </display:table>
 </fieldset>
@@ -87,14 +125,32 @@ function showHideDiv(ele) {
 	<display:column titleKey="activity.show">
 				<a href="activity/administrator/show.do?activityId=${row.id}"><spring:message code = "activity.show"/></a>
 		</display:column>
-<display:column titleKey="activity.delete">
-				<a href="activity/administrator/delete.do?activityId=${row.id}&conferenceId=${conference.id}"><spring:message code = "activity.delete"/></a>
+		
+		<display:column titleKey="activity.edit">
+		<jstl:choose>
+		<jstl:when test="${row.startMoment > now}">
+		<a href="activity/administrator/edit.do?activityId=${row.id}&conferenceId=${conference.id}"><spring:message code = "activity.edit"/></a>
+		</jstl:when>
+		<jstl:otherwise>
+		<spring:message code="activity.alreadyTakenPlace" />
+		</jstl:otherwise>
+		</jstl:choose>
+		</display:column>
+		
+		<display:column titleKey="activity.delete">
+		<jstl:choose>
+		<jstl:when test="${row.startMoment > now}">
+		<a href="activity/administrator/delete.do?activityId=${row.id}&conferenceId=${conference.id}"><spring:message code = "activity.delete"/></a>
+		</jstl:when>
+		<jstl:otherwise>
+		<spring:message code="activity.alreadyTakenPlace" />
+		</jstl:otherwise>
+		</jstl:choose>
 </display:column>	
 </display:table>
 </fieldset>
 <jstl:choose>
 <jstl:when test="${now < conference.startDate}">
-
 <jstl:choose>
 <jstl:when test="${fn:contains(conferencesWithPosiblePapers, conference)}">
 <input type="button" 

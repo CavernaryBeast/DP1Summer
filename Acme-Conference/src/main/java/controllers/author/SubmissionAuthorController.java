@@ -51,10 +51,12 @@ public class SubmissionAuthorController extends AbstractController {
 
 		final Collection<Submission> submissions = this.submissionService.findOwn();
 		final Collection<Conference> conferences = this.conferenceService.getConferencesSubmissionDeadlineNotElapsed();
+		final Collection<Submission> submissionsWithEditablePapers = this.submissionService.findSubmissionsWithEditablePapers();
 		res = new ModelAndView("submission/list");
 
 		res.addObject("submissions", submissions);
 		res.addObject("conferences", conferences);
+		res.addObject("submissionsWithEditablePapers", submissionsWithEditablePapers);
 		res.addObject("requestURI", "submission/author/list.do");
 
 		return res;
@@ -166,12 +168,30 @@ public class SubmissionAuthorController extends AbstractController {
 
 	@RequestMapping(value = "editPaper", method = RequestMethod.GET)
 	public ModelAndView editPaper(@RequestParam final int submissionId) {
+		ModelAndView res;
+		try {
 
-		final ModelAndView res;
-		final Submission submission = this.submissionService.findOne(submissionId);
-		final Paper paper = this.paperService.findOne(submission.getPaper().getId());
+			final Submission submission = this.submissionService.findOne(submissionId);
+			final Paper paper = this.paperService.findOneToEdit(submission.getPaper().getId());
+			res = this.createEditModelAndViewPaper(paper);
+		} catch (final Throwable oops) {
+			oops.printStackTrace();
+			if (oops.getMessage().equals("Camera-Ready Deadline Elapsed"))
+				res = this.ListModelAndView("submission.editPaperError.cameraReadyDeadlineElapsed");
+			else if (oops.getMessage().equals("Corresponding Submission Not Accepted"))
+				res = this.ListModelAndView("submission.editPaperError.submissionNotAccepted");
+			else if (oops.getMessage().equals("Not one of the authors"))
+				res = this.ListModelAndView("submission.editPaperError.notPaperAuthor");
+			else if (oops.getMessage().equals("Paper already Cámera-Ready"))
+				res = this.ListModelAndView("submission.editPaperError.paperAlreadyCameraReady");
+			else if (oops.getMessage().equals("Not the author from submission"))
+				res = this.ListModelAndView("submission.editPaperError.NotSubmissionAuthor");
+			else if (oops.getMessage().equals("Submission Deadline No Elapsed"))
+				res = this.ListModelAndView("submission.editPaperError.submissionDeadlineNotElapsed");
+			else
+				res = this.ListModelAndView();
+		}
 
-		res = this.createEditModelAndViewPaper(paper);
 		return res;
 	}
 
@@ -200,21 +220,21 @@ public class SubmissionAuthorController extends AbstractController {
 	}
 
 	//Delete --------------------------------------------------------
-
-	@RequestMapping(value = "edit", method = RequestMethod.POST, params = "delete")
-	public ModelAndView delete(final Submission submission, final BindingResult binding) {
-
-		ModelAndView res;
-
-		try {
-			this.submissionService.delete(submission);
-			res = new ModelAndView("redirect:list.do");
-
-		} catch (final Throwable oops) {
-			res = this.createEditModelAndView(submission, "creditcard.commit.error");
-		}
-		return res;
-	}
+	//
+	//	@RequestMapping(value = "edit", method = RequestMethod.POST, params = "delete")
+	//	public ModelAndView delete(final Submission submission, final BindingResult binding) {
+	//
+	//		ModelAndView res;
+	//
+	//		try {
+	//			this.submissionService.delete(submission);
+	//			res = new ModelAndView("redirect:list.do");
+	//
+	//		} catch (final Throwable oops) {
+	//			res = this.createEditModelAndView(submission, "creditcard.commit.error");
+	//		}
+	//		return res;
+	//	}
 
 	//Ancillary methods --------------------------------------------------------
 
@@ -233,6 +253,17 @@ public class SubmissionAuthorController extends AbstractController {
 		final Collection<Author> authors = this.authorService.findAll();
 		final Author author = this.authorService.findByPrincipal();
 		authors.remove(author);
+		if (submission.getPaper().getAuthors() != null) {
+			boolean check = false;
+			for (final Author a : submission.getPaper().getAuthors())
+				if (a == null) {
+					check = true;
+					break;
+				}
+			if (check)
+				submission.getPaper().setAuthors(null);
+		}
+
 		final Collection<Conference> conferences = this.conferenceService.getConferencesSubmissionDeadlineNotElapsed();
 		res = new ModelAndView("submission/edit");
 		res.addObject("message", messageCode);

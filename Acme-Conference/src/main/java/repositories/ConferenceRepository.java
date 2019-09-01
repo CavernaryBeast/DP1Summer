@@ -58,6 +58,9 @@ public interface ConferenceRepository extends JpaRepository<Conference, Integer>
 	@Query("select distinct c from Conference c join c.activities a where a.id = ?1")
 	Conference getConferenceFromActivityId(int activityId);
 
+	@Query("select distinct c from Conference c join c.submissions s where s.paper.id  = ?1")
+	Conference getConferenceFromPaperId(int paperId);
+
 	@Query("select min(c.fee), max(c.fee), avg(c.fee), stddev(c.fee) from Conference c")
 	String getFeesPerConferenceStats();
 

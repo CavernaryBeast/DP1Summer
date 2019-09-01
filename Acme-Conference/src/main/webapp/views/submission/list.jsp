@@ -41,13 +41,17 @@
 		<display:column titleKey="submission.update">
 			<jstl:choose>
 				<jstl:when
-					test="${ row.status eq  checkStatus and  not row.paper.cameraReady}">
+					test="${ fn:contains(submissionsWithEditablePapers, row) and    row.status eq  checkStatus and  not row.paper.cameraReady}">
 					<a href="submission/author/editPaper.do?submissionId=${row.id}"><spring:message
 							code="submission.update" /></a>
 				</jstl:when>
 				<jstl:when
 					test="${ row.status eq  checkStatus and row.paper.cameraReady}">
 					<spring:message code="submission.paper.isCameraReady" />
+				</jstl:when>
+				<jstl:when
+					test="${ not fn:contains(submissionsWithEditablePapers, row) and    row.status eq  checkStatus and  not row.paper.cameraReady}">
+						<spring:message code="submission.editPaperError.cameraReadyDeadlineElapsed" />
 				</jstl:when>
 				<jstl:otherwise>
 					<spring:message code="submission.notUpdatePaper" />

@@ -53,7 +53,6 @@
 					code="conference.edit" /></a>
 					</jstl:if>
 		</display:column>
-
 	</security:authorize>
 
 </display:table>

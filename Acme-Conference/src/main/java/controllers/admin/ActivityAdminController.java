@@ -3,7 +3,6 @@ package controllers.admin;
 
 import java.util.Collection;
 import java.util.Date;
-import java.util.HashSet;
 
 import javax.validation.Valid;
 
@@ -72,32 +71,78 @@ public class ActivityAdminController extends AbstractController {
 
 		return res;
 	}
+
+	protected ModelAndView ListModelAndView(final int conferenceId) {
+		ModelAndView result;
+
+		result = this.ListModelAndView(conferenceId, null);
+
+		return result;
+	}
+
+	protected ModelAndView ListModelAndView(final int conferenceId, final String messageCode) {
+		ModelAndView result;
+		result = this.list(conferenceId);
+		result.addObject("message", messageCode);
+		return result;
+	}
+
 	//Creation --------------------------------------------------------
 
 	@RequestMapping(value = "/createPresentation", method = RequestMethod.GET)
 	public ModelAndView createPresentation(@RequestParam final int conferenceId) {
 
 		ModelAndView res;
-		final Activity presentation = this.activityService.createPresentation();
-		res = this.createEditModelAndView(presentation, conferenceId);
+
+		try {
+			final Activity presentation = this.activityService.createPresentation(conferenceId);
+			res = this.createEditModelAndView(presentation, conferenceId);
+		} catch (final Throwable oops) {
+			oops.printStackTrace();
+			if (oops.getMessage().equals("StartDate elapsed"))
+				res = this.ListModelAndView(conferenceId, "activity.cantAddActivitiesSorry");
+			else if (oops.getMessage().equals("Conference doesn't have available papers"))
+				res = this.ListModelAndView(conferenceId, "activity.error.noPapersAvailable");
+			else
+				res = this.ListModelAndView(conferenceId);
+		}
+
 		return res;
 	}
-
 	@RequestMapping(value = "/createTutorial", method = RequestMethod.GET)
 	public ModelAndView createTutorial(@RequestParam final int conferenceId) {
 
 		ModelAndView res;
-		final Activity tutotial = this.activityService.createTutorial();
-		res = this.createEditModelAndView(tutotial, conferenceId);
+
+		try {
+			final Activity tutotial = this.activityService.createTutorial(conferenceId);
+			res = this.createEditModelAndView(tutotial, conferenceId);
+		} catch (final Throwable oops) {
+			oops.printStackTrace();
+			if (oops.getMessage().equals("StartDate elapsed"))
+				res = this.ListModelAndView(conferenceId, "activity.cantAddActivitiesSorry");
+			else
+				res = this.ListModelAndView(conferenceId);
+		}
+
 		return res;
 	}
-
 	@RequestMapping(value = "/createPanel", method = RequestMethod.GET)
 	public ModelAndView createPanel(@RequestParam final int conferenceId) {
 
 		ModelAndView res;
-		final Activity panel = this.activityService.createPanel();
-		res = this.createEditModelAndView(panel, conferenceId);
+
+		try {
+			final Activity panel = this.activityService.createPanel(conferenceId);
+			res = this.createEditModelAndView(panel, conferenceId);
+		} catch (final Throwable oops) {
+			oops.printStackTrace();
+			if (oops.getMessage().equals("StartDate elapsed"))
+				res = this.ListModelAndView(conferenceId, "activity.cantAddActivitiesSorry");
+			else
+				res = this.ListModelAndView(conferenceId);
+		}
+
 		return res;
 	}
 
@@ -106,10 +151,18 @@ public class ActivityAdminController extends AbstractController {
 	@RequestMapping(value = "edit", method = RequestMethod.GET)
 	public ModelAndView edit(@RequestParam final int activityId, final int conferenceId) {
 
-		final ModelAndView res;
-		final Activity activity = this.activityService.findOne(activityId);
+		ModelAndView res;
 
-		res = this.createEditModelAndView(activity, conferenceId);
+		try {
+			final Activity activity = this.activityService.findOneEditable(activityId);
+			res = this.createEditModelAndView(activity, conferenceId);
+		} catch (final Throwable oops) {
+			oops.printStackTrace();
+			if (oops.getMessage().equals("StartDate elapsed"))
+				res = this.ListModelAndView(conferenceId, "activity.cantEditActivitiesSorry");
+			else
+				res = this.ListModelAndView(conferenceId);
+		}
 
 		return res;
 	}
@@ -126,21 +179,25 @@ public class ActivityAdminController extends AbstractController {
 			System.out.println("Field: " + binding.getFieldError().getField());
 			System.out.println(binding.getGlobalErrorCount());
 			System.out.println(binding.getFieldErrorCount());
+			if (activity.getId() == 0)
+				activity.setPaper(null);
 			res = this.createEditModelAndView(activity, conferenceId);
 		} else
 			try {
-				final Conference conference = this.conferenceService.findOne2(conferenceId);
-				final Collection<Activity> activities = conference.getActivities();
-				activities.add(activity);
-				conference.setActivities(activities);
-				saved = this.activityService.save(activity);
-				this.conferenceService.save2(conference);
+
+				saved = this.activityService.save(activity, conferenceId);
 				res = new ModelAndView("redirect:/activity/administrator/list.do?conferenceId=" + conferenceId);
 
 			} catch (final Throwable oops) {
-				res = this.createEditModelAndView(activity, conferenceId, "activity.commit.error");
-				System.out.println(oops.getStackTrace());
-				System.out.println(oops.getCause().getMessage());
+				if (activity.getId() == 0)
+					activity.setPaper(null);
+				if (oops.getMessage().equals("StartMoment between the startDate and the endDate of the conference"))
+					res = this.createEditModelAndView(activity, conferenceId, "activity.betweenStartAndEndDate");
+				else if (oops.getMessage().equals("The duration shorter than the conference total one"))
+					res = this.createEditModelAndView(activity, conferenceId, "activity.durationShorterThanConference");
+				else
+					res = this.createEditModelAndView(activity, conferenceId, "activity.commit.error");
+
 			}
 		return res;
 	}
@@ -158,20 +215,16 @@ public class ActivityAdminController extends AbstractController {
 			res = this.createEditModelAndView(activity, conferenceId);
 		} else
 			try {
-				final Conference conference = this.conferenceService.findOne2(conferenceId);
-				final Collection<Activity> activities = new HashSet<>(conference.getActivities());
-				saved = this.activityService.save(activity);
-				activities.add(saved);
-				conference.setActivities(activities);
-				this.conferenceService.save2(conference);
+				saved = this.activityService.save(activity, conferenceId);
 				res = new ModelAndView("redirect:/activity/administrator/list.do?conferenceId=" + conferenceId);
 
 			} catch (final Throwable oops) {
-				System.out.println(oops.getLocalizedMessage());
-				res = this.createEditModelAndView(activity, conferenceId, "activity.commit.error");
-
-				System.out.println(oops.getStackTrace());
-				System.out.println(oops.getCause().getMessage());
+				if (oops.getMessage().equals("StartMoment between the startDate and the endDate of the conference"))
+					res = this.createEditModelAndView(activity, conferenceId, "activity.betweenStartAndEndDate");
+				else if (oops.getMessage().equals("The duration shorter than the conference total one"))
+					res = this.createEditModelAndView(activity, conferenceId, "activity.durationShorterThanConference");
+				else
+					res = this.createEditModelAndView(activity, conferenceId, "activity.commit.error");
 			}
 		return res;
 	}
@@ -189,18 +242,15 @@ public class ActivityAdminController extends AbstractController {
 			res = this.createEditModelAndView(activity, conferenceId);
 		} else
 			try {
-				final Conference conference = this.conferenceService.findOne2(conferenceId);
-				final Collection<Activity> activities = conference.getActivities();
-				activities.add(activity);
-				conference.setActivities(activities);
-				saved = this.activityService.save(activity);
-				this.conferenceService.save2(conference);
+				saved = this.activityService.save(activity, conferenceId);
 				res = new ModelAndView("redirect:/activity/administrator/list.do?conferenceId=" + conferenceId);
-
 			} catch (final Throwable oops) {
-				res = this.createEditModelAndView(activity, conferenceId, "activity.commit.error");
-				System.out.println(oops.getStackTrace());
-				System.out.println(oops.getCause().getMessage());
+				if (oops.getMessage().equals("StartMoment between the startDate and the endDate of the conference"))
+					res = this.createEditModelAndView(activity, conferenceId, "activity.betweenStartAndEndDate");
+				else if (oops.getMessage().equals("The duration shorter than the conference total one"))
+					res = this.createEditModelAndView(activity, conferenceId, "activity.durationShorterThanConference");
+				else
+					res = this.createEditModelAndView(activity, conferenceId, "activity.commit.error");
 			}
 		return res;
 	}
@@ -237,9 +287,16 @@ public class ActivityAdminController extends AbstractController {
 			res.addObject("section", section);
 			res.addObject("activityId", activityId);
 		} catch (final Throwable oops) {
-			res = new ModelAndView("redirect:/activity/administrator/list.do?conferenceId=" + conference.getId());
-			System.out.println(oops.getStackTrace());
-			System.out.println(oops.getCause().getMessage());
+			//res = new ModelAndView("redirect:/activity/administrator/list.do?conferenceId=" + conference.getId());
+			if (oops.getMessage().equals("Only for tutorials"))
+				res = this.ListModelAndView(conference.getId(), "activity.error.OnlySectionsToTutorials");
+			else if (oops.getMessage().equals("StartDate elapsed"))
+				res = this.ListModelAndView(conference.getId(), "activity.error.StartDateExpired");
+			else
+				res = this.ListModelAndView(conference.getId());
+
+			//	System.out.println(oops.getStackTrace());
+			//	System.out.println(oops.getCause().getMessage());
 		}
 
 		return res;
@@ -279,10 +336,16 @@ public class ActivityAdminController extends AbstractController {
 		try {
 			this.activityService.delete(activityId, conferenceId);
 			res = new ModelAndView("redirect:/activity/administrator/list.do?conferenceId=" + conferenceId);
-
 		} catch (final Throwable oops) {
-			res = new ModelAndView("redirect:/activity/administrator/list.do?conferenceId=" + conferenceId);
+			oops.printStackTrace();
+			if (oops.getMessage().equals("StartDate elapsed"))
+				res = this.ListModelAndView(conferenceId, "activity.cantDeleteActivitiesSorry");
+			else if (oops.getMessage().equals("Activity must be from the conference"))
+				res = this.ListModelAndView(conferenceId, "activity.canOnlyDeleteActivittiesFromConference");
+			else
+				res = this.ListModelAndView(conferenceId);
 		}
+
 		return res;
 	}
 
@@ -328,7 +391,7 @@ public class ActivityAdminController extends AbstractController {
 	protected ModelAndView createEditModelAndViewSection(final Section section, final int activityId, final String messageCode) {
 		ModelAndView res;
 
-		res = new ModelAndView("activity/editTutorial");
+		res = new ModelAndView("activity/addSection");
 		res.addObject("section", section);
 		res.addObject("message", messageCode);
 		res.addObject("activityId", activityId);

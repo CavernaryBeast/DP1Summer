@@ -14,7 +14,6 @@ import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.Valid;
-import javax.validation.constraints.Future;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -52,7 +51,7 @@ public class Activity extends DomainEntity {
 		this.title = title;
 	}
 
-	@Future
+	@NotNull
 	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern = "yyyy/MM/dd HH:mm")
 	public Date getStartMoment() {
@@ -63,6 +62,7 @@ public class Activity extends DomainEntity {
 		this.startMoment = startMoment;
 	}
 
+	@NotNull
 	@Min(0)
 	public double getDuration() {
 		return this.duration;
@@ -90,7 +90,6 @@ public class Activity extends DomainEntity {
 		this.summary = summary;
 	}
 
-	@NotNull
 	@ElementCollection
 	public Collection<String> getAttachments() {
 		return this.attachments;

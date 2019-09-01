@@ -2,6 +2,7 @@
 package services;
 
 import java.util.Collection;
+import java.util.Date;
 
 import javax.transaction.Transactional;
 
@@ -13,7 +14,9 @@ import org.springframework.validation.Validator;
 
 import repositories.PaperRepository;
 import domain.Author;
+import domain.Conference;
 import domain.Paper;
+import domain.Submission;
 
 @Transactional
 @Service
@@ -27,6 +30,9 @@ public class PaperService {
 
 	@Autowired
 	private ConferenceService	conferenceService;
+
+	@Autowired
+	private SubmissionService	submissionService;
 
 	@Autowired
 	private Validator			validator;
@@ -51,6 +57,27 @@ public class PaperService {
 		final Paper res = this.paperRepository.findOne(id);
 		Assert.notNull(res);
 		Assert.isTrue(res.getAuthors().contains(author));
+		return res;
+	}
+
+	public Paper findOneToEdit(final int id) {
+		final Author author = this.authorService.findByPrincipal();
+		Assert.isTrue(id != 0);
+		Assert.notNull(id);
+		Assert.isTrue(this.paperRepository.exists(id));
+		final Paper res = this.paperRepository.findOne(id);
+		Assert.notNull(res);
+		final Date now = new Date(System.currentTimeMillis() - 1);
+		final Conference conference = this.conferenceService.getConferenceFromPaperId(res.getId());
+		final Submission submission = this.submissionService.findSubmissionFromPaperId(res.getId());
+
+		Assert.isTrue(submission.getAuthor().equals(author), "Not the author from submission");
+		Assert.isTrue(res.getAuthors().contains(author), "Not one of the authors");
+		Assert.isTrue(!res.isCameraReady(), "Paper already Cámera-Ready");
+		Assert.isTrue(conference.getCameraReadyDeadline().after(now), "Camera-Ready Deadline Elapsed");
+		Assert.isTrue(conference.getSubmissionDeadline().before(now), "Submission Deadline No Elapsed");
+		Assert.isTrue(submission.getStatus().equals("ACCEPTED"), "Corresponding Submission Not Accepted");
+
 		return res;
 	}
 

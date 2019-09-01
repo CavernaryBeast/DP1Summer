@@ -84,7 +84,9 @@ public class ConferenceAdminController extends AbstractController {
 		final ModelAndView result = new ModelAndView("conference/list2");
 		final String language = LocaleContextHolder.getLocale().getLanguage();
 		final String typeFilter = administratorfilterConferenceForm.getTypeFilter();
+		final Date now = new Date(System.currentTimeMillis() - 1);
 		Collection<Conference> conferences = new HashSet<>();
+		final Collection<Conference> conferencesWithUnderReviewSubmissions = this.conferenceService.getConferencesWithUnderReviewSubmissions();
 
 		if (typeFilter.equals("SUBMISSION"))
 			conferences = this.conferenceService.getConferencesSubmissionDeadlineLastFiveDays();
@@ -99,9 +101,11 @@ public class ConferenceAdminController extends AbstractController {
 
 		result.addObject("conferences", conferences);
 		result.addObject("language", language);
+		result.addObject("now", now);
 		result.addObject("requestURI", "conference/administrator/list.do");
 		result.addObject("actionFilter", "conference/administrator/adminFilter.do");
 		result.addObject("administratorfilterConferenceForm", administratorfilterConferenceForm);
+		result.addObject("conferencesWithUnderReviewSubmissions", conferencesWithUnderReviewSubmissions);
 		return result;
 	}
 
@@ -187,11 +191,24 @@ public class ConferenceAdminController extends AbstractController {
 	@RequestMapping(value = "/update", method = RequestMethod.GET)
 	public ModelAndView update(@RequestParam final int conferenceId) {
 		ModelAndView result;
-		this.conferenceService.decideStatus(conferenceId);
-		result = new ModelAndView("redirect:/conference/administrator/list.do");
+
+		try {
+			this.conferenceService.decideStatus(conferenceId);
+			result = new ModelAndView("redirect:/conference/administrator/list.do");
+
+		} catch (final Throwable oops) {
+			oops.printStackTrace();
+			if (oops.getMessage().equals("Submission Deadline not Elapsed"))
+				result = this.ListModelAndView("conference.cantUpdate.submissionDeadlineNotElased");
+			else if (oops.getMessage().equals("Camera-Ready Deadline already Elapsed"))
+				result = this.ListModelAndView("conference.cantUpdate.cameraReadyDeadlineElapsed");
+			else if (oops.getMessage().equals("The conference must have Under-Review submissions"))
+				result = this.ListModelAndView("conference.cantUpdate.NoUnderReviewSubmissions");
+			else
+				result = this.ListModelAndView();
+		}
 		return result;
 	}
-
 	protected ModelAndView createEditModelAndView(final Conference conference) {
 		ModelAndView result;
 

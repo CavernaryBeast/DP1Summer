@@ -109,6 +109,17 @@ public class SubmissionService {
 		return res;
 	}
 
+	public Submission findOneEditPaper(final int id) {
+		//		final Author author = this.authorService.findByPrincipal();
+		Assert.isTrue(id != 0);
+		Assert.notNull(id);
+		Assert.isTrue(this.submissionRepository.exists(id));
+		final Submission res = this.submissionRepository.findOne(id);
+		Assert.notNull(res);
+
+		return res;
+	}
+
 	public Submission findOne2(final int id) {
 		Assert.isTrue(id != 0);
 		Assert.notNull(id);
@@ -132,7 +143,7 @@ public class SubmissionService {
 			if (a != null)
 				autoresSecundarios.add(a);
 
-		autoresSecundarios.add(principal);
+		//	autoresSecundarios.add(principal);
 		paper.setAuthors(autoresSecundarios);
 		savedP = this.paperService.save(paper);
 		submission.setAuthor(principal);
@@ -252,6 +263,13 @@ public class SubmissionService {
 		return res;
 	}
 
+	public Collection<Submission> findSubmissionsWithEditablePapers() {
+		this.authorService.findByPrincipal();
+		final Collection<Submission> res = this.submissionRepository.findSubmissionsWithEditablePapers();
+		Assert.notNull(res);
+		return res;
+	}
+
 	public Collection<Submission> findAcceptedSubmissionsFromConference(final int conferenceId) {
 		Assert.isTrue(conferenceId != 0, "ConferenceId es 0");
 		Assert.notNull(conferenceId, "ConferenceId es nulo");
@@ -368,6 +386,14 @@ public class SubmissionService {
 		String result;
 		this.administratorService.findByPrincipal();
 		result = this.submissionRepository.getSubmissionsPerConferenceStats();
+		Assert.notNull(result);
+		return result;
+	}
+
+	public Submission findSubmissionFromPaperId(final int paperId) {
+		Assert.isTrue(paperId != 0);
+		Submission result;
+		result = this.submissionRepository.findSubmissionFromPaperId(paperId);
 		Assert.notNull(result);
 		return result;
 	}

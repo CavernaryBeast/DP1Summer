@@ -253,6 +253,14 @@ public class ConferenceService {
 		return result;
 	}
 
+	public Conference getConferenceFromPaperId(final int paperId) {
+		Assert.isTrue(paperId != 0);
+		Conference result;
+		result = this.conferenceRepository.getConferenceFromPaperId(paperId);
+		Assert.notNull(result);
+		return result;
+	}
+
 	public Conference reconstruct(final Conference conference, final BindingResult binding) {
 		Conference original;
 		final Administrator principal = this.administratorService.findByPrincipal();
@@ -292,9 +300,11 @@ public class ConferenceService {
 		Assert.notNull(conferenceId, "Id no nulo");
 		Assert.isTrue(this.exist(conferenceId), "Existe Id");
 		final Conference conference = this.findOne(conferenceId);
+		final Collection<Conference> conferencesWithUnderReviewSubmissions = this.getConferencesWithUnderReviewSubmissions();
 		final Date now = new Date(System.currentTimeMillis() - 1);
-		Assert.isTrue(now.after(conference.getSubmissionDeadline()));
-		Assert.isTrue(conference.getCameraReadyDeadline().after(now));
+		Assert.isTrue(now.after(conference.getSubmissionDeadline()), "Submission Deadline not Elapsed");
+		Assert.isTrue(conference.getCameraReadyDeadline().after(now), "Camera-Ready Deadline already Elapsed");
+		Assert.isTrue(conferencesWithUnderReviewSubmissions.contains(conference), "The conference must have Under-Review submissions");
 		final Collection<Submission> submissionsUnderReview = this.submissionService.findUnderReviewSubmissionsFromConference(conferenceId);
 		for (final Submission submission : submissionsUnderReview) {
 			System.out.println("reviewers: " + submission.getReviewers());
