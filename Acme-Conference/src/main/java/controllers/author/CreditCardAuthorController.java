@@ -113,7 +113,7 @@ public class CreditCardAuthorController extends AbstractController {
 
 	//Delete --------------------------------------------------------
 
-	@RequestMapping(value = "/edit", method = RequestMethod.GET)
+	@RequestMapping(value = "/delete", method = RequestMethod.GET)
 	public ModelAndView delete(@RequestParam final int creditcardId) {
 
 		ModelAndView res;

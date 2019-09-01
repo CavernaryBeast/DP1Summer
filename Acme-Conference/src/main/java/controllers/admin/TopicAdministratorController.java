@@ -21,7 +21,7 @@ import services.ConfigurationParametersService;
 import services.TopicService;
 
 @Controller
-@RequestMapping("/configurationparameters/administrator")
+@RequestMapping("/topic/administrator")
 
 public class TopicAdministratorController extends AbstractController {
 
