@@ -15,14 +15,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import services.ConfigurationParametersService;
-import services.ReportService;
-import services.ReviewerService;
-import services.SubmissionService;
 import controllers.AbstractController;
 import domain.Report;
 import domain.Reviewer;
 import domain.Submission;
+import services.ConfigurationParametersService;
+import services.ReportService;
+import services.ReviewerService;
+import services.SubmissionService;
 
 @Controller
 @RequestMapping("report/reviewer")
@@ -98,7 +98,7 @@ public class ReportReviewerController extends AbstractController {
 
 	//Save --------------------------------------------------------
 
-	@RequestMapping(value = "edit", method = RequestMethod.POST, params = "save")
+	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
 	public ModelAndView save(@ModelAttribute("report") @Valid final Report report, final BindingResult binding) {
 
 		ModelAndView res;
@@ -139,7 +139,7 @@ public class ReportReviewerController extends AbstractController {
 
 	//Display --------------------------------------------------------
 
-	@RequestMapping(value = "display", method = RequestMethod.GET)
+	@RequestMapping(value = "/display", method = RequestMethod.GET)
 	public ModelAndView display(@RequestParam final int reportId) {
 
 		ModelAndView res;

@@ -15,15 +15,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import services.AuthorService;
-import services.ConferenceService;
-import services.PaperService;
-import services.SubmissionService;
 import controllers.AbstractController;
 import domain.Author;
 import domain.Conference;
 import domain.Paper;
 import domain.Submission;
+import services.AuthorService;
+import services.ConferenceService;
+import services.PaperService;
+import services.SubmissionService;
 
 @Controller
 @RequestMapping("/submission/author")
@@ -102,7 +102,7 @@ public class SubmissionAuthorController extends AbstractController {
 
 	//Edition --------------------------------------------------------
 
-	@RequestMapping(value = "edit", method = RequestMethod.GET)
+	@RequestMapping(value = "/edit", method = RequestMethod.GET)
 	public ModelAndView edit(@RequestParam final int submissionId) {
 
 		final ModelAndView res;
@@ -118,7 +118,7 @@ public class SubmissionAuthorController extends AbstractController {
 
 	//Save --------------------------------------------------------
 
-	@RequestMapping(value = "edit", method = RequestMethod.POST, params = "save")
+	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
 	public ModelAndView save(@ModelAttribute("submission") @Valid Submission submission, final BindingResult binding, final Integer conferenceId) {
 
 		ModelAndView res;
@@ -166,7 +166,7 @@ public class SubmissionAuthorController extends AbstractController {
 
 	// Update ----------------------------------------------------------------------------------
 
-	@RequestMapping(value = "editPaper", method = RequestMethod.GET)
+	@RequestMapping(value = "/editPaper", method = RequestMethod.GET)
 	public ModelAndView editPaper(@RequestParam final int submissionId) {
 		ModelAndView res;
 		try {
@@ -182,7 +182,7 @@ public class SubmissionAuthorController extends AbstractController {
 				res = this.ListModelAndView("submission.editPaperError.submissionNotAccepted");
 			else if (oops.getMessage().equals("Not one of the authors"))
 				res = this.ListModelAndView("submission.editPaperError.notPaperAuthor");
-			else if (oops.getMessage().equals("Paper already Cámera-Ready"))
+			else if (oops.getMessage().equals("Paper already Cï¿½mera-Ready"))
 				res = this.ListModelAndView("submission.editPaperError.paperAlreadyCameraReady");
 			else if (oops.getMessage().equals("Not the author from submission"))
 				res = this.ListModelAndView("submission.editPaperError.NotSubmissionAuthor");
@@ -195,7 +195,7 @@ public class SubmissionAuthorController extends AbstractController {
 		return res;
 	}
 
-	@RequestMapping(value = "editPaper", method = RequestMethod.POST, params = "save")
+	@RequestMapping(value = "/editPaper", method = RequestMethod.POST, params = "save")
 	public ModelAndView savePaper(@ModelAttribute("paper") @Valid Paper paper, final BindingResult binding) {
 
 		ModelAndView res;

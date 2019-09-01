@@ -78,7 +78,7 @@ public class CommentReviewerController extends AbstractController {
 
 	//Save --------------------------------------------------------
 
-	@RequestMapping(value = "edit", method = RequestMethod.POST, params = "save")
+	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
 	public ModelAndView save(@ModelAttribute("comment") @Valid final Comment comment, final BindingResult binding, @RequestParam final int reportId) {
 
 		ModelAndView res;

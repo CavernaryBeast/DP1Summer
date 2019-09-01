@@ -14,17 +14,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import controllers.AbstractController;
+import domain.Author;
+import domain.Conference;
+import domain.CreditCard;
+import domain.Registration;
 import services.AuthorService;
 import services.ConferenceService;
 import services.ConfigurationParametersService;
 import services.CreditCardService;
 import services.PaperService;
 import services.RegistrationService;
-import controllers.AbstractController;
-import domain.Author;
-import domain.Conference;
-import domain.CreditCard;
-import domain.Registration;
 
 @Controller
 @RequestMapping("/registration/author")
@@ -81,7 +81,7 @@ public class RegistrationAuthorController extends AbstractController {
 
 	//Save --------------------------------------------------------
 
-	@RequestMapping(value = "edit", method = RequestMethod.POST, params = "save")
+	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
 	public ModelAndView save(@Valid final Registration registration, final BindingResult binding, final Integer conferenceId) {
 
 		ModelAndView res;

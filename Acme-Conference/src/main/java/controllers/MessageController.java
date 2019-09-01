@@ -247,7 +247,7 @@ public class MessageController extends AbstractController {
 	}
 	//Delete --------------------------------------------------------
 
-	@RequestMapping(value = "delete", method = RequestMethod.GET)
+	@RequestMapping(value = "/delete", method = RequestMethod.GET)
 	public ModelAndView delete(@RequestParam final int messageId) {
 
 		ModelAndView res;
@@ -256,13 +256,14 @@ public class MessageController extends AbstractController {
 		try {
 			this.messageService.delete(toDelete);
 			res = new ModelAndView("redirect:list.do");
-			final String banner = this.configurationParametersService.getBanner();
-			res.addObject("banner", banner);
 		} catch (final Throwable oops) {
 			res = new ModelAndView("redirect:display.do?messageId=" + messageId);
 			final String error = "Cannot delete this message";
 			res.addObject("error", error);
 		}
+		final String banner = this.configurationParametersService.getBanner();
+		res.addObject("banner", banner);
+
 		return res;
 	}
 

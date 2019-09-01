@@ -14,13 +14,13 @@ import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
-import repositories.ConferenceRepository;
 import domain.Activity;
 import domain.Administrator;
 import domain.Conference;
 import domain.Registration;
 import domain.Report;
 import domain.Submission;
+import repositories.ConferenceRepository;
 
 @Transactional
 @Service
@@ -46,6 +46,9 @@ public class ConferenceService {
 
 	@Autowired
 	private Validator				validator;
+
+	@Autowired
+	private MessageService			messageService;
 
 
 	public Conference create() {
@@ -325,7 +328,8 @@ public class ConferenceService {
 					submission.setStatus("REJECTED");
 			} else
 				submission.setStatus("ACCEPTED");
-			this.submissionService.save2(submission);
+			//			this.submissionService.save2(submission);
+			this.messageService.notifyAuthor(submission);
 		}
 	}
 

@@ -15,16 +15,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import services.ConferenceService;
+import domain.Category;
 import domain.Conference;
 import forms.FilterConferenceForm;
+import services.CategoryService;
+import services.ConferenceService;
 
 @Controller
 @RequestMapping("/conference")
 public class ConferenceController extends AbstractController {
 
 	@Autowired
-	ConferenceService	conferenceService;
+	ConferenceService		conferenceService;
+
+	@Autowired
+	private CategoryService	categoryService;
 
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
@@ -32,16 +37,21 @@ public class ConferenceController extends AbstractController {
 		ModelAndView result;
 		Collection<Conference> conferences;
 		final FilterConferenceForm filterConferenceForm = new FilterConferenceForm();
+		filterConferenceForm.setCategory(null);
 		final String language = LocaleContextHolder.getLocale().getLanguage();
 		conferences = this.conferenceService.getAllConferencesFinalMode();
 		final Date now = new Date(System.currentTimeMillis() - 1);
 		result = new ModelAndView("conference/list");
+
+		final Collection<Category> categories = this.categoryService.findAll();
+
 		result.addObject("conferences", conferences);
 		result.addObject("language", language);
 		result.addObject("requestURI", "conference/list.do");
 		result.addObject("actionFilter", "conference/listFilter.do");
 		result.addObject("filterConferenceForm", filterConferenceForm);
 		result.addObject("now", now);
+		result.addObject("categories", categories);
 		return result;
 	}
 
@@ -52,6 +62,7 @@ public class ConferenceController extends AbstractController {
 		final String typeDate = filterConferenceForm.getTypeDate();
 		Collection<Conference> conferences = new HashSet<>();
 		final Date now = new Date(System.currentTimeMillis() - 1);
+
 		if (typeDate.equals("FORTHCOMING"))
 			conferences = this.conferenceService.getForthcomingConferencesByKeyword(filterConferenceForm.getKeyWord());
 		else if (typeDate.equals("RUNNING"))
@@ -60,6 +71,11 @@ public class ConferenceController extends AbstractController {
 			conferences = this.conferenceService.getPastConferencesByKeyword(filterConferenceForm.getKeyWord());
 		else
 			conferences = this.conferenceService.getAllConferencesByKeyword(filterConferenceForm.getKeyWord());
+
+		if (filterConferenceForm.getCategory() != null) {
+			final Collection<Conference> aux = filterConferenceForm.getCategory().getConferences();
+			conferences.retainAll(aux);
+		}
 
 		result.addObject("conferences", conferences);
 		result.addObject("language", language);

@@ -14,16 +14,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import services.ActivityService;
-import services.AuthorService;
-import services.ConferenceService;
-import services.PaperService;
-import services.SubmissionService;
 import controllers.AbstractController;
 import domain.Activity;
 import domain.Conference;
 import domain.Paper;
 import domain.Section;
+import services.ActivityService;
+import services.AuthorService;
+import services.ConferenceService;
+import services.PaperService;
+import services.SubmissionService;
 
 @Controller
 @RequestMapping("/activity/administrator")
@@ -148,7 +148,7 @@ public class ActivityAdminController extends AbstractController {
 
 	//Edition --------------------------------------------------------
 
-	@RequestMapping(value = "edit", method = RequestMethod.GET)
+	@RequestMapping(value = "/edit", method = RequestMethod.GET)
 	public ModelAndView edit(@RequestParam final int activityId, final int conferenceId) {
 
 		ModelAndView res;

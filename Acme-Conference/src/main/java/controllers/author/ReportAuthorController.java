@@ -9,11 +9,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import domain.Author;
+import domain.Report;
 import services.AuthorService;
 import services.ConfigurationParametersService;
 import services.ReportService;
-import domain.Author;
-import domain.Report;
 
 @Controller
 @RequestMapping("/report/author")
@@ -31,7 +31,7 @@ public class ReportAuthorController {
 
 	//Display --------------------------------------------------------
 
-	@RequestMapping(value = "display", method = RequestMethod.GET)
+	@RequestMapping(value = "/display", method = RequestMethod.GET)
 	public ModelAndView display(@RequestParam final int reportId) {
 
 		ModelAndView res;

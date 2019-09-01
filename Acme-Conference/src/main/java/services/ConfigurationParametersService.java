@@ -9,8 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
-import repositories.ConfigurationParametersRepository;
 import domain.ConfigurationParameters;
+import repositories.ConfigurationParametersRepository;
 
 @Service
 @Transactional
@@ -18,6 +18,9 @@ public class ConfigurationParametersService {
 
 	@Autowired
 	private ConfigurationParametersRepository	configurationParametersRepository;
+
+	@Autowired
+	private AdministratorService				administratorService;
 
 
 	public ConfigurationParameters create() {
@@ -29,7 +32,21 @@ public class ConfigurationParametersService {
 		return confParams;
 	}
 
+	public ConfigurationParameters save(final ConfigurationParameters confParams) {
+
+		Assert.notNull(confParams);
+		Assert.isTrue(confParams.getId() != 0);
+
+		this.administratorService.findByPrincipal();
+
+		final ConfigurationParameters saved = this.configurationParametersRepository.save(confParams);
+
+		return saved;
+	}
+
 	public ConfigurationParameters getConfigurationParameters() {
+
+		this.administratorService.findByPrincipal();
 
 		final ConfigurationParameters res = this.configurationParametersRepository.getConfigurationParameters();
 		Assert.notNull(res);

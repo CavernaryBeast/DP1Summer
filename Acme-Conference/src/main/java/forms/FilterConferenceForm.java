@@ -1,12 +1,17 @@
 
 package forms;
 
+import javax.validation.Valid;
+
 import org.hibernate.validator.constraints.NotBlank;
+
+import domain.Category;
 
 public class FilterConferenceForm {
 
-	private String	keyWord;
-	private String	typeDate;
+	private String		keyWord;
+	private String		typeDate;
+	private Category	category;
 
 
 	//	@Pattern(regexp = "^FORTHCOMING|PAST|RUNNING$")
@@ -25,6 +30,15 @@ public class FilterConferenceForm {
 
 	public void setKeyWord(final String keyWord) {
 		this.keyWord = keyWord;
+	}
+
+	@Valid
+	public Category getCategory() {
+		return this.category;
+	}
+
+	public void setCategory(final Category category) {
+		this.category = category;
 	}
 
 }
