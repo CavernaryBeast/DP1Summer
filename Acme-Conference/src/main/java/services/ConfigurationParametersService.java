@@ -9,8 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
-import domain.ConfigurationParameters;
 import repositories.ConfigurationParametersRepository;
+import domain.ConfigurationParameters;
 
 @Service
 @Transactional
@@ -121,7 +121,7 @@ public class ConfigurationParametersService {
 	public String checkPhoneNumber(String phoneNumber) {
 
 		if (!phoneNumber.startsWith("+") && phoneNumber.length() > 4)
-			phoneNumber = this.getConfigurationParameters().getCountryCode() + " " + phoneNumber;
+			phoneNumber = this.getCountryCode() + " " + phoneNumber;
 
 		return phoneNumber;
 	}

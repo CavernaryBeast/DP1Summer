@@ -69,9 +69,6 @@ public class SponsorService {
 	public Sponsor save(final Sponsor sponsor) {
 
 		Assert.notNull(sponsor);
-
-		this.findByPrincipal();
-
 		Md5PasswordEncoder encoder;
 		encoder = new Md5PasswordEncoder();
 
