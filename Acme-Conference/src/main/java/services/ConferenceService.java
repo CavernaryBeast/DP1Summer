@@ -16,7 +16,10 @@ import org.springframework.validation.Validator;
 
 import domain.Activity;
 import domain.Administrator;
+import domain.Author;
+import domain.Category;
 import domain.Conference;
+import domain.Finder;
 import domain.Registration;
 import domain.Report;
 import domain.Submission;
@@ -49,6 +52,12 @@ public class ConferenceService {
 
 	@Autowired
 	private MessageService			messageService;
+
+	@Autowired
+	private CategoryService			categoryService;
+
+	@Autowired
+	private AuthorService			authorService;
 
 
 	public Conference create() {
@@ -355,6 +364,102 @@ public class ConferenceService {
 		result = this.conferenceRepository.getDaysPerConferenceStats();
 		Assert.notNull(result);
 		return result;
+	}
+
+	//Finder --------------------------------------------------------------------------------------------------------------------------------------------------
+
+	public Collection<Conference> findConferencesByKeyword(final String keyword) {
+
+		Collection<Conference> res;
+
+		res = this.conferenceRepository.findConferencesByKeyword(keyword);
+		Assert.notNull(res);
+
+		return res;
+	}
+
+	public Collection<Conference> findConferencesByCategory(final Category category) {
+
+		final Category aux = this.categoryService.findOne(category.getId());
+
+		final Collection<Conference> res = aux.getConferences();
+
+		Assert.notNull(res);
+
+		return res;
+	}
+
+	public Collection<Conference> findConferencesByStartDate(final Date startDate) {
+
+		Collection<Conference> res;
+
+		res = this.conferenceRepository.findConferencesByStartDate(startDate);
+		Assert.notNull(res);
+
+		return res;
+	}
+
+	public Collection<Conference> findConferencesByEndDate(final Date endDate) {
+
+		Collection<Conference> res;
+
+		res = this.conferenceRepository.findConferencesByEndDate(endDate);
+		Assert.notNull(res);
+
+		return res;
+	}
+
+	public Collection<Conference> findConferencesByMaximunFee(final Double fee) {
+
+		Collection<Conference> res;
+
+		res = this.conferenceRepository.findConferencesByMaximunFee(fee);
+		Assert.notNull(res);
+
+		return res;
+	}
+
+	public Collection<Conference> useFinder(final Finder finder) {
+
+		Assert.notNull(finder);
+		Assert.isTrue(finder.getId() != 0);
+
+		final Author principal = this.authorService.findByPrincipal();
+
+		Assert.isTrue(principal.getFinder().getId() == finder.getId());
+
+		final Collection<Conference> res = new ArrayList<Conference>();
+		final Collection<Collection> aux = new ArrayList<Collection>();
+
+		if (finder.getKeyword() != null) {
+			final Collection<Conference> keyword = this.findConferencesByKeyword(finder.getKeyword());
+			res.addAll(keyword);
+			aux.add(keyword);
+		}
+		if (finder.getCategory() != null) {
+			final Collection<Conference> category = this.findConferencesByCategory(finder.getCategory());
+			res.addAll(category);
+			aux.add(category);
+		}
+		if (finder.getStartDate() != null) {
+			final Collection<Conference> startDate = this.findConferencesByStartDate(finder.getStartDate());
+			res.addAll(startDate);
+			aux.add(startDate);
+		}
+		if (finder.getEndDate() != null) {
+			final Collection<Conference> endDate = this.findConferencesByEndDate(finder.getEndDate());
+			res.addAll(endDate);
+			aux.add(endDate);
+		}
+		if (finder.getFee() != null) {
+			final Collection<Conference> fee = this.findConferencesByMaximunFee(finder.getFee());
+			res.addAll(fee);
+			aux.add(fee);
+		}
+
+		for (final Collection collection : aux)
+			res.retainAll(collection);
+		return res;
 	}
 
 }

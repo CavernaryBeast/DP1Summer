@@ -2,6 +2,7 @@
 package repositories;
 
 import java.util.Collection;
+import java.util.Date;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -66,5 +67,19 @@ public interface ConferenceRepository extends JpaRepository<Conference, Integer>
 
 	@Query("select min((c.endDate - c.startDate)/1000000), max((c.endDate - c.startDate)/1000000), avg((c.endDate - c.startDate)/1000000), stddev((c.endDate - c.startDate)/1000000) from Conference c")
 	String getDaysPerConferenceStats();
+
+	//Finder ---------------------------------------------------------------------------------------------------------------------
+
+	@Query("select distinct(c) from Conference c where (c.title like %?1% or c.venue like %?1% or c.summary like %?1% or c.acronym like %?1%)and c.isFinal = 1")
+	Collection<Conference> findConferencesByKeyword(String keyword);
+
+	@Query("select distinct(c) from Conference c where ?1 < c.startDate")
+	Collection<Conference> findConferencesByStartDate(Date startDate);
+
+	@Query("select distinct(c) from Conference c where c.endDate < ?1")
+	Collection<Conference> findConferencesByEndDate(Date startDate);
+
+	@Query("select distinct(c) from Conference c where c.fee < ?1")
+	Collection<Conference> findConferencesByMaximunFee(Double fee);
 
 }
