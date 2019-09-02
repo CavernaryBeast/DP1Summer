@@ -35,4 +35,10 @@
 			value="/views/conference/list2.jsp" />
 	</definition>
 		
+	<definition name="conference/show" extends="master.page">
+		<put-attribute name="title" value="Show conference" />
+		<put-attribute name="body"
+			value="/views/conference/show.jsp" />
+	</definition>
+		
 </tiles-definitions>

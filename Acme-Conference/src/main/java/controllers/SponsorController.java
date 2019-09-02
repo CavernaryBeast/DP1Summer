@@ -11,16 +11,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import services.AdministratorService;
 import services.ConfigurationParametersService;
-import domain.Administrator;
+import services.SponsorService;
+import domain.Sponsor;
 
 @Controller
-@RequestMapping("/administrator")
-public class AdministratorController extends AbstractController {
+@RequestMapping("/sponsor")
+public class SponsorController extends AbstractController {
 
 	@Autowired
-	private AdministratorService			administratorService;
+	private SponsorService					sponsorService;
 
 	@Autowired
 	private ConfigurationParametersService	configurationParametersService;
@@ -32,7 +32,7 @@ public class AdministratorController extends AbstractController {
 	public ModelAndView edit() {
 
 		ModelAndView res;
-		final Administrator principal = this.administratorService.findByPrincipal();
+		final Sponsor principal = this.sponsorService.findByPrincipal();
 
 		res = this.createEditModelAndView(principal);
 
@@ -42,20 +42,20 @@ public class AdministratorController extends AbstractController {
 	// Save -----------------------------------------------------------
 
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(@ModelAttribute("actor") @Valid final Administrator administrator, final BindingResult binding) {
+	public ModelAndView save(@ModelAttribute("actor") @Valid final Sponsor sponsor, final BindingResult binding) {
 		ModelAndView result;
 
 		if (binding.hasErrors())
-			result = this.createEditModelAndView(administrator);
+			result = this.createEditModelAndView(sponsor);
 		else
 			try {
-				this.administratorService.save(administrator);
+				this.sponsorService.save(sponsor);
 
 				result = new ModelAndView("redirect:/");
 				final String banner = this.configurationParametersService.getBanner();
 				result.addObject("banner", banner);
 			} catch (final Throwable oops) {
-				result = this.createEditModelAndView(administrator, "actor.commit.error");
+				result = this.createEditModelAndView(sponsor, "actor.commit.error");
 			}
 		return result;
 
@@ -66,10 +66,9 @@ public class AdministratorController extends AbstractController {
 	@RequestMapping(value = "/display", method = RequestMethod.GET)
 	public ModelAndView display() {
 		ModelAndView result;
-		final Administrator principal = this.administratorService.findByPrincipal();
-
-		result = new ModelAndView("administrator/display");
-		result.addObject("administrator", principal);
+		final Sponsor principal = this.sponsorService.findByPrincipal();
+		result = new ModelAndView("sponsor/display");
+		result.addObject("sponsor", principal);
 		final String banner = this.configurationParametersService.getBanner();
 		result.addObject("banner", banner);
 		return result;
@@ -77,19 +76,19 @@ public class AdministratorController extends AbstractController {
 
 	// Ancillary methods --------------------------------------------------------
 
-	protected ModelAndView createEditModelAndView(final Administrator administrator) {
+	protected ModelAndView createEditModelAndView(final Sponsor sponsor) {
 		ModelAndView result;
-		result = this.createEditModelAndView(administrator, null);
+		result = this.createEditModelAndView(sponsor, null);
 		return result;
 	}
 
-	protected ModelAndView createEditModelAndView(final Administrator administrator, final String messageCode) {
+	protected ModelAndView createEditModelAndView(final Sponsor sponsor, final String messageCode) {
 		ModelAndView result;
 
 		result = new ModelAndView("actor/edit");
-		result.addObject("actor", administrator);
-		result.addObject("role", "administrator");
-		result.addObject("requestURI", "administrator/edit.do");
+		result.addObject("actor", sponsor);
+		result.addObject("role", "sponsor");
+		result.addObject("requestURI", "sponsor/edit.do");
 		result.addObject("message", messageCode);
 		// the message code references an error message or null
 		final String banner = this.configurationParametersService.getBanner();
