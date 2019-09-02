@@ -428,36 +428,33 @@ public class ConferenceService {
 
 		Assert.isTrue(principal.getFinder().getId() == finder.getId());
 
-		final Collection<Conference> res = new ArrayList<Conference>();
-		final Collection<Collection> aux = new ArrayList<Collection>();
+		final Collection<Conference> res = this.findAll();
 
-		if (finder.getKeyword() != null) {
-			final Collection<Conference> keyword = this.findConferencesByKeyword(finder.getKeyword());
-			res.addAll(keyword);
-			aux.add(keyword);
-		}
+		final Collection<Collection<Conference>> aux = new ArrayList<Collection<Conference>>();
+
+		//		if (finder.getKeyword() != "") {
+		final Collection<Conference> keyword = this.findConferencesByKeyword(finder.getKeyword());
+		aux.add(keyword);
+		//		}
 		if (finder.getCategory() != null) {
 			final Collection<Conference> category = this.findConferencesByCategory(finder.getCategory());
-			res.addAll(category);
 			aux.add(category);
 		}
-		if (finder.getStartDate() != null) {
-			final Collection<Conference> startDate = this.findConferencesByStartDate(finder.getStartDate());
-			res.addAll(startDate);
-			aux.add(startDate);
-		}
-		if (finder.getEndDate() != null) {
-			final Collection<Conference> endDate = this.findConferencesByEndDate(finder.getEndDate());
-			res.addAll(endDate);
-			aux.add(endDate);
-		}
-		if (finder.getFee() != null) {
-			final Collection<Conference> fee = this.findConferencesByMaximunFee(finder.getFee());
-			res.addAll(fee);
-			aux.add(fee);
-		}
+		//		if (finder.getStartDate() != null) {
+		final Collection<Conference> startDate = this.findConferencesByStartDate(finder.getStartDate());
+		aux.add(startDate);
+		//		}
+		//		if (finder.getEndDate() != null) {
+		final Collection<Conference> endDate = this.findConferencesByEndDate(finder.getEndDate());
+		aux.add(endDate);
+		//		}
+		//		if (finder.getFee() != null) {
+		final Collection<Conference> fee = this.findConferencesByMaximunFee(finder.getFee());
+		aux.add(fee);
+		//		}
 
-		for (final Collection collection : aux)
+		//		if (!aux.isEmpty())
+		for (final Collection<Conference> collection : aux)
 			res.retainAll(collection);
 		return res;
 	}

@@ -169,6 +169,8 @@ public class CreditCardAuthorController extends AbstractController {
 
 		res = new ModelAndView("creditcard/edit");
 
+		res.addObject("creditcard", creditCard);
+
 		res.addObject("makes", makes);
 		res.addObject("message", messageCode);
 		final String banner = this.configurationParametersService.getBanner();
