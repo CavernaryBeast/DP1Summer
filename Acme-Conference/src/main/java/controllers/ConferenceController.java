@@ -13,23 +13,28 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import domain.Category;
-import domain.Conference;
-import forms.FilterConferenceForm;
 import services.CategoryService;
 import services.ConferenceService;
+import services.SponsorshipService;
+import domain.Conference;
+import domain.Sponsorship;
+import forms.FilterConferenceForm;
 
 @Controller
 @RequestMapping("/conference")
 public class ConferenceController extends AbstractController {
 
 	@Autowired
-	ConferenceService		conferenceService;
+	ConferenceService			conferenceService;
 
 	@Autowired
-	private CategoryService	categoryService;
+	private CategoryService		categoryService;
+
+	@Autowired
+	private SponsorshipService	sponsorshipService;
 
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
@@ -43,7 +48,7 @@ public class ConferenceController extends AbstractController {
 		final Date now = new Date(System.currentTimeMillis() - 1);
 		result = new ModelAndView("conference/list");
 
-		final Collection<Category> categories = this.categoryService.findAll();
+		//	final Collection<Category> categories = this.categoryService.findAll();
 
 		result.addObject("conferences", conferences);
 		result.addObject("language", language);
@@ -51,7 +56,7 @@ public class ConferenceController extends AbstractController {
 		result.addObject("actionFilter", "conference/listFilter.do");
 		result.addObject("filterConferenceForm", filterConferenceForm);
 		result.addObject("now", now);
-		result.addObject("categories", categories);
+		//	result.addObject("categories", categories);
 		return result;
 	}
 
@@ -83,6 +88,25 @@ public class ConferenceController extends AbstractController {
 		result.addObject("actionFilter", "conference/listFilter.do");
 		result.addObject("filterConferenceForm", filterConferenceForm);
 		result.addObject("now", now);
+		return result;
+	}
+
+	@RequestMapping(value = "/show", method = RequestMethod.GET)
+	public ModelAndView show(@RequestParam final int conferenceId) {
+		ModelAndView result;
+		Conference conference;
+
+		conference = this.conferenceService.findOne2(conferenceId);
+		result = new ModelAndView("conference/show");
+		result.addObject("conference", conference);
+		Collection<Sponsorship> sponsorships = new HashSet<Sponsorship>();
+		sponsorships = this.sponsorshipService.findSponsorshipsFromConferenceId(conference.getId());
+		if (!sponsorships.isEmpty()) {
+			final Sponsorship randomSponsorship = this.sponsorshipService.randomSponsorShip(sponsorships);
+			result.addObject("randomSponsorship", randomSponsorship);
+		}
+		result.addObject("sponsorships", sponsorships);
+
 		return result;
 	}
 

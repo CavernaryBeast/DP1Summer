@@ -7,14 +7,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import domain.Actor;
-import domain.Administrator;
-import domain.Author;
-import domain.Reviewer;
 import services.AdministratorService;
 import services.AuthorService;
 import services.ConfigurationParametersService;
 import services.ReviewerService;
+import services.SponsorService;
+import domain.Actor;
+import domain.Administrator;
+import domain.Author;
+import domain.Reviewer;
+import domain.Sponsor;
 
 @Controller
 @RequestMapping("/actor")
@@ -25,6 +27,9 @@ public class ActorController extends AbstractController {
 
 	@Autowired
 	private ReviewerService					reviewerService;
+
+	@Autowired
+	private SponsorService					sponsorService;
 
 	@Autowired
 	private AdministratorService			administratorService;
@@ -73,19 +78,25 @@ public class ActorController extends AbstractController {
 		return result;
 	}
 
+	@RequestMapping(value = "/createSponsor", method = RequestMethod.GET)
+	public ModelAndView createSponsor() {
+		ModelAndView result;
+		final Sponsor sponsor = this.sponsorService.create();
+		final String role = "sponsor";
+		result = this.createEditModelAndView(sponsor);
+		result.addObject("role", role);
+
+		return result;
+	}
+
 	@RequestMapping(value = "/administrator/createAdministrator", method = RequestMethod.GET)
 	public ModelAndView createAdmin() {
 		ModelAndView result;
-
 		this.administratorService.findByPrincipal();
-
 		final Administrator admin = this.administratorService.create();
-
 		final String role = "administrator";
-
 		result = this.createEditModelAndView(admin);
 		result.addObject("role", role);
-
 		return result;
 	}
 
@@ -93,22 +104,18 @@ public class ActorController extends AbstractController {
 
 	protected ModelAndView createEditModelAndView(final Actor actor) {
 		ModelAndView result;
-
 		result = this.createEditModelAndView(actor, null);
-
 		return result;
 	}
 
 	protected ModelAndView createEditModelAndView(final Actor actor, final String messageCode) {
 		ModelAndView result;
-
 		result = new ModelAndView("actor/edit");
 		result.addObject("actor", actor);
 		result.addObject("message", messageCode);
 		// the message code references an error message or null
 		final String banner = this.configurationParametersService.getBanner();
 		result.addObject("banner", banner);
-
 		return result;
 	}
 

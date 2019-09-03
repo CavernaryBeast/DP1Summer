@@ -142,8 +142,8 @@ public class Activity extends DomainEntity {
 		this.speakers = speakers;
 	}
 
+	//	@NotNull
 	@Valid
-	@NotNull
 	@OneToMany(cascade = CascadeType.ALL)
 	@ElementCollection
 	public Collection<Comment> getComments() {

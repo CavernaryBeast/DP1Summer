@@ -219,7 +219,61 @@
 		</property>
 	</bean>
 
-	<!-- AUTHORS FINISHED -->
+	<!-- REVIEWERS FINISHED -->
+
+
+	<!-- SPONSORS -->
+
+	<bean id="userAccount10" class="security.UserAccount">
+		<property name="username" value="sponsor1" />
+		<property name="password" value="42c63ad66d4dc07ed17753772bef96d6" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="SPONSOR" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+
+		<bean id="userAccount11" class="security.UserAccount">
+		<property name="username" value="sponsor2" />
+		<property name="password" value="3dc67f80a03324e01b1640f45d107485" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="SPONSOR" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+	
+		<bean id="userAccount12" class="security.UserAccount">
+		<property name="username" value="sponsor3" />
+		<property name="password" value="857a54956061fdc1b88d7722cafe6519" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="SPONSOR" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+	
+	
+		<bean id="userAccount13" class="security.UserAccount">
+		<property name="username" value="sponsor4" />
+		<property name="password" value="a8be034fe44a453e912feadc414dc803" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="SPONSOR" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+	
+	<!-- SPONSORS FINISHED -->
 
 	<!-- USER ACCOUNTS FINISHED -->
 
@@ -378,9 +432,99 @@
 	</bean>
 
 	<!-- REVIEWERS FINISHED -->
-
+	
+	<!-- SPONSORS -->
+		<bean id="sponsor1" class="domain.Sponsor">
+		<property name="name" value="Sponsor1 Name" />
+		<property name="middleName" value="Sponsor1 Middle Name" />
+		<property name="surname" value="Sponsor1 Surname" />
+		<property name="photo" value="https://photosponsor1.jpg" />
+		<property name="email" value="sponsor1@us.es" />
+		<property name="phoneNumber" value="666666666" />
+		<property name="address" value="Sponsor1 Address" />
+		<property name="userAccount" ref="userAccount10" />
+	</bean>
+	
+			<bean id="sponsor2" class="domain.Sponsor">
+		<property name="name" value="Sponsor2 Name" />
+		<property name="middleName" value="Sponsor2 Middle Name" />
+		<property name="surname" value="Sponsor2 Surname" />
+		<property name="photo" value="https://photosponsor2.jpg" />
+		<property name="email" value="sponsor2@us.es" />
+		<property name="phoneNumber" value="666666666" />
+		<property name="address" value="Sponsor2 Address" />
+		<property name="userAccount" ref="userAccount11" />
+	</bean>
+	
+			<bean id="sponsor3" class="domain.Sponsor">
+		<property name="name" value="Sponsor3 Name" />
+		<property name="middleName" value="Sponsor3 Middle Name" />
+		<property name="surname" value="Sponsor3 Surname" />
+		<property name="photo" value="https://photosponsor3.jpg" />
+		<property name="email" value="sponsor3@us.es" />
+		<property name="phoneNumber" value="666666666" />
+		<property name="address" value="Sponsor3 Address" />
+		<property name="userAccount" ref="userAccount12" />
+	</bean>
+	
+			<bean id="sponsor4" class="domain.Sponsor">
+		<property name="name" value="Sponsor4 Name" />
+		<property name="middleName" value="Sponsor4 Middle Name" />
+		<property name="surname" value="Sponsor4 Surname" />
+		<property name="photo" value="https://photosponsor4.jpg" />
+		<property name="email" value="sponsor4@us.es" />
+		<property name="phoneNumber" value="666666666" />
+		<property name="address" value="Sponsor4 Address" />
+		<property name="userAccount" ref="userAccount13" />
+	</bean>
+	
+	
+	<!-- SPONSORS FINISHED -->
 	<!-- ACTORS FINISHED -->
-
+	
+	
+	<!-- SPONSORSHIPS -->
+	<bean id="sponsorship1" class="domain.Sponsorship">
+		<property name="banner" value="https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/2fd32b58324945.59f83720f0b79.jpg" />
+		<property name="targetURL" value="https://targetURL.org" />
+		<property name="sponsor" ref="sponsor1" />
+		<property name="conference" ref="conference1" />
+		<property name="creditCard" ref="creditCard5" />
+	</bean>
+	
+	<bean id="sponsorship2" class="domain.Sponsorship">
+		<property name="banner" value="https://findlogovector.com/wp-content/uploads/2018/12/fanta-logo-vector.png" />
+		<property name="targetURL" value="https://targetURL.org" />
+		<property name="sponsor" ref="sponsor1" />
+		<property name="conference" ref="conference1" />
+		<property name="creditCard" ref="creditCard5" />
+	</bean>
+	
+	<bean id="sponsorship3" class="domain.Sponsorship">
+		<property name="banner" value="https://ichef.bbci.co.uk/news/660/cpsprodpb/66A2/production/_107847262_gettyimages-1152276563-594x594.jpg" />
+		<property name="targetURL" value="https://targetURL.org" />
+		<property name="sponsor" ref="sponsor2" />
+		<property name="conference" ref="conference1" />
+		<property name="creditCard" ref="creditCard6" />
+	</bean>
+	
+		<bean id="sponsorship4" class="domain.Sponsorship">
+			<property name="banner" value="https://is4-ssl.mzstatic.com/image/thumb/Purple123/v4/34/0c/ff/340cff7f-65bf-8466-aec7-bab2c5c2fd43/AppIcon-0-1x_U007emarketing-0-0-85-220-0-10.png/1200x630wa.png" />
+		<property name="targetURL" value="https://targetURL.org" />
+		<property name="sponsor" ref="sponsor2" />
+		<property name="conference" ref="conference2" />
+		<property name="creditCard" ref="creditCard6" />
+	</bean>
+	
+			<bean id="sponsorship5" class="domain.Sponsorship">
+			<property name="banner" value="https://gabrielapatron.com/wp-content/uploads/2019/01/Glovo.jpg" />
+		<property name="targetURL" value="https://targetURL.org" />
+		<property name="sponsor" ref="sponsor3" />
+		<property name="conference" ref="conference2" />
+		<property name="creditCard" ref="creditCard7" />
+	</bean>
+	
+	<!-- SPONSORSHIPS FINISHED -->
 
 	<!-- ##################################################################################################### -->
 
@@ -563,6 +707,52 @@
 		<property name="make" value="AMEX" />
 		<property name="owner" ref="author4" />
 	</bean>
+	
+		<bean id="creditCard5" class="domain.CreditCard">
+		<property name="holderName" value="sponsor1" />
+		<property name="brandName" value="Acme Conference's brand" />
+		<property name="number" value="5592372558099087" />
+		<property name="expirationMonth" value="01" />
+		<property name="expirationYear" value="20" />
+		<property name="cvv" value="736" />
+		<property name="make" value="AMEX" />
+		<property name="owner" ref="sponsor1" />
+	</bean>
+	
+		<bean id="creditCard6" class="domain.CreditCard">
+		<property name="holderName" value="sponsor2" />
+		<property name="brandName" value="Acme Conference's brand" />
+		<property name="number" value="5180982685379471" />
+		<property name="expirationMonth" value="01" />
+		<property name="expirationYear" value="20" />
+		<property name="cvv" value="333" />
+		<property name="make" value="AMEX" />
+		<property name="owner" ref="sponsor2" />
+	</bean>
+	
+		<bean id="creditCard7" class="domain.CreditCard">
+		<property name="holderName" value="sponsor3" />
+		<property name="brandName" value="Acme Conference's brand" />
+		<property name="number" value="5178144882955470" />
+		<property name="expirationMonth" value="01" />
+		<property name="expirationYear" value="20" />
+		<property name="cvv" value="399" />
+		<property name="make" value="AMEX" />
+		<property name="owner" ref="sponsor3" />
+	</bean>
+	
+			<bean id="creditCard8" class="domain.CreditCard">
+		<property name="holderName" value="sponsor4" />
+		<property name="brandName" value="Acme Conference's brand" />
+		<property name="number" value="5341202554082692" />
+		<property name="expirationMonth" value="01" />
+		<property name="expirationYear" value="20" />
+		<property name="cvv" value="899" />
+		<property name="make" value="AMEX" />
+		<property name="owner" ref="sponsor4" />
+	</bean>
+	
+	
 	<!-- CREDIT CARDS FINISHED -->
 
 
@@ -604,7 +794,7 @@
 				<ref bean="activity2" />
 			</list>
 		</property>
-		<property name="isFinal" value="false" />
+		<property name="isFinal" value="true" />
 	</bean>
 
 	<bean id="conference2" class="domain.Conference">
@@ -636,7 +826,7 @@
 				<ref bean="activity3" />
 			</list>
 		</property>
-		<property name="isFinal" value="false" />
+		<property name="isFinal" value="true" />
 	</bean>	<!-- CONFERENCES FINISHED -->
 
 
