@@ -7,16 +7,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import domain.Actor;
-import domain.Administrator;
-import domain.Author;
-import domain.Reviewer;
-import domain.Sponsor;
 import services.AdministratorService;
 import services.AuthorService;
 import services.ConfigurationParametersService;
 import services.ReviewerService;
 import services.SponsorService;
+import domain.Actor;
+import domain.Administrator;
+import domain.Author;
+import domain.Reviewer;
+import domain.Sponsor;
 
 @Controller
 @RequestMapping("/actor")
@@ -78,14 +78,14 @@ public class ActorController extends AbstractController {
 		return result;
 	}
 
-	@RequestMapping(value = "/administrator/createSponsor", method = RequestMethod.GET)
+	@RequestMapping(value = "/createSponsor", method = RequestMethod.GET)
 	public ModelAndView createSponsor() {
 		ModelAndView result;
-		this.administratorService.findByPrincipal();
 		final Sponsor sponsor = this.sponsorService.create();
 		final String role = "sponsor";
 		result = this.createEditModelAndView(sponsor);
 		result.addObject("role", role);
+
 		return result;
 	}
 
