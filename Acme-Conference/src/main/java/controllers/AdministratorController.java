@@ -79,7 +79,9 @@ public class AdministratorController extends AbstractController {
 
 	protected ModelAndView createEditModelAndView(final Administrator administrator) {
 		ModelAndView result;
+
 		result = this.createEditModelAndView(administrator, null);
+
 		return result;
 	}
 

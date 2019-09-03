@@ -199,8 +199,8 @@ public class Conference extends DomainEntity {
 		this.activities = activities;
 	}
 
-	//	@NotNull
 	@Valid
+	@NotNull
 	@OneToMany(cascade = CascadeType.ALL)
 	@ElementCollection
 	public Collection<Comment> getComments() {

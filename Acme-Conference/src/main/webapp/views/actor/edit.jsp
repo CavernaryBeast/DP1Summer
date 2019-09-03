@@ -71,6 +71,4 @@
 
 	<acme:button url="/" code="actor.cancel" />
 
-
-
 </form:form>
