@@ -13,6 +13,7 @@
 	">
 
 	<util:list id="converters">
+
 		<bean class="converters.ActivityToStringConverter" />
 		<bean class="converters.StringToActivityConverter" />
 
@@ -61,7 +62,8 @@
 		<bean class="converters.FinderToStringConverter" />
 		<bean class="converters.StringToFinderConverter" />
 
-
+		<bean class="converters.SponsorToStringConverter" />
+		<bean class="converters.StringToSponsorConverter" />
 
 	</util:list>
 
