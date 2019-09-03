@@ -3,7 +3,6 @@ package domain;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 import javax.validation.Valid;
@@ -29,7 +28,7 @@ public class Author extends Actor {
 	}
 
 	@Valid
-	@OneToOne(cascade = CascadeType.ALL, optional = false)
+	@OneToOne(optional = false)
 	public Finder getFinder() {
 		return this.finder;
 	}

@@ -42,15 +42,15 @@
 			</a>
 				<ul>
 					<li class="arrow"></li>
-					<li><a href="message/administrator/broadcast.do"> <spring:message
+					<li><a href="messages/administrator/broadcast.do"> <spring:message
 								code="master.page.broadcast" />
 					</a></li>
-					<li><a href="message/administrator/broadcastToAuthors.do">
+					<li><a href="messages/administrator/broadcastToAuthors.do">
 							<spring:message code="master.page.broadcastToAuthors" />
 					</a></li>
 				</ul></li>
 			<li><a class="fNiv"> <spring:message
-						code="master.page.administrator.confParams" />
+						code="master.page.messages" />
 			</a>
 				<ul>
 					<li class="arrow"></li>
@@ -91,9 +91,6 @@
 						code="master.page.login" /></a></li>
 			<li><a href="conference/list.do"><spring:message
 						code="master.page.conferences" /></a></li>
-			<li><a href="actor/signUp.do"><spring:message
-						code="master.page.signUp" /></a></li>
-
 		</security:authorize>
 
 		<security:authorize access="isAuthenticated()">
@@ -129,10 +126,10 @@
 			</a>
 				<ul>
 					<li class="arrow"></li>
-					<li><a href="message/list.do"> <spring:message
+					<li><a href="messages/list.do"> <spring:message
 								code="master.page.listMessages" />
 					</a></li>
-					<li><a href="message/create.do"> <spring:message
+					<li><a href="messages/create.do"> <spring:message
 								code="master.page.sendMessage" />
 					</a></li>
 				</ul></li>

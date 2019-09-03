@@ -9,9 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
-import repositories.FinderRepository;
 import domain.Author;
 import domain.Finder;
+import repositories.FinderRepository;
 
 @Service
 @Transactional
@@ -59,10 +59,8 @@ public class FinderService {
 
 		Assert.notNull(finder);
 
-		if (finder.getId() != 0) {
-			final Author principal = this.authorService.findByPrincipal();
-			Assert.isTrue(principal.getFinder().getId() == finder.getId());
-		}
+		final Author principal = this.authorService.findByPrincipal();
+		Assert.isTrue(principal.getFinder().getId() == finder.getId());
 
 		return this.finderRepository.save(finder);
 	}

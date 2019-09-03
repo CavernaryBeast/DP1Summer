@@ -17,15 +17,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import domain.Activity;
+import domain.Actor;
+import domain.Comment;
+import domain.Conference;
 import services.ActivityService;
 import services.ActorService;
 import services.CommentService;
 import services.ConferenceService;
 import services.ConfigurationParametersService;
-import domain.Activity;
-import domain.Actor;
-import domain.Comment;
-import domain.Conference;
 
 @Controller
 @RequestMapping("/comment")
@@ -114,7 +114,7 @@ public class CommentController extends AbstractController {
 		this.conferenceService.findOne(conferenceId);
 
 		res = this.createEditModelAndView(comment);
-		res.addObject("actionURI", "comment/editToConference.do?conferenceId=" + conferenceId);
+		res.addObject("actionURI", "comment/edit.do?conferenceId=" + conferenceId);
 
 		return res;
 	}
@@ -136,21 +136,21 @@ public class CommentController extends AbstractController {
 		this.activityService.findOne(activityId);
 
 		res = this.createEditModelAndView(comment);
-		res.addObject("actionURI", "comment/editToActivity.do?activityId=" + activityId);
+		res.addObject("actionURI", "comment/edit.do?activityId=" + activityId);
 
 		return res;
 	}
 
 	//Save to Conference --------------------------------------------------------
 
-	@RequestMapping(value = "editToConference", method = RequestMethod.POST, params = "save")
+	@RequestMapping(value = "edit", method = RequestMethod.POST, params = "save")
 	public ModelAndView saveToConference(@ModelAttribute("comment") @Valid final Comment comment, final BindingResult binding, @RequestParam final int conferenceId) {
 
 		ModelAndView res;
 
 		if (binding.hasErrors()) {
 			res = this.createEditModelAndView(comment);
-			res.addObject("actionURI", "comment/editToConference.do?conferenceId=" + conferenceId);
+			res.addObject("actionURI", "comment/edit.do?conferenceId=" + conferenceId);
 		} else
 			try {
 				this.commentService.saveToConference(comment, conferenceId);
@@ -160,21 +160,21 @@ public class CommentController extends AbstractController {
 				res.addObject("banner", banner);
 			} catch (final Throwable oops) {
 				res = this.createEditModelAndView(comment, "report.commit.error");
-				res.addObject("actionURI", "comment/editToConference.do?conferenceId=" + conferenceId);
+				res.addObject("actionURI", "comment/edit.do?conferenceId=" + conferenceId);
 			}
 		return res;
 	}
 
 	//Save to Conference --------------------------------------------------------
 
-	@RequestMapping(value = "editToActivity", method = RequestMethod.POST, params = "save")
+	@RequestMapping(value = "edit", method = RequestMethod.POST, params = "save")
 	public ModelAndView saveToActivity(@ModelAttribute("comment") @Valid final Comment comment, final BindingResult binding, @RequestParam final int activityId) {
 
 		ModelAndView res;
 
 		if (binding.hasErrors()) {
 			res = this.createEditModelAndView(comment);
-			res.addObject("actionURI", "comment/editToActivity.do?activityId=" + activityId);
+			res.addObject("actionURI", "comment/edit.do?activityId=" + activityId);
 		} else
 			try {
 				this.commentService.saveToActivity(comment, activityId);
@@ -184,7 +184,7 @@ public class CommentController extends AbstractController {
 				res.addObject("banner", banner);
 			} catch (final Throwable oops) {
 				res = this.createEditModelAndView(comment, "report.commit.error");
-				res.addObject("actionURI", "comment/editToActivity.do?activityId=" + activityId);
+				res.addObject("actionURI", "comment/edit.do?activityId=" + activityId);
 			}
 		return res;
 	}

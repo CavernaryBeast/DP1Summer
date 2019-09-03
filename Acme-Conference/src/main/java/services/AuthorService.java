@@ -10,13 +10,13 @@ import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
+import domain.Author;
+import domain.Finder;
 import repositories.AuthorRepository;
 import security.Authority;
 import security.LoginService;
 import security.UserAccount;
 import security.UserAccountService;
-import domain.Author;
-import domain.Finder;
 
 @Service
 @Transactional
@@ -84,10 +84,6 @@ public class AuthorService {
 
 		Md5PasswordEncoder encoder;
 		encoder = new Md5PasswordEncoder();
-		if (author.getId() == 0) {
-			final Finder finder = this.finderService.create();
-			author.setFinder(finder);
-		}
 
 		author.getUserAccount().setPassword(encoder.encodePassword(author.getUserAccount().getPassword(), null));
 
@@ -105,6 +101,8 @@ public class AuthorService {
 			final String editedPhone = this.configurationParametersService.checkPhoneNumber(author.getPhoneNumber());
 			author.setPhoneNumber(editedPhone);
 		}
+
+		this.finderService.save(author.getFinder());
 
 		saved = this.authorRepository.save(author);
 
