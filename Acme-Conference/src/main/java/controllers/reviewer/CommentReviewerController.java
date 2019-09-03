@@ -17,11 +17,9 @@ import org.springframework.web.servlet.ModelAndView;
 import controllers.AbstractController;
 import domain.Comment;
 import domain.Report;
-import domain.Reviewer;
 import services.CommentService;
 import services.ConfigurationParametersService;
 import services.ReportService;
-import services.ReviewerService;
 
 @Controller
 @RequestMapping("/comment/reviewer")
@@ -35,9 +33,6 @@ public class CommentReviewerController extends AbstractController {
 
 	@Autowired
 	private ReportService					reportService;
-
-	@Autowired
-	private ReviewerService					reviewerService;
 
 
 	//Listing --------------------------------------------------------
@@ -72,15 +67,11 @@ public class CommentReviewerController extends AbstractController {
 
 		ModelAndView res;
 		final Comment comment = this.commentService.create();
-		final Reviewer author = this.reviewerService.findByPrincipal();
-
-		comment.setAuthor(author);
 
 		this.reportService.findOne(reportId);
 
 		res = this.createEditModelAndView(comment);
-
-		res.addObject("actionURI", "comment/reviewer/edit.do?reportId=" + reportId);
+		res.addObject("reportId", reportId);
 
 		return res;
 	}
@@ -92,10 +83,9 @@ public class CommentReviewerController extends AbstractController {
 
 		ModelAndView res;
 
-		if (binding.hasErrors()) {
+		if (binding.hasErrors())
 			res = this.createEditModelAndView(comment);
-			res.addObject("actionURI", "comment/reviewer/edit.do?reportId=" + reportId);
-		} else
+		else
 			try {
 				this.commentService.saveToReport(comment, reportId);
 
@@ -104,9 +94,7 @@ public class CommentReviewerController extends AbstractController {
 				res.addObject("banner", banner);
 			} catch (final Throwable oops) {
 				res = this.createEditModelAndView(comment, "report.commit.error");
-				res.addObject("actionURI", "comment/reviewer/edit.do?reportId=" + reportId);
 			}
-
 		return res;
 	}
 

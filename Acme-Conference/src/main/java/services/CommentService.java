@@ -41,8 +41,6 @@ public class CommentService {
 
 		res.setMoment(moment);
 
-		res.setAuthor(null);
-
 		return res;
 	}
 

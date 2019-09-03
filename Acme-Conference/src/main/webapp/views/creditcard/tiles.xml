@@ -10,21 +10,21 @@
 
 <tiles-definitions>
 
-	<definition name="creditcard/list"
+	<definition name="creditcard/author/list"
 		extends="master.page">
 		<put-attribute name="title" value="CreditCard list" />
 		<put-attribute name="body"
 			value="/views/creditcard/list.jsp" />
 	</definition>
 
-	<definition name="creditcard/display"
+	<definition name="creditcard/author/display"
 		extends="master.page">
 		<put-attribute name="title" value="Display CreditCard" />
 		<put-attribute name="body"
 			value="/views/creditcard/display.jsp" />
 	</definition>
 
-	<definition name="creditcard/edit"
+	<definition name="creditcard/author/edit"
 		extends="master.page">
 		<put-attribute name="title" value="Edit CreditCard" />
 		<put-attribute name="body"

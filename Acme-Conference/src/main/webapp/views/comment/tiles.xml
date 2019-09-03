@@ -10,16 +10,22 @@
 
 <tiles-definitions>
 
-	<definition name="comment/edit" extends="master.page">
-		<put-attribute name="title" value="Edit comment" />
+	<definition name="report/edit" extends="master.page">
+		<put-attribute name="title" value="Edit report" />
 		<put-attribute name="body"
-			value="/views/comment/edit.jsp" />
+			value="/views/report/edit.jsp" />
 	</definition>
 
-	<definition name="comment/list" extends="master.page">
-		<put-attribute name="title" value="List of comments" />
+	<definition name="report/display" extends="master.page">
+		<put-attribute name="title" value="Display report" />
 		<put-attribute name="body"
-			value="/views/comment/list.jsp" />
+			value="/views/report/display.jsp" />
+	</definition>
+
+	<definition name="report/list" extends="master.page">
+		<put-attribute name="title" value="List of reports" />
+		<put-attribute name="body"
+			value="/views/report/list.jsp" />
 	</definition>
 
 </tiles-definitions>

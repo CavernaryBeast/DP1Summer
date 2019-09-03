@@ -10,7 +10,7 @@
 
 <tiles-definitions>
 
-	<definition name="creditcard/list"
+	<definition name="creditcard/author/list"
 		extends="master.page">
 		<put-attribute name="title"
 			value="Lista de tarjetas de crédito" />
@@ -18,7 +18,7 @@
 			value="/views/creditcard/list.jsp" />
 	</definition>
 
-	<definition name="creditcard/display"
+	<definition name="creditcard/author/display"
 		extends="master.page">
 		<put-attribute name="title"
 			value="Mostrar tarjeta de crédito" />
@@ -26,7 +26,7 @@
 			value="/views/creditcard/display.jsp" />
 	</definition>
 
-	<definition name="creditcard/edit"
+	<definition name="creditcard/author/edit"
 		extends="master.page">
 		<put-attribute name="title"
 			value="Editar tarjeta de crédito" />
