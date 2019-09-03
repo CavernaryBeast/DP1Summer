@@ -68,8 +68,6 @@
 								code="master.page.author.submissions" /></a></li>
 					<li><a href="registration/author/list.do"><spring:message
 								code="master.page.author.registrations" /></a></li>
-					<li><a href="finder/author/edit.do"><spring:message
-								code="master.page.author.editFinder" /></a></li>
 				</ul></li>
 		</security:authorize>
 

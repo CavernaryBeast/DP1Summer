@@ -32,7 +32,6 @@
 		<value>/views/registration/messages</value>
 		<value>/views/configurationParameters/messages</value>
 		<value>/views/topic/messages</value>
-		<value>/views/finder/messages</value>
 	</util:list>
 
 </beans>
