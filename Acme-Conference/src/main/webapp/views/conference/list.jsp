@@ -53,6 +53,8 @@
 </form:form>
 
 
+
+
 <display:table pagesize="10" name="${conferences}" id="row"
 	requestURI="${requestURI}">
 
@@ -63,7 +65,7 @@
 	<display:column property="endDate" titleKey="conference.endDate" />
 
 
-	<security:authorize access="hasRole('ADMINISTRATOR')">
+	<security:authorize access="hasRole('AUTHOR')">
 		<display:column titleKey="conference.edit">
 			<jstl:if test="${ row.isFinal eq false}">
 				<a href="conference/administrator/edit.do?conferenceId=${row.id}"><spring:message

@@ -30,10 +30,6 @@
 	<form:hidden path="version" />
 	<form:hidden path="userAccount.authorities" />
 
-	<jstl:if test="${role == 'author'}">
-		<form:hidden path="finder" />
-	</jstl:if>
-
 	<acme:textbox code="actor.name" path="name" />
 
 	<acme:textbox code="actor.middleName" path="middleName" />

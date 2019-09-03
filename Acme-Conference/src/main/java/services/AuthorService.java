@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import domain.Author;
-import domain.Finder;
 import repositories.AuthorRepository;
 import security.Authority;
 import security.LoginService;
@@ -34,9 +33,6 @@ public class AuthorService {
 	@Autowired
 	private ConfigurationParametersService	configurationParametersService;
 
-	@Autowired
-	private FinderService					finderService;
-
 
 	public Author create() {
 
@@ -52,9 +48,6 @@ public class AuthorService {
 		ua.addAuthority(auth);
 
 		res.setUserAccount(ua);
-
-		final Finder finder = this.finderService.create();
-		res.setFinder(finder);
 
 		return res;
 	}
@@ -101,8 +94,6 @@ public class AuthorService {
 			final String editedPhone = this.configurationParametersService.checkPhoneNumber(author.getPhoneNumber());
 			author.setPhoneNumber(editedPhone);
 		}
-
-		this.finderService.save(author.getFinder());
 
 		saved = this.authorRepository.save(author);
 
