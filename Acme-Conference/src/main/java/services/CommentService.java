@@ -10,11 +10,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
+import repositories.CommentRepository;
 import domain.Activity;
 import domain.Comment;
 import domain.Conference;
 import domain.Report;
-import repositories.CommentRepository;
 
 @Transactional
 @Service
@@ -127,7 +127,7 @@ public class CommentService {
 		//Lets see if this work
 		saved = this.commentRepository.save(comment);
 		activity.getComments().add(saved);
-		this.activityService.save(activity);
+		this.activityService.save2(activity);
 
 		return saved;
 	}

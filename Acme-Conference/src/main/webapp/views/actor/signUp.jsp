@@ -21,9 +21,6 @@
 	<acme:button url="actor/administrator/createAdministrator.do"
 		code="actor.signUp.administrator" />
 
-	<acme:button url="actor/administrator/createSponsor.do"
-		code="actor.signUp.sponsor" />
-
 </security:authorize>
 <br />
 
