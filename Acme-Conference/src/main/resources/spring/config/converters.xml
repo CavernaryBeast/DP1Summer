@@ -5,13 +5,15 @@
 	Licence, a copy of which you may download from * http://www.tdg-seville.info/License.html -->
 
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:util="http://www.springframework.org/schema/util"
 	xsi:schemaLocation="
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd		
 		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.0.xsd		
 	">
 
 	<util:list id="converters">
+
 		<bean class="converters.ActivityToStringConverter" />
 		<bean class="converters.StringToActivityConverter" />
 
@@ -57,6 +59,11 @@
 		<bean class="converters.TopicToStringConverter" />
 		<bean class="converters.StringToTopicConverter" />
 
+		<bean class="converters.FinderToStringConverter" />
+		<bean class="converters.StringToFinderConverter" />
+
+		<bean class="converters.SponsorToStringConverter" />
+		<bean class="converters.StringToSponsorConverter" />
 
 	</util:list>
 

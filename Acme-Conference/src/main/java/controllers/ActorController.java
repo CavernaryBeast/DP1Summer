@@ -85,7 +85,6 @@ public class ActorController extends AbstractController {
 		final String role = "sponsor";
 		result = this.createEditModelAndView(sponsor);
 		result.addObject("role", role);
-
 		return result;
 	}
 

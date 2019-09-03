@@ -9,19 +9,19 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
-<form:form action="${actionURI}" modelAttribute="comment">
+<form:form action="category/administrator/edit.do"
+	modelAttribute="category">
 
 	<form:hidden path="id" />
 	<form:hidden path="version" />
-	<form:hidden path="moment" />
+	<form:hidden path="father" />
 
-	<form:hidden path="author" />
+	<acme:textbox code="category.name" path="name" />
 
-	<acme:textarea code="comment.title" path="title" />
+	<acme:textarea code="category.nameEs" path="nameEs" />
 
-	<acme:textarea code="comment.text" path="text" />
+	<acme:submit name="save" code="category.save" />
 
-	<acme:submit name="save" code="comment.save" />
-
-	<acme:button url="/" code="comment.cancel" />
+	<acme:button url="category/administrator/list.do"
+		code="category.cancel" />
 </form:form>
