@@ -15,15 +15,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import services.AuthorService;
+import services.ConferenceService;
+import services.PaperService;
+import services.SubmissionService;
 import controllers.AbstractController;
 import domain.Author;
 import domain.Conference;
 import domain.Paper;
 import domain.Submission;
-import services.AuthorService;
-import services.ConferenceService;
-import services.PaperService;
-import services.SubmissionService;
 
 @Controller
 @RequestMapping("/submission/author")
@@ -119,7 +119,7 @@ public class SubmissionAuthorController extends AbstractController {
 	//Save --------------------------------------------------------
 
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(@ModelAttribute("submission") @Valid Submission submission, final BindingResult binding, final Integer conferenceId) {
+	public ModelAndView save(@ModelAttribute("submission") Submission submission, final BindingResult binding, final Integer conferenceId) {
 
 		ModelAndView res;
 		Submission saved;

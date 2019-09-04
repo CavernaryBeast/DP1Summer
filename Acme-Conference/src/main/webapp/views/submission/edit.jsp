@@ -26,7 +26,7 @@
 		<acme:textbox code="submission.paper.title" path="paper.title" />
 		<br />
 
-		<acme:select items="${authors}" itemLabel="userAccount.username"
+		<acme:selectR items="${authors}" itemLabel="userAccount.username"
 			code="submission.paper.authors" path="paper.authors" />
 		<br />
 

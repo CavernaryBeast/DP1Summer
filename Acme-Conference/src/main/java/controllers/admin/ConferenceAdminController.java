@@ -244,28 +244,69 @@ public class ConferenceAdminController extends AbstractController {
 		result.addObject("underReview", underReview);
 		result.addObject("rejected", rejected);
 		result.addObject("now", now);
+		result.addObject("conference", conference);
 		return result;
 	}
 
+	protected ModelAndView ListSubmissionModelAndView(final int conferenceId) {
+		ModelAndView result;
+
+		result = this.ListSubmissionModelAndView(conferenceId, null);
+
+		return result;
+	}
+
+	protected ModelAndView ListSubmissionModelAndView(final int conferenceId, final String messageCode) {
+		ModelAndView result;
+		result = this.listSubmissions(conferenceId);
+		result.addObject("message", messageCode);
+		return result;
+	}
 	@RequestMapping(value = "/assignSubmissionAutomatic", method = RequestMethod.GET)
 	public ModelAndView assignSubmission(@RequestParam final int submissionId) {
 		ModelAndView result;
 		Conference conference;
-		final Submission submission;
-		this.submissionService.assignSubmission(submissionId);
-		conference = this.conferenceService.getConferenceFromSubmissionId(submissionId);
-		result = new ModelAndView("redirect:/conference/administrator/listSubmissions.do?conferenceId=" + conference.getId());
+		try {
+
+			final Submission submission;
+			this.submissionService.assignSubmission(submissionId);
+			conference = this.conferenceService.getConferenceFromSubmissionId(submissionId);
+			result = new ModelAndView("redirect:/conference/administrator/listSubmissions.do?conferenceId=" + conference.getId());
+
+		} catch (final Throwable oops) {
+			oops.printStackTrace();
+			conference = this.conferenceService.getConferenceFromSubmissionId(submissionId);
+			if (oops.getMessage().equals("Maximo 3 reviewers"))
+				result = this.ListSubmissionModelAndView(conference.getId(), "submission.cantAddMoreReviewers");
+			else if (oops.getMessage().equals("NotificationDeadline Elapsed"))
+				result = this.ListSubmissionModelAndView(conference.getId(), "submission.cantAssingNDElapsed");
+			else
+				result = this.ListModelAndView();
+		}
+
 		return result;
 	}
 
 	@RequestMapping(value = "/addReviewer", method = RequestMethod.GET)
 	public ModelAndView addReviewer(@RequestParam final int submissionId) {
-
 		ModelAndView result;
 		Submission submission;
+		Conference conference;
+		try {
 
-		submission = this.submissionService.findOne2(submissionId);
-		result = this.createEditModelAndViewAddReviewer(submission);
+			submission = this.submissionService.findOne3(submissionId);
+			result = this.createEditModelAndViewAddReviewer(submission);
+
+		} catch (final Throwable oops) {
+			oops.printStackTrace();
+			conference = this.conferenceService.getConferenceFromSubmissionId(submissionId);
+			if (oops.getMessage().equals("Maximo 3 reviewers"))
+				result = this.ListSubmissionModelAndView(conference.getId(), "submission.cantAddMoreReviewers");
+			else if (oops.getMessage().equals("NotificationDeadline Elapsed"))
+				result = this.ListSubmissionModelAndView(conference.getId(), "submission.cantAssingNDElapsed");
+			else
+				result = this.ListModelAndView();
+		}
 
 		return result;
 

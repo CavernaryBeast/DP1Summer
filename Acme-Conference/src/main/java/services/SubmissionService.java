@@ -129,6 +129,19 @@ public class SubmissionService {
 		return res;
 	}
 
+	public Submission findOne3(final int id) {
+		Assert.isTrue(id != 0);
+		Assert.notNull(id);
+		Assert.isTrue(this.submissionRepository.exists(id));
+		final Submission res = this.submissionRepository.findOne(id);
+		Assert.notNull(res);
+		Assert.isTrue(res.getReviewers().size() < 3, "Maximo 3 reviewers");
+		final Conference conference = this.conferenceService.getConferenceFromSubmissionId(id);
+		final Date now = new Date(System.currentTimeMillis() - 1);
+		Assert.isTrue(conference.getNotificationDeadline().after(now), "NotificationDeadline Elapsed");
+		return res;
+	}
+
 	public Submission save(final Submission submission) {
 		Assert.notNull(submission);
 		Submission saved;
@@ -319,7 +332,8 @@ public class SubmissionService {
 		final Map<Reviewer, Integer> matchesPerActor = new HashMap<>();
 		Matcher matchesTitle, matchesSummary;
 		final Conference conference = this.conferenceService.getConferenceFromSubmissionId(submissionId);
-
+		final Date now = new Date(System.currentTimeMillis() - 1);
+		Assert.isTrue(conference.getNotificationDeadline().after(now), "NotificationDeadline Elapsed");
 		for (final Reviewer r : posibleReviewers) {
 			Integer countMatches = 0;
 			matchesTitle = this.patternKeywords(r).matcher(conference.getTitle().toLowerCase());
