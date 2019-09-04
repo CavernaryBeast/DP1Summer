@@ -99,5 +99,4 @@ public class Message extends DomainEntity {
 	public void setRecipients(final Collection<Actor> recipients) {
 		this.recipients = recipients;
 	}
-
 }
