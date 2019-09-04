@@ -81,8 +81,7 @@ public class Report extends DomainEntity {
 		this.reviewer = reviewer;
 	}
 
-	@Valid
-	@ManyToOne(optional = false)
+	@ManyToOne(optional = true)
 	public Submission getSubmission() {
 		return this.submission;
 	}

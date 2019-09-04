@@ -9,11 +9,10 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
-<form:form action="report/edit.do" modelAttribute="report">
+<form:form action="report/reviewer/edit.do?submissionId=${submissionId}" modelAttribute="report">
 
 	<form:hidden path="id" />
 	<form:hidden path="version" />
-	<form:hidden path="submission" />
 	<form:hidden path="reviewer" />
 	<form:hidden path="comments" />
 
@@ -23,7 +22,13 @@
 
 	<acme:textbox code="report.readabilityScore" path="readabilityScore" />
 
-	<acme:textarea code="report.decision" path="decision" />
+		<spring:message code="report.decision" />
+	<form:select path="decision">
+	<form:option value="REJECT"></form:option>
+	<form:option value="BORDER-LINE"></form:option>
+	<form:option value="ACCEPT"></form:option>
+	</form:select>
+	<br>
 
 	<acme:submit name="save" code="report.save" />
 

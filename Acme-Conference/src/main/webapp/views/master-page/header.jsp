@@ -15,10 +15,12 @@
 <%@taglib prefix="security"
 	uri="http://www.springframework.org/security/tags"%>
 
+
 <div>
-	<a href="#"><img src="${banner}" width="480" height="260"
-		alt="Acme Handy Worker Co., Inc." /></a>
+	<a href="#"><img src="images/acme-conference.png" alt="Acme-Conference Co., Inc."
+		style="margin-bottom: 0.5em;" /></a>
 </div>
+
 
 <div>
 	<ul id="jMenu">

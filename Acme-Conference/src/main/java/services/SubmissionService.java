@@ -422,4 +422,12 @@ public class SubmissionService {
 		return result;
 	}
 
+	public void checkSubmisisonCanBeSavedToReview(final int submissionId) {
+		Assert.notNull(submissionId);
+		Assert.isTrue(submissionId != 0);
+		final Submission sub = this.findOne2(submissionId);
+		final Collection<Submission> submissionsToReview = this.findSubmissionsToReview();
+		Assert.isTrue(submissionsToReview.contains(sub), "Is not a Submission To Review");
+	}
+
 }
