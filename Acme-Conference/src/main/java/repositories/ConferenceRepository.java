@@ -85,4 +85,7 @@ public interface ConferenceRepository extends JpaRepository<Conference, Integer>
 	@Query("select distinct(c) from Conference c where c.fee < ?1")
 	Collection<Conference> findConferencesByMaximunFee(Double fee);
 
+	@Query("select conf from Category c join c.conferences conf where c.id = ?1")
+	Collection<Conference> findConferencesByCategoryId(int id);
+
 }

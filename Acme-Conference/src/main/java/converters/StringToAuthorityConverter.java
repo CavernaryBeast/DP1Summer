@@ -30,6 +30,8 @@ public class StringToAuthorityConverter implements Converter<String, Authority> 
 					res.setAuthority(Authority.AUTHOR);
 				else if (URLDecoder.decode(parts[0], "UTF-8").equals("REVIEWER"))
 					res.setAuthority(Authority.REVIEWER);
+				else if (URLDecoder.decode(parts[0], "UTF-8").equals("SPONSOR"))
+					res.setAuthority(Authority.SPONSOR);
 			} catch (final Throwable oops) {
 				throw new RuntimeException(oops);
 			}

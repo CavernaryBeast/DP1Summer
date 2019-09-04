@@ -36,6 +36,8 @@
 								code="master.page.administrator.confParams" /></a></li>
 					<li><a href="topic/administrator/list.do"><spring:message
 								code="master.page.administrator.topics" /></a></li>
+					<li><a href="category/administrator/list.do"><spring:message
+								code="master.page.administrator.categories" /></a></li>
 				</ul></li>
 			<li><a class="fNiv"> <spring:message
 						code="master.page.adminMessage" />
@@ -54,8 +56,9 @@
 			</a>
 				<ul>
 					<li class="arrow"></li>
-					<li><a href="configurationparameters/administrator/edit.do"> <spring:message
-								code="master.page.confParamsEdit" /></a>
+					<li><a href="configurationparameters/administrator/edit.do">
+							<spring:message code="master.page.confParamsEdit" />
+					</a>
 				</ul></li>
 		</security:authorize>
 
@@ -125,6 +128,11 @@
 
 					<security:authorize access="hasRole('AUTHOR')">
 						<li><a href="author/edit.do"><spring:message
+									code="master.page.editProfile" /></a></li>
+					</security:authorize>
+
+					<security:authorize access="hasRole('SPONSOR')">
+						<li><a href="sponsor/edit.do"><spring:message
 									code="master.page.editProfile" /></a></li>
 					</security:authorize>
 

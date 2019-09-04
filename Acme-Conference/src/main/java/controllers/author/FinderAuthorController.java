@@ -14,16 +14,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import controllers.AbstractController;
-import domain.Author;
-import domain.Category;
-import domain.Conference;
-import domain.Finder;
 import services.AuthorService;
 import services.CategoryService;
 import services.ConferenceService;
 import services.ConfigurationParametersService;
 import services.FinderService;
+import controllers.AbstractController;
+import domain.Author;
+import domain.Category;
+import domain.Conference;
+import domain.Finder;
 
 @Controller
 @RequestMapping("/finder/author")
@@ -73,13 +73,13 @@ public class FinderAuthorController extends AbstractController {
 	public ModelAndView save(@ModelAttribute("finder") @Valid final Finder finder, final BindingResult binding) {
 
 		ModelAndView res;
-		Finder saved;
+		final Finder saved;
 
 		if (binding.hasErrors())
 			res = this.createEditModelAndView(finder);
 		else
 			try {
-				saved = this.finderService.save(finder);
+				this.finderService.save(finder);
 
 				res = new ModelAndView("redirect:display.do");
 
@@ -100,7 +100,7 @@ public class FinderAuthorController extends AbstractController {
 		final Author principal = this.authorService.findByPrincipal();
 		final Finder finder = principal.getFinder();
 
-		res = new ModelAndView("conference/listFinded");
+		res = new ModelAndView("conference/listFound");
 
 		final Collection<Conference> conferences = this.conferenceService.useFinder(finder);
 

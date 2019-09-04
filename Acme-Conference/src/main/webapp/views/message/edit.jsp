@@ -29,13 +29,13 @@
 	<jstl:choose>
 		<jstl:when test="${lang eq 'en'}">
 
-			<acme:select items="${topics}" itemLabel="name" code="message.topics"
+			<acme:select1 items="${topics}" itemLabel="name" code="message.topics"
 				path="topic" />
 
 		</jstl:when>
 		<jstl:when test="${lang eq 'es'}">
 
-			<acme:select items="${topics}" itemLabel="nameEs"
+			<acme:select1 items="${topics}" itemLabel="nameEs"
 				code="message.topics" path="topic" />
 
 		</jstl:when>

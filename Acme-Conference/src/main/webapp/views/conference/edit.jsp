@@ -9,45 +9,69 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
-<form:form action="conference/administrator/edit.do" modelAttribute="conference">
+<form:form action="conference/administrator/edit.do"
+	modelAttribute="conference">
 
 	<form:hidden path="id" />
 	<form:hidden path="version" />
 
 
-		<acme:textbox code="conference.title" path="title"/>
-		<br />
-		
-		<acme:textbox code="conference.acronym" path="acronym"/>
-		<br />
-		
-		<acme:textbox code="conference.venue" path="venue"/>
-		<br />
-		
-		<acme:textbox code="conference.submissionDeadline" path="submissionDeadline"/>
-		<br />
-		
-		<acme:textbox code="conference.notificationDeadline" path="notificationDeadline"/>
-		<br />
-		
-		<acme:textbox code="conference.cameraReadyDeadline" path="cameraReadyDeadline"/>
-		<br />
-		
-		<acme:textbox code="conference.startDate" path="startDate"/>
-		<br />
-		
-		<acme:textbox code="conference.endDate" path="endDate"/>
-		<br />
-		
-		<acme:textbox code="conference.summary" path="summary"/>
-		<br />
-		
-		<acme:textbox code="conference.fee" path="fee"/>
-		<br />
-		
-		<acme:radiobutton code="conference.isFinal" path="isFinal"  codeTrue="conference.yes"  codeFalse="conference.no" />
+	<acme:textbox code="conference.title" path="title" />
+	<br />
 
-	
+	<acme:textbox code="conference.acronym" path="acronym" />
+	<br />
+
+	<acme:textbox code="conference.venue" path="venue" />
+	<br />
+
+	<acme:textbox code="conference.submissionDeadline"
+		path="submissionDeadline" />
+	<br />
+
+	<acme:textbox code="conference.notificationDeadline"
+		path="notificationDeadline" />
+	<br />
+
+	<acme:textbox code="conference.cameraReadyDeadline"
+		path="cameraReadyDeadline" />
+	<br />
+
+	<acme:textbox code="conference.startDate" path="startDate" />
+	<br />
+
+	<acme:textbox code="conference.endDate" path="endDate" />
+	<br />
+
+	<acme:textbox code="conference.summary" path="summary" />
+	<br />
+
+	<acme:textbox code="conference.fee" path="fee" />
+	<br />
+
+	<acme:radiobutton code="conference.isFinal" path="isFinal"
+		codeTrue="conference.yes" codeFalse="conference.no" />
+
+	<jstl:choose>
+		<jstl:when test="${lang eq 'en'}">
+			<spring:message code="conference.category" />
+			<select id="categoryId" name="categoryId">
+				<jstl:forEach var="c" items="${categories}">
+					<option value="${c.id}">${c.name}</option>
+				</jstl:forEach>
+			</select>
+		</jstl:when>
+		<jstl:when test="${lang eq 'es'}">
+			<spring:message code="conference.category" />
+			<select id="categoryId" name="categoryId">
+				<jstl:forEach var="c" items="${categories}">
+					<option value="${c.id}">${c.nameEs}</option>
+				</jstl:forEach>
+			</select>
+		</jstl:when>
+	</jstl:choose>
+	<br />
+
 	<acme:submit name="save" code="conference.save" />
 
 	<acme:button url="/" code="conference.cancel" />

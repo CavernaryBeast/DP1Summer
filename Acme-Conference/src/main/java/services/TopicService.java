@@ -2,6 +2,7 @@
 package services;
 
 import java.util.Collection;
+import java.util.List;
 
 import javax.transaction.Transactional;
 
@@ -10,6 +11,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import repositories.TopicRepository;
+import domain.ConfigurationParameters;
+import domain.Message;
 import domain.Topic;
 
 @Service
@@ -17,10 +20,16 @@ import domain.Topic;
 public class TopicService {
 
 	@Autowired
-	private TopicRepository			topicRepository;
+	private TopicRepository					topicRepository;
 
 	@Autowired
-	private AdministratorService	administratorService;
+	private AdministratorService			administratorService;
+
+	@Autowired
+	private MessageService					messageService;
+
+	@Autowired
+	private ConfigurationParametersService	configurationParametersService;
 
 
 	public Topic create() {
@@ -83,6 +92,19 @@ public class TopicService {
 		Assert.notNull(topic);
 
 		this.administratorService.findByPrincipal();
+
+		final Collection<Message> messages = this.messageService.findByTopicId(topic.getId());
+		final List<Topic> all = (List<Topic>) this.findAll();
+		all.remove(topic);
+		final Topic toSet = all.get(0);
+		for (final Message mes : messages) {
+			mes.setTopic(toSet);
+			this.messageService.save2(mes);
+		}
+		final ConfigurationParameters confParams = this.configurationParametersService.getConfigurationParameters();
+		Assert.isTrue(confParams.getTopics().size() >= 1);
+		confParams.getTopics().remove(topic);
+		this.configurationParametersService.save(confParams);
 
 		this.topicRepository.delete(topic);
 	}

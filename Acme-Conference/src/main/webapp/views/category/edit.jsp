@@ -14,7 +14,23 @@
 
 	<form:hidden path="id" />
 	<form:hidden path="version" />
-	<form:hidden path="father" />
+	<jstl:choose>
+		<jstl:when test="${category.father == null}">
+			<jstl:choose>
+				<jstl:when test="${lang eq 'en'}">
+					<acme:select1 items="${categories}" itemLabel="name"
+						code="category.father" path="father" />
+				</jstl:when>
+				<jstl:when test="${lang eq 'es'}">
+					<acme:select1 items="${categories}" itemLabel="nameEs"
+						code="category.father" path="father" />
+				</jstl:when>
+			</jstl:choose>
+		</jstl:when>
+		<jstl:when test="${category.father != null}">
+			<form:hidden path="father" />
+		</jstl:when>
+	</jstl:choose>
 
 	<acme:textbox code="category.name" path="name" />
 

@@ -1,17 +1,17 @@
 
 package services;
 
-import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
+import repositories.CategoryRepository;
 import domain.Category;
 import domain.Conference;
-import repositories.CategoryRepository;
 
 @Service
 @Transactional
@@ -22,6 +22,9 @@ public class CategoryService {
 
 	@Autowired
 	private AdministratorService	administratorService;
+
+	@Autowired
+	private ConferenceService		conferenceService;
 
 
 	public Category create() {
@@ -59,18 +62,38 @@ public class CategoryService {
 		return res;
 	}
 
-	public Collection<Category> findAllChildren(final int id) {
-
-		Assert.isTrue(id != 0);
-
-		final Collection<Category> children = this.categoryRepository.findChildren(id);
-		for (final Category category : children)
-			children.addAll(this.categoryRepository.findChildren(category.getId()));
-
-		Assert.notNull(children);
-
-		return children;
-	}
+	//	public Category findAllChildren(final int id) {
+	//
+	//		Assert.isTrue(id != 0);
+	//
+	//		final Category father = this.findFather(id);
+	//		final Category fatherToSave = this.findAllChildrenAlt(id, father);
+	//
+	//		return fatherToSave;
+	//	}
+	//	public Category findAllChildrenAlt(final int id, final Category father) {
+	//
+	//		Assert.isTrue(id != 0);
+	//
+	//		final Category first = this.findOne(id);
+	//
+	//		for (final Conference conf : first.getConferences()) {
+	//			first.getConferences().remove(conf);
+	//			father.getConferences().add(conf);
+	//		}
+	//
+	//		final Collection<Category> aux = this.categoryRepository.findChildren(id);
+	//		if (!aux.isEmpty())
+	//			for (final Category category : aux)
+	//				//father.getConferences().addAll(category.getConferences());
+	//				this.findAllChildrenAlt(category.getId(), father);
+	//		else
+	//			this.categoryRepository.delete(first);
+	//		if (this.categoryRepository.exists(first.getId()))
+	//			this.categoryRepository.delete(first);
+	//
+	//		return father;
+	//	}
 
 	public Category findFather(final int id) {
 
@@ -94,44 +117,50 @@ public class CategoryService {
 
 		Assert.notNull(c);
 
+		if (c.getFather() == null)
+			Assert.isTrue(c.getName() == "CONFERENCE");
+
 		this.administratorService.findByPrincipal();
 
 		return this.categoryRepository.save(c);
 	}
 
-	public void delete(final Category c) {
+	public void delete(final Category category) {
 
-		Assert.notNull(c);
-		Assert.isTrue(c.getId() != 0);
+		final Collection<Conference> conferences = new HashSet<>();
 
-		Assert.isTrue(!c.getName().equals("CATEGORY"));
-		Assert.isTrue(!c.getFather().equals(null));
+		final Category parent = this.findFather(category.getId());
 
-		this.administratorService.findByPrincipal();
+		final Collection<Conference> aux = this.delete(category, conferences);
 
-		//If the deleted category was referenced by some conference, we need to set the category of all that conferences with the root category
-
-		final Collection<Category> categories = this.findAllChildren(c.getId());
-
-		categories.add(c);
-
-		final Collection<Conference> conferences = new ArrayList<Conference>();
-
-		for (final Category category : categories)
-			conferences.addAll(category.getConferences());
-
-		final Category father = this.findFather(c.getId());
-		father.setConferences(conferences);
-
-		this.deleteAll(categories);
+		parent.setConferences(aux);
+		this.save(parent);
 	}
 
-	private void deleteAll(final Collection<Category> categories) {
+	public Collection<Conference> delete(final Category category, final Collection<Conference> conferences) {
 
-		Assert.notNull(categories);
+		Assert.notNull(category);
+		Assert.isTrue(category.getId() != 0);
+		Assert.isTrue(!category.getName().equals("CONFERENCE"));
 
-		for (final Category c : categories)
-			this.categoryRepository.delete(c);
+		final Collection<Category> childs = this.findChildren(category.getId());
+		//		final Category parent = category.getFather();
+
+		//All the conferences that have this category
+		conferences.addAll(this.conferenceService.findConferencesByCategoryId(category.getId()));
+
+		//all conferences that have a child category of this category
+		if (!childs.isEmpty()) {
+			final Collection<Category> copy = new HashSet<>();
+			copy.addAll(childs);
+			for (final Category c : copy) {
+				conferences.addAll(this.conferenceService.findConferencesByCategoryId(category.getId()));
+				childs.remove(c);
+				this.delete(c, conferences);
+			}
+		}
+		this.categoryRepository.delete(category);
+		return conferences;
 	}
 
 	public Collection<Double> findAvgMinMaxStddevConferencesPerCategory() {

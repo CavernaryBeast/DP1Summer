@@ -18,10 +18,12 @@ import org.springframework.web.servlet.ModelAndView;
 
 import services.ActorService;
 import services.AdministratorService;
+import services.CategoryService;
 import services.ConferenceService;
 import services.ReviewerService;
 import services.SubmissionService;
 import controllers.AbstractController;
+import domain.Category;
 import domain.Conference;
 import domain.Reviewer;
 import domain.Submission;
@@ -45,6 +47,9 @@ public class ConferenceAdminController extends AbstractController {
 
 	@Autowired
 	private ActorService	actorService;
+
+	@Autowired
+	private CategoryService	categoryService;
 
 
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
@@ -152,7 +157,7 @@ public class ConferenceAdminController extends AbstractController {
 	// ----------------------------------------------------------------------------------
 
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(Conference conference, final BindingResult binding) {
+	public ModelAndView save(Conference conference, final BindingResult binding, final int categoryId) {
 
 		ModelAndView result;
 
@@ -161,7 +166,12 @@ public class ConferenceAdminController extends AbstractController {
 			result = this.createEditModelAndView(conference);
 		else
 			try {
-				this.conferenceService.save(conference);
+				final Conference saved = this.conferenceService.save(conference);
+
+				final Category category = this.categoryService.findOne(categoryId);
+				category.getConferences().add(saved);
+				this.categoryService.save(category);
+
 				result = new ModelAndView("redirect:/conference/administrator/list.do");
 
 			} catch (final Throwable oops) {
@@ -221,7 +231,12 @@ public class ConferenceAdminController extends AbstractController {
 		ModelAndView result;
 		result = new ModelAndView("conference/edit");
 
+		final Collection<Category> categories = this.categoryService.findAll();
+		final String lang = LocaleContextHolder.getLocale().getLanguage();
+
 		result.addObject("conference", conference);
+		result.addObject("categories", categories);
+		result.addObject("lang", lang);
 		result.addObject("message", messageCode);
 		return result;
 	}

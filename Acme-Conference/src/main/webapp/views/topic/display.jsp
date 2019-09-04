@@ -22,8 +22,6 @@
 <acme:button url="topic/administrator/edit.do?topicId=${topic.id}"
 	code="topic.edit" />
 
-<acme:button url="topic/administrator/delete.do?topicId=${topic.id}"
-	code="topic.delete" />
 <br />
 
 <acme:button url="topic/administrator/list.do" code="topic.back" />

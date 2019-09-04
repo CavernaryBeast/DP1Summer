@@ -17,12 +17,12 @@
 	<acme:textarea code="finder.keyword" path="keyword" />
 
 	<jstl:choose>
-		<jstl:when test="${language eq 'en'}">
-			<acme:select items="categories" itemLabel="name"
+		<jstl:when test="${lang eq 'en'}">
+			<acme:select items="${categories}" itemLabel="name"
 				code="category.categories" path="category" />
 		</jstl:when>
-		<jstl:when test="${language eq 'es'}">
-			<acme:select items="categories" itemLabel="nameEs"
+		<jstl:when test="${lang eq 'es'}">
+			<acme:select items="${categories}" itemLabel="nameEs"
 				code="category.categories" path="category" />
 		</jstl:when>
 	</jstl:choose>

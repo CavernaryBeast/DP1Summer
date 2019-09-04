@@ -447,30 +447,41 @@ public class ConferenceService {
 
 		final Collection<Collection<Conference>> aux = new ArrayList<Collection<Conference>>();
 
-		//		if (finder.getKeyword() != "") {
-		final Collection<Conference> keyword = this.findConferencesByKeyword(finder.getKeyword());
-		aux.add(keyword);
-		//		}
+		if (finder.getKeyword() != null) {
+			final Collection<Conference> keyword = this.findConferencesByKeyword(finder.getKeyword());
+			aux.add(keyword);
+		}
 		if (finder.getCategory() != null) {
 			final Collection<Conference> category = this.findConferencesByCategory(finder.getCategory());
 			aux.add(category);
 		}
-		//		if (finder.getStartDate() != null) {
-		final Collection<Conference> startDate = this.findConferencesByStartDate(finder.getStartDate());
-		aux.add(startDate);
-		//		}
-		//		if (finder.getEndDate() != null) {
-		final Collection<Conference> endDate = this.findConferencesByEndDate(finder.getEndDate());
-		aux.add(endDate);
-		//		}
-		//		if (finder.getFee() != null) {
-		final Collection<Conference> fee = this.findConferencesByMaximunFee(finder.getFee());
-		aux.add(fee);
-		//		}
+		if (finder.getStartDate() != null) {
+			final Collection<Conference> startDate = this.findConferencesByStartDate(finder.getStartDate());
+			aux.add(startDate);
+		}
+		if (finder.getEndDate() != null) {
+			final Collection<Conference> endDate = this.findConferencesByEndDate(finder.getEndDate());
+			aux.add(endDate);
+		}
+		if (finder.getFee() != null) {
+			final Collection<Conference> fee = this.findConferencesByMaximunFee(finder.getFee());
+			aux.add(fee);
+		}
 
 		//		if (!aux.isEmpty())
 		for (final Collection<Conference> collection : aux)
 			res.retainAll(collection);
+		return res;
+	}
+
+	public Collection<Conference> findConferencesByCategoryId(final int id) {
+
+		Assert.notNull(id);
+		Assert.isTrue(id != 0);
+
+		final Collection<Conference> res = this.conferenceRepository.findConferencesByCategoryId(id);
+		Assert.notNull(res);
+
 		return res;
 	}
 

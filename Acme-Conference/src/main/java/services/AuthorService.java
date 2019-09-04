@@ -111,6 +111,17 @@ public class AuthorService {
 		return saved;
 	}
 
+	public Author save2(final Author author) {
+
+		Assert.notNull(author);
+		Author saved;
+
+		saved = this.authorRepository.save(author);
+		Assert.notNull(saved);
+
+		return saved;
+	}
+
 	public void delete(final Author author) {
 
 		Assert.notNull(author);

@@ -89,6 +89,14 @@ public class MessageService {
 		return saved;
 	}
 
+	public Message save2(final Message mes) {
+
+		Assert.notNull(mes);
+		Assert.isTrue(mes.getId() != 0);
+
+		return this.messageRepository.save(mes);
+	}
+
 	public void delete(final Message mes) {
 
 		Message saved;
@@ -194,4 +202,14 @@ public class MessageService {
 		this.submissionService.save2(submission);
 	}
 
+	public Collection<Message> findByTopicId(final int id) {
+
+		Assert.notNull(id);
+		Assert.isTrue(id != 0);
+
+		final Collection<Message> res = this.messageRepository.findByTopicId2(id);
+		Assert.notNull(res);
+
+		return res;
+	}
 }

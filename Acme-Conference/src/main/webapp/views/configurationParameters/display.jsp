@@ -8,6 +8,7 @@
 	uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <spring:message code="confParams.sysName" />
 :
@@ -52,11 +53,15 @@
 
 	<display:column property="name" titleKey="topic.name" />
 	<display:column property="nameEs" titleKey="topic.nameEs" />
+	
+	<jstl:if test="${fn:length(confParams.topics) > 1}">
 	<display:column>
 		<a href="topic/administrator/edit.do?topicId=${row.id}"> <spring:message
 				code="topic.edit" />
 		</a>
 	</display:column>
+	</jstl:if>
+	
 	<display:column>
 		<a href="topic/administrator/delete.do?topicId=${row.id}"> <spring:message
 				code="topic.delete" />

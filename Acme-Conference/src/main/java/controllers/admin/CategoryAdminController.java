@@ -15,11 +15,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import controllers.AbstractController;
-import domain.Category;
 import services.AdministratorService;
 import services.CategoryService;
 import services.ConfigurationParametersService;
+import controllers.AbstractController;
+import domain.Category;
 
 @Controller
 @RequestMapping("/category/administrator")
@@ -151,10 +151,17 @@ public class CategoryAdminController extends AbstractController {
 
 		res = new ModelAndView("category/edit");
 
+		final Collection<Category> categories = this.categoryService.findAll();
+		if (category.getFather() != null)
+			categories.remove(category);
+
 		res.addObject("category", category);
+		res.addObject("categories", categories);
 		res.addObject("message", messageCode);
 		final String banner = this.configurationParametersService.getBanner();
 		res.addObject("banner", banner);
+		final String lang = LocaleContextHolder.getLocale().getLanguage();
+		res.addObject("lang", lang);
 
 		return res;
 	}

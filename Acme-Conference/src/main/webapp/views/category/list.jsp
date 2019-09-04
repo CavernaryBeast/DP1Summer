@@ -68,3 +68,6 @@
 	</display:column>
 
 </display:table>
+
+<acme:button url="category/administrator/create.do"
+	code="category.create" />

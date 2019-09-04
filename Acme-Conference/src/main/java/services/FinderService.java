@@ -58,12 +58,11 @@ public class FinderService {
 	public Finder save(final Finder finder) {
 
 		Assert.notNull(finder);
+		final Author principal = this.authorService.findByPrincipal();
 
-		if (finder.getId() != 0) {
-			final Author principal = this.authorService.findByPrincipal();
+		if (finder.getId() != 0)
 			Assert.isTrue(principal.getFinder().getId() == finder.getId());
-		}
-
+		this.authorService.save2(principal);
 		return this.finderRepository.save(finder);
 	}
 
