@@ -77,6 +77,9 @@
 
 		<security:intercept-url
 			pattern="/comment/reviewer/**" access="hasRole('REVIEWER')" />
+			
+		<security:intercept-url
+			pattern="/sponsorship/sponsor/**" access="hasRole('SPONSOR')" />	
 
 		<security:intercept-url pattern="/comment/**"
 			access="permitAll" />
@@ -108,7 +111,7 @@
 			access="permitAll" />
 
 	<security:intercept-url
-			pattern="/sponsor/edit.do" access="hasRole('SPONSOR')" />
+			pattern="/sponsor/edit.do" access="hasRole('SPONSOR')" />		
 
 		<security:intercept-url
 			pattern="/reviewer/edit.do" access="hasRole('REVIEWER')" />

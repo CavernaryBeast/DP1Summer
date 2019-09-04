@@ -33,6 +33,7 @@
 		<value>/views/registration/messages</value>
 		<value>/views/configurationParameters/messages</value>
 		<value>/views/topic/messages</value>
+		<value>/views/sponsorship/messages</value>
 	</util:list>
 
 </beans>

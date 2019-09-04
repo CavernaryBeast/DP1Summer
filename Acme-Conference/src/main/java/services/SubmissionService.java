@@ -178,6 +178,15 @@ public class SubmissionService {
 		return res;
 	}
 
+	public Collection<Submission> findSubmissionsFromAuthor(final int authorId) {
+		Assert.notNull(authorId);
+		Assert.isTrue(authorId != 0);
+		final Collection<Submission> res;
+		res = this.submissionRepository.findOwn(authorId);
+		Assert.notNull(res);
+		return res;
+	}
+
 	public Submission reconstruct(final Submission submission, final BindingResult binding) {
 
 		final Author principal = this.authorService.findByPrincipal();
@@ -343,6 +352,7 @@ public class SubmissionService {
 		this.save2(submission);
 		return submission;
 	}
+
 	private Pattern patternKeywords(final Reviewer reviewer) {
 		final Collection<String> keywords = reviewer.getExpertise();
 		String pattern = "";

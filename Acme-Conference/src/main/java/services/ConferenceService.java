@@ -14,13 +14,13 @@ import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
+import repositories.ConferenceRepository;
 import domain.Activity;
 import domain.Administrator;
 import domain.Conference;
 import domain.Registration;
 import domain.Report;
 import domain.Submission;
-import repositories.ConferenceRepository;
 
 @Transactional
 @Service
@@ -200,6 +200,13 @@ public class ConferenceService {
 	public Collection<Conference> getConferencesStartDateInLessFiveDays() {
 		Collection<Conference> result;
 		result = this.conferenceRepository.getConferencesStartDateInLessFiveDays();
+		Assert.notNull(result);
+		return result;
+	}
+
+	public Collection<Conference> getConferencesorganizedInLast12MonthsOrInFuture() {
+		Collection<Conference> result;
+		result = this.conferenceRepository.getConferencesorganizedInLast12MonthsOrInFuture();
 		Assert.notNull(result);
 		return result;
 	}

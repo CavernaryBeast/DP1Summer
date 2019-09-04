@@ -11,16 +11,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import services.ConfigurationParametersService;
 import controllers.AbstractController;
 import domain.ConfigurationParameters;
-import services.ConfigurationParametersService;
 
 @Controller
 @RequestMapping("/configurationparameters/administrator")
 public class ConfigurationParametersAdmincontroller extends AbstractController {
 
 	@Autowired
-	private ConfigurationParametersService configurationParametersService;
+	private ConfigurationParametersService	configurationParametersService;
 
 
 	// Edit
@@ -66,6 +66,21 @@ public class ConfigurationParametersAdmincontroller extends AbstractController {
 
 	@RequestMapping(value = "/display", method = RequestMethod.GET)
 	public ModelAndView display() {
+
+		ModelAndView res;
+		final ConfigurationParameters confParams = this.configurationParametersService.getConfigurationParameters();
+
+		res = new ModelAndView("configurationParameters/display");
+		res.addObject("confParams", confParams);
+
+		final String banner = this.configurationParametersService.getBanner();
+		res.addObject("banner", banner);
+
+		return res;
+	}
+
+	@RequestMapping(value = "/compute", method = RequestMethod.GET)
+	public ModelAndView compute() {
 
 		ModelAndView res;
 		final ConfigurationParameters confParams = this.configurationParametersService.getConfigurationParameters();

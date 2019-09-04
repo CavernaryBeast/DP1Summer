@@ -19,19 +19,31 @@ import org.hibernate.validator.constraints.NotEmpty;
 public class ConfigurationParameters extends DomainEntity {
 
 	//Atributos de clase
-	private String				sysName; //
-	private String				banner; //
-	private String				message; //
-	private String				messageEs; //
+	private String				sysName;			//
+	private String				banner;			//
+	private String				message;			//
+	private String				messageEs;			//
 	private String				countryCode;
-	private String				defaultCountry; //
-	private Collection<String>	creditCardMakes; //
+	private String				defaultCountry;	//
+	private Collection<String>	creditCardMakes;	//
 	private Collection<Topic>	topics;
+	private Collection<String>	voidWords;
+
 
 	//Atributos de asociación
 
-
 	//Getters and setters
+
+	@Valid
+	@NotEmpty
+	@ElementCollection
+	public Collection<String> getVoidWords() {
+		return this.voidWords;
+	}
+
+	public void setVoidWords(final Collection<String> voidWords) {
+		this.voidWords = voidWords;
+	}
 
 	@NotBlank
 	public String getSysName() {

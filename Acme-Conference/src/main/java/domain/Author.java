@@ -10,10 +10,19 @@ import javax.persistence.Entity;
 public class Author extends Actor {
 
 	//Atributos de clase
-	private String alias;
+	private String	alias;
+	private int		puntuation;
+
 
 	//Atributos de asociación
 
+	public int getPuntuation() {
+		return this.puntuation;
+	}
+
+	public void setPuntuation(final int puntuation) {
+		this.puntuation = puntuation;
+	}
 
 	//Getters and setters
 	public String getAlias() {

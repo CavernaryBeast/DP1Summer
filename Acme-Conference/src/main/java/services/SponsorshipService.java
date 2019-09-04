@@ -9,8 +9,12 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 
 import repositories.SponsorshipRepository;
+import domain.CreditCard;
+import domain.Sponsor;
 import domain.Sponsorship;
 
 @Service
@@ -23,10 +27,19 @@ public class SponsorshipService {
 	@Autowired
 	private SponsorService			sponsorService;
 
+	@Autowired
+	private CreditCardService		creditCardService;
+
+	@Autowired
+	private Validator				validator;
+
 
 	public Sponsorship create() {
-		this.sponsorService.findByPrincipal();
+		final Sponsor sponsor = this.sponsorService.findByPrincipal();
 		final Sponsorship res = new Sponsorship();
+		final CreditCard creditCard = new CreditCard();
+		res.setCreditCard(creditCard);
+		res.setSponsor(sponsor);
 		return res;
 	}
 
@@ -49,17 +62,28 @@ public class SponsorshipService {
 
 	public Sponsorship save(final Sponsorship sponsorship) {
 		Assert.notNull(sponsorship);
-		this.sponsorService.findByPrincipal();
-		Sponsorship saved;
+		final Sponsor sponsor = this.sponsorService.findByPrincipal();
+		final Sponsorship saved;
+		if (sponsorship.getId() == 0) {
+			final CreditCard creditCard = sponsorship.getCreditCard();
+			creditCard.setOwner(sponsor);
+			final CreditCard savedC = this.creditCardService.save(creditCard);
+			sponsorship.setCreditCard(savedC);
+		} else {
+			final CreditCard c = sponsorship.getCreditCard();
+			c.setOwner(sponsor);
+			this.creditCardService.save(c);
+
+		}
 		saved = this.sponsorshipRepository.save(sponsorship);
 		Assert.notNull(saved);
-		return sponsorship;
+		return saved;
 	}
-
-	public void delete(final Sponsorship sponsorship) {
-		Assert.notNull(sponsorship);
+	public void delete(final int sponsorshipId) {
+		Assert.notNull(sponsorshipId);
+		Assert.isTrue(sponsorshipId != 0);
 		this.sponsorService.findByPrincipal();
-		this.sponsorshipRepository.delete(sponsorship);
+		this.sponsorshipRepository.delete(sponsorshipId);
 	}
 
 	public boolean exist(final int id) {
@@ -88,6 +112,32 @@ public class SponsorshipService {
 		result = this.sponsorshipRepository.findSponsorshipsFromConferenceId(conferenceId);
 		Assert.notNull(result);
 		return result;
+	}
+
+	public Collection<Sponsorship> findSponsorshipsFromSponsorId(final int sponsorId) {
+		Assert.notNull(sponsorId);
+		Assert.isTrue(sponsorId != 0);
+		Collection<Sponsorship> result;
+		result = this.sponsorshipRepository.findSponsorshipsFromSponsorId(sponsorId);
+		Assert.notNull(result);
+		return result;
+	}
+
+	public Sponsorship reconstruct(final Sponsorship sponsorship, final BindingResult binding) {
+		Sponsorship original;
+		final Sponsor principal = this.sponsorService.findByPrincipal();
+
+		if (sponsorship.getId() == 0)
+			sponsorship.setSponsor(principal);
+		else {
+			original = this.findOne(sponsorship.getId());
+			sponsorship.setId(original.getId());
+			sponsorship.setVersion(original.getVersion());
+			sponsorship.setSponsor(original.getSponsor());
+		}
+		this.validator.validate(sponsorship, binding);
+		return sponsorship;
+
 	}
 
 }

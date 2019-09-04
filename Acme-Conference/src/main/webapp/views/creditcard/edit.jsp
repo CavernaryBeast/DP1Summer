@@ -30,7 +30,7 @@
 		<spring:message code="creditCard.make" />: 
 	</form:label>
 
-	<form:select id="makes" path="make">
+	<form:select id="makes" path="creditCard.make">
 		<jstl:forEach items="${makes}" var="make">
 			<form:option value="${make}" />
 		</jstl:forEach>
