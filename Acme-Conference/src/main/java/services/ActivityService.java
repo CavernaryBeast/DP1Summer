@@ -85,7 +85,7 @@ public class ActivityService {
 	}
 
 	public Activity findOne(final int activityId) {
-		this.administratorService.findByPrincipal();
+		//		this.administratorService.findByPrincipal();
 		Assert.isTrue(activityId != 0);
 		Assert.notNull(activityId);
 		Assert.isTrue(this.activityRepository.exists(activityId));

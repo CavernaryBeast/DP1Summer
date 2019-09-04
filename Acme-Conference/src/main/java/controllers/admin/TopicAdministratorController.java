@@ -14,15 +14,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import controllers.AbstractController;
-import domain.Topic;
 import services.AdministratorService;
 import services.ConfigurationParametersService;
 import services.TopicService;
+import controllers.AbstractController;
+import domain.Topic;
 
 @Controller
 @RequestMapping("/topic/administrator")
-
 public class TopicAdministratorController extends AbstractController {
 
 	@Autowired
@@ -148,7 +147,7 @@ public class TopicAdministratorController extends AbstractController {
 
 		ModelAndView res;
 
-		res = this.createEditModelAndView(topic);
+		res = this.createEditModelAndView(topic, null);
 
 		return res;
 	}

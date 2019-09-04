@@ -13,17 +13,20 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 <jstl:forEach items="${comments}" var="comment">
-	<ol>
-		<li><spring:message code="comment.author" />: <jstl:if
-				test="${comment.author not eq null}">
-				<jstl:out value="${comment.author.userAccount.username}" />
-			</jstl:if> <spring:message code="comment.author.anonimous" /> <br /> <spring:message
-				code="comment.title" />: <jstl:out value="${comment.title}" /> <br />
-
-			<spring:message code="comment.moment" />: <jstl:out
-				value="${comment.moment}" /> <br /> <spring:message
-				code="comment.text" />: <jstl:out value="${comment-text}" /></li>
-	</ol>
+	<ul>
+		<li><spring:message code="comment.author" />: <jstl:choose>
+				<jstl:when test="${comment.author != null}">
+					<jstl:out value="${comment.author.userAccount.username}" />
+				</jstl:when>
+				<jstl:otherwise>
+					<spring:message code="comment.author.anonimous" />
+				</jstl:otherwise>
+			</jstl:choose> <br /> <spring:message code="comment.title" /> : <jstl:out
+				value="${comment.title}" /> <br /> <spring:message
+				code="comment.moment" /> : <jstl:out value="${comment.moment}" />
+			<br /> <spring:message code="comment.text" /> : <jstl:out
+				value="${comment.text}" /></li>
+	</ul>
 </jstl:forEach>
 <br />
 
@@ -33,7 +36,7 @@
 			code="report.addComment" />
 
 		<acme:button url="report/reviewer/display.do?reportId=${reportId}"
-			code="report.display" />
+			code="report.back" />
 	</jstl:when>
 
 	<jstl:when test="${object eq 'conference'}">
@@ -42,7 +45,7 @@
 			code="conference.addComment" />
 
 		<acme:button url="conference/show.do?conferenceId=${conferenceId}"
-			code="conference.show" />
+			code="conference.back" />
 	</jstl:when>
 
 	<jstl:when test="${object eq 'activity'}">
@@ -51,6 +54,6 @@
 			code="activity.addComment" />
 
 		<acme:button url="activity/show.do?activityId=${activityId}"
-			code="activity.show" />
+			code="activity.back" />
 	</jstl:when>
 </jstl:choose>

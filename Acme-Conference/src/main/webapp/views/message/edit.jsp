@@ -20,7 +20,7 @@
 	</jstl:if>
 
 	<jstl:if test="${empty m.recipients}">
-	<acme:select items="${possibleRecipients}" itemLabel="userAccount.username"
+	<acme:select1 items="${possibleRecipients}" itemLabel="userAccount.username"
 		code="message.recipients" path="recipients" />
 	</jstl:if>
 

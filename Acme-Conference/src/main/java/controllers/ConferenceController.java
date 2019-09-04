@@ -19,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 import services.CategoryService;
 import services.ConferenceService;
 import services.SponsorshipService;
+import domain.Category;
 import domain.Conference;
 import domain.Sponsorship;
 import forms.FilterConferenceForm;
@@ -48,7 +49,7 @@ public class ConferenceController extends AbstractController {
 		final Date now = new Date(System.currentTimeMillis() - 1);
 		result = new ModelAndView("conference/list");
 
-		//	final Collection<Category> categories = this.categoryService.findAll();
+		final Collection<Category> categories = this.categoryService.findAll();
 
 		result.addObject("conferences", conferences);
 		result.addObject("language", language);
@@ -56,7 +57,7 @@ public class ConferenceController extends AbstractController {
 		result.addObject("actionFilter", "conference/listFilter.do");
 		result.addObject("filterConferenceForm", filterConferenceForm);
 		result.addObject("now", now);
-		//	result.addObject("categories", categories);
+		result.addObject("categories", categories);
 		return result;
 	}
 
@@ -82,12 +83,15 @@ public class ConferenceController extends AbstractController {
 			conferences.retainAll(aux);
 		}
 
+		final Collection<Category> categories = this.categoryService.findAll();
+
 		result.addObject("conferences", conferences);
 		result.addObject("language", language);
 		result.addObject("requestURI", "conference/list.do");
 		result.addObject("actionFilter", "conference/listFilter.do");
 		result.addObject("filterConferenceForm", filterConferenceForm);
 		result.addObject("now", now);
+		result.addObject("categories", categories);
 		return result;
 	}
 

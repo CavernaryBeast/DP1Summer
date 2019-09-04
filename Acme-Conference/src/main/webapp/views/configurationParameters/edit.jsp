@@ -9,11 +9,12 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
-<form:form action="configurationParameters/author/edit.do" method="POST"
-	modelAttribute="confParams">
+<form:form action="configurationparameters/administrator/edit.do"
+	method="POST" modelAttribute="confParams">
 	<form:hidden path="id" />
 	<form:hidden path="version" />
 	<form:hidden path="topics" />
+	<form:hidden path="voidWords"/>
 
 	<acme:textbox code="confParams.sysName" path="sysName" />
 
@@ -31,7 +32,7 @@
 
 	<acme:submit name="save" code="confParams.save" />
 
-	<acme:button url="confParams/administrator/display.do"
+	<acme:button url="configurationparameters/administrator/display.do"
 		code="confParams.back" />
 
 </form:form>

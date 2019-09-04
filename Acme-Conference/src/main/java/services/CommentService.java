@@ -105,7 +105,7 @@ public class CommentService {
 		//Lets see if this work
 		saved = this.commentRepository.save(comment);
 		conference.getComments().add(saved);
-		this.conferenceService.save(conference);
+		this.conferenceService.save2(conference);
 
 		return saved;
 	}

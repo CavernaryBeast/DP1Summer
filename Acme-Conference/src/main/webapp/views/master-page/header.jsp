@@ -54,7 +54,7 @@
 			</a>
 				<ul>
 					<li class="arrow"></li>
-					<li><a href="configurationParameters/edit.do"> <spring:message
+					<li><a href="configurationparameters/administrator/edit.do"> <spring:message
 								code="master.page.confParamsEdit" /></a>
 				</ul></li>
 		</security:authorize>

@@ -72,11 +72,11 @@
 		<security:intercept-url pattern="/creditcard/author/**"
 			access="hasRole('AUTHOR')" />
 
-		<security:intercept-url
-			pattern="/comment/reviewer/**" access="hasRole('REVIEWER')" />
-			
-		<security:intercept-url
-			pattern="/sponsorship/sponsor/**" access="hasRole('SPONSOR')" />	
+		<security:intercept-url pattern="/comment/reviewer/**"
+			access="hasRole('REVIEWER')" />
+
+		<security:intercept-url pattern="/sponsorship/sponsor/**"
+			access="hasRole('SPONSOR')" />
 
 		<security:intercept-url pattern="/comment/**"
 			access="permitAll" />
@@ -92,6 +92,10 @@
 
 		<security:intercept-url pattern="/configurationparameters/administrator/**"
 			access="hasRole('ADMINISTRATOR')" />
+
+		<security:intercept-url pattern="/topic/administrator/**"
+			access="hasRole('ADMINISTRATOR')" />
+
 
 		<security:intercept-url pattern="/registration/author/**"
 			access="hasRole('AUTHOR')" />

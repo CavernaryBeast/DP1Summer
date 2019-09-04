@@ -32,6 +32,22 @@
 		<form:option label="${pastLabel}" value="PAST" />
 	</form:select>
 
+	<security:authorize access="isAnonymous()">
+		<form:hidden path="category" />
+	</security:authorize>
+
+	<security:authorize access="isAuthenticated()">
+		<jstl:choose>
+			<jstl:when test="${language eq 'en'}">
+				<acme:select items="${categories}" itemLabel="name"
+					code="category.categories" path="category" />
+			</jstl:when>
+			<jstl:when test="${language eq 'es'}">
+				<acme:select items="${categories}" itemLabel="nameEs"
+					code="category.categories" path="category" />
+			</jstl:when>
+		</jstl:choose>
+	</security:authorize>
 	<br />
 	<acme:submit code="conference.filter" name="filter" />
 </form:form>
@@ -45,10 +61,10 @@
 	<display:column property="summary" titleKey="conference.summary" />
 	<display:column property="startDate" titleKey="conference.startDate" />
 	<display:column property="endDate" titleKey="conference.endDate" />
-		<display:column titleKey="conference.show">
-				<a href="conference/show.do?conferenceId=${row.id}"><spring:message
-						code="conference.show" /></a>
-		</display:column>
+	<display:column titleKey="conference.show">
+		<a href="conference/show.do?conferenceId=${row.id}"><spring:message
+				code="conference.show" /></a>
+	</display:column>
 
 
 	<security:authorize access="hasRole('ADMINISTRATOR')">

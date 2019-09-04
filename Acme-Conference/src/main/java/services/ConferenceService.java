@@ -78,7 +78,7 @@ public class ConferenceService {
 
 	public Conference findOne(final int id) {
 		//TODO: Probablemente haya que diferenciar los casos en funcion del actor, en función de la fecha que está por cumplirse.
-		this.administratorService.findByPrincipal();
+		//		this.administratorService.findByPrincipal();
 		Assert.isTrue(id != 0);
 		Assert.notNull(id);
 		Assert.isTrue(this.exist(id));

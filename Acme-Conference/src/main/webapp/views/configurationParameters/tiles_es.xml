@@ -10,8 +10,7 @@
 
 <tiles-definitions>
 
-	<definition name="configurationParameters/edit"
-		extends="master.page">
+	<definition name="configurationParameters/edit" extends="master.page">
 		<put-attribute name="title"
 			value="Editar Parámetros de Configuración del Sistema" />
 		<put-attribute name="body"
@@ -19,8 +18,7 @@
 	</definition>
 
 
-	<definition name="configurationParameters/display"
-		extends="master.page">
+	<definition name="configurationParameters/display" extends="master.page">
 		<put-attribute name="title"
 			value="Mostrar Parámetros de Configuración del Sistema" />
 		<put-attribute name="body"
