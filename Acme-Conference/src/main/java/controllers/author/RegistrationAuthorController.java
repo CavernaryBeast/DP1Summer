@@ -69,12 +69,18 @@ public class RegistrationAuthorController extends AbstractController {
 
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public ModelAndView create() {
-
 		ModelAndView res;
-		final Registration registration = this.registrationService.create();
-		res = this.createEditModelAndView(registration);
-		final String lang = LocaleContextHolder.getLocale().getLanguage();
-		res.addObject("lang", lang);
+		try {
+			final Registration registration = this.registrationService.create();
+			res = this.createEditModelAndView(registration);
+			final String lang = LocaleContextHolder.getLocale().getLanguage();
+			res.addObject("lang", lang);
+		} catch (final Throwable oops) {
+			if (oops.getMessage().equals("No conferences avaliable"))
+				res = this.ListModelAndView("registration.conferencesNotAvailable");
+			else
+				res = this.ListModelAndView();
+		}
 
 		return res;
 	}
@@ -101,6 +107,7 @@ public class RegistrationAuthorController extends AbstractController {
 				final Collection<Registration> registrationsOfConference = conference.getRegistrations();
 				registration.setAuthor(principal);
 				final CreditCard creditCard = registration.getCreditCard();
+				this.registrationService.tryluhnTest(creditCard.getNumber());
 				creditCard.setOwner(principal);
 				saved2 = this.creditCardService.save(creditCard);
 				registration.setCreditCard(saved2);
@@ -111,8 +118,11 @@ public class RegistrationAuthorController extends AbstractController {
 				res = new ModelAndView("redirect:/registration/author/list.do");
 
 			} catch (final Throwable oops) {
+				if (oops.getMessage().equals("Not a valid Credit Card"))
+					res = this.createEditModelAndView(registration, "registration.NotValidCreditCard");
+				else
+					res = this.createEditModelAndView(registration, "registration.commit.error");
 
-				res = this.createEditModelAndView(registration, "registration.commit.error");
 			}
 		return res;
 	}
@@ -123,9 +133,16 @@ public class RegistrationAuthorController extends AbstractController {
 		ModelAndView result;
 		final Registration registration;
 
-		registration = this.registrationService.findOne(registrationId);
-		result = new ModelAndView("registration/show");
-		result.addObject("registration", registration);
+		try {
+			registration = this.registrationService.findOne(registrationId);
+			result = new ModelAndView("registration/show");
+			result.addObject("registration", registration);
+		} catch (final Throwable oops) {
+			if (oops.getMessage().equals("Not the author"))
+				result = this.ListModelAndView("registration.NotTheAuthor");
+			else
+				result = this.ListModelAndView();
+		}
 
 		return result;
 	}
@@ -145,13 +162,28 @@ public class RegistrationAuthorController extends AbstractController {
 
 		ModelAndView res;
 		final Collection<String> makes = this.configurationParametersService.getCreditCardMakes();
-		final Collection<Conference> conferences = this.conferenceService.getConferencesStartDateNotElapsed();
+		final Collection<Conference> conferences = this.conferenceService.getConferencesStartDateNotElapsed3();
 		res = new ModelAndView("registration/edit");
 		res.addObject("message", messageCode);
 		res.addObject("registration", registration);
 		res.addObject("conferences", conferences);
 		res.addObject("makes", makes);
 		return res;
+	}
+
+	protected ModelAndView ListModelAndView() {
+		ModelAndView result;
+
+		result = this.ListModelAndView(null);
+
+		return result;
+	}
+
+	protected ModelAndView ListModelAndView(final String messageCode) {
+		ModelAndView result;
+		result = this.list();
+		result.addObject("message", messageCode);
+		return result;
 	}
 
 	//	protected ModelAndView createEditModelAndViewPaper(final Paper paper) {

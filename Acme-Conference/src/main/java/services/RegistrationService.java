@@ -56,7 +56,7 @@ public class RegistrationService {
 		Assert.isTrue(this.registrationRepository.exists(registrationId));
 		final Registration res = this.registrationRepository.findOne(registrationId);
 		Assert.notNull(res);
-		Assert.isTrue(res.getAuthor().equals(author));
+		Assert.isTrue(res.getAuthor().equals(author), "Not the author");
 		return res;
 	}
 
@@ -122,6 +122,26 @@ public class RegistrationService {
 		res = this.registrationRepository.findOwn(author.getId());
 		Assert.notNull(res);
 		return res;
+	}
+
+	public static boolean luhnTest(final String number) {
+		int s1 = 0, s2 = 0;
+		final String reverse = new StringBuffer(number).reverse().toString();
+		for (int i = 0; i < reverse.length(); i++) {
+			final int digit = Character.digit(reverse.charAt(i), 10);
+			if (i % 2 == 0)
+				s1 += digit;
+			else {//add 2 * digit for 0-4, add 2 * digit - 9 for 5-9
+				s2 += 2 * digit;
+				if (digit >= 5)
+					s2 -= 9;
+			}
+		}
+		return (s1 + s2) % 10 == 0;
+	}
+
+	public void tryluhnTest(final String number) {
+		Assert.isTrue(RegistrationService.luhnTest(number), "Not a valid Credit Card");
 	}
 
 }

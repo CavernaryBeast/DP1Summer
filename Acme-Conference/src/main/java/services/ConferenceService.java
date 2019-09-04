@@ -241,6 +241,14 @@ public class ConferenceService {
 		return result;
 	}
 
+	public Collection<Conference> getConferencesStartDateNotElapsed3() {
+		Collection<Conference> result;
+		result = this.conferenceRepository.getConferencesStartDateNotElapsed();
+		Assert.notNull(result);
+		Assert.isTrue(!result.isEmpty(), "No conferences avaliable");
+		return result;
+	}
+
 	public Collection<Conference> getConferencesStartDateNotElapsed2() {
 		Collection<Conference> result;
 		result = this.conferenceRepository.getConferencesStartDateNotElapsed();

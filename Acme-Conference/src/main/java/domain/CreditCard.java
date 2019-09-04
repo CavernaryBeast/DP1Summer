@@ -3,12 +3,10 @@ package domain;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.validation.Valid;
 
-import org.hibernate.validator.constraints.CreditCardNumber;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.Range;
 
@@ -49,8 +47,6 @@ public class CreditCard extends DomainEntity {
 	}
 
 	@NotBlank
-	@CreditCardNumber
-	@Column(unique = true)
 	public String getNumber() {
 		return this.number;
 	}
