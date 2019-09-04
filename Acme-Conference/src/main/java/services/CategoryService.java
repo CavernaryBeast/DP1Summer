@@ -163,12 +163,10 @@ public class CategoryService {
 		return conferences;
 	}
 
-	public Collection<Double> findAvgMinMaxStddevConferencesPerCategory() {
+	public String findAvgMinMaxStddevConferencesPerCategory() {
 
-		final Collection<Double> res = this.categoryRepository.findAvgMinMaxStddevConferencesPerCategory();
-
+		final String res = this.categoryRepository.findAvgMinMaxStddevConferencesPerCategory();
 		Assert.notNull(res);
-		Assert.notEmpty(res);
 
 		return res;
 	}

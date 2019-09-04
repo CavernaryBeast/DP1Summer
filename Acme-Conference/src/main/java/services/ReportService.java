@@ -9,6 +9,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
+import org.springframework.validation.Validator;
 
 import repositories.ReportRepository;
 import domain.Comment;
@@ -24,6 +25,12 @@ public class ReportService {
 
 	@Autowired
 	private ReviewerService		reviewerService;
+
+	@Autowired
+	private Validator			validator;
+
+	@Autowired
+	private SubmissionService	submissionService;
 
 
 	public Report create() {
@@ -119,4 +126,22 @@ public class ReportService {
 
 		return res;
 	}
+
+	//	public Report reconstruct(final Report report, final BindingResult binding, final int submissionId) {
+	//		this.reviewerService.findByPrincipal();
+	//		Assert.isTrue(report.getId() == 0);
+	//		final Submission submission = this.submissionService.findOne2(submissionId);
+	//		this.submissionService.checkSubmisisonCanBeSavedToReview(submissionId);
+	//		report.setSubmission(submission);
+	//		this.validator.validate(report, binding);
+	//		return report;
+	//	}
+
+	//	public Collection<String> generateCollectionOfDecisions(){
+	//		Collection<String> res = new HashSet<>();
+	//		res.add("REJECT");
+	//		res.
+	//		REJECT|BORDER-LINE|ACCEPT
+	//	}
+
 }

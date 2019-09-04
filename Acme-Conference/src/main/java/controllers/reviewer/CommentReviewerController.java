@@ -14,14 +14,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import controllers.AbstractController;
-import domain.Comment;
-import domain.Report;
-import domain.Reviewer;
 import services.CommentService;
 import services.ConfigurationParametersService;
 import services.ReportService;
 import services.ReviewerService;
+import controllers.AbstractController;
+import domain.Comment;
+import domain.Report;
+import domain.Reviewer;
 
 @Controller
 @RequestMapping("/comment/reviewer")
@@ -99,7 +99,7 @@ public class CommentReviewerController extends AbstractController {
 			try {
 				this.commentService.saveToReport(comment, reportId);
 
-				res = new ModelAndView("redirect:display.do?reportId=" + reportId);
+				res = new ModelAndView("redirect:list.do?reportId=" + reportId);
 				final String banner = this.configurationParametersService.getBanner();
 				res.addObject("banner", banner);
 			} catch (final Throwable oops) {

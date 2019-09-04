@@ -9,20 +9,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import controllers.AbstractController;
-import domain.Report;
-import domain.Reviewer;
-import domain.Submission;
 import services.ConfigurationParametersService;
 import services.ReportService;
 import services.ReviewerService;
 import services.SubmissionService;
+import controllers.AbstractController;
+import domain.Report;
+import domain.Reviewer;
+import domain.Submission;
 
 @Controller
 @RequestMapping("report/reviewer")
@@ -76,7 +75,7 @@ public class ReportReviewerController extends AbstractController {
 		report.setReviewer(principal);
 
 		res = this.createEditModelAndView(report);
-
+		res.addObject("submissionId", submissionId);
 		return res;
 	}
 
@@ -99,22 +98,29 @@ public class ReportReviewerController extends AbstractController {
 	//Save --------------------------------------------------------
 
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(@ModelAttribute("report") @Valid final Report report, final BindingResult binding) {
+	public ModelAndView save(@Valid final Report report, final BindingResult binding, @RequestParam final int submissionId) {
 
 		ModelAndView res;
 		Report saved;
-
+		//	this.reportService.reconstruct(report, binding, submissionId);
 		if (binding.hasErrors())
 			res = this.createEditModelAndView(report);
 		else
 			try {
+				final Submission submission = this.submissionService.findOne2(submissionId);
+				this.submissionService.checkSubmisisonCanBeSavedToReview(submissionId);
+				report.setSubmission(submission);
 				saved = this.reportService.save(report);
-
 				res = new ModelAndView("redirect:display.do?reportId=" + saved.getId());
 				final String banner = this.configurationParametersService.getBanner();
 				res.addObject("banner", banner);
 			} catch (final Throwable oops) {
-				res = this.createEditModelAndView(report, "report.commit.error");
+				if (oops.getMessage().equals("Is not a Submission To Review"))
+					res = this.ListModelAndView("report.submissionNotValid");
+				else
+					res = this.createEditModelAndView(report, "report.commit.error");
+
+				res.addObject("submissionId", submissionId);
 			}
 		return res;
 	}
@@ -183,6 +189,21 @@ public class ReportReviewerController extends AbstractController {
 		res.addObject("banner", banner);
 
 		return res;
+	}
+
+	protected ModelAndView ListModelAndView() {
+		ModelAndView result;
+
+		result = this.ListModelAndView(null);
+
+		return result;
+	}
+
+	protected ModelAndView ListModelAndView(final String messageCode) {
+		ModelAndView result;
+		result = this.list();
+		result.addObject("message", messageCode);
+		return result;
 	}
 
 }

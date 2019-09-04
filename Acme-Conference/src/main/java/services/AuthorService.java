@@ -91,7 +91,7 @@ public class AuthorService {
 
 		author.getUserAccount().setPassword(encoder.encodePassword(author.getUserAccount().getPassword(), null));
 
-		//		//Creación del author
+		//		//Creaciï¿½n del author
 		//		if (author.getId() == 0) {
 		//
 		//			Md5PasswordEncoder encoder;

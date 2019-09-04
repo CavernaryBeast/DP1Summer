@@ -16,11 +16,7 @@
 
 <spring:message code="report.submission" />
 :
-<a
-	href="submission/${role}
-	/show.do?submissionId=${report.submission.id}">
-	<jstl:out value="${report.submission.ticker}" />
-</a>
+<jstl:out value="${report.submission.paper.title}" />
 <br />
 
 <spring:message code="report.originalityScore" />

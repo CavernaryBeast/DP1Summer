@@ -15,10 +15,12 @@
 <%@taglib prefix="security"
 	uri="http://www.springframework.org/security/tags"%>
 
+
 <div>
-	<a href="#"><img src="${banner}" width="480" height="260"
-		alt="Acme Handy Worker Co., Inc." /></a>
+	<a href="#"><img src="images/acme-conference.png" alt="Acme-Conference Co., Inc."
+		style="margin-bottom: 0.5em;" /></a>
 </div>
+
 
 <div>
 	<ul id="jMenu">
@@ -67,6 +69,8 @@
 						code="master.page.author" /></a>
 				<ul>
 					<li class="arrow"></li>
+					<li><a href="author/show.do"><spring:message
+								code="master.page.author.show" /></a></li>
 					<li><a href="submission/author/list.do"><spring:message
 								code="master.page.author.submissions" /></a></li>
 					<li><a href="registration/author/list.do"><spring:message

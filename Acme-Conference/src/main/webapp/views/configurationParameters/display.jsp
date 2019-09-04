@@ -42,11 +42,19 @@
 
 <spring:message code="confParams.creditCardMakes" />
 :
+
+
 <jstl:forEach items="${confParams.creditCardMakes}" var="make">
 	<ul>
 		<li><jstl:out value="${make}" /></li>
 	</ul>
 </jstl:forEach>
+
+<acme:button url="/configurationparameters/administrator/compute.do"
+	code="confParams.compute" />
+<br>
+
+
 
 <display:table name="${confParams.topics}" id="row"
 	requestURI="${requestURI}" pagesize="10" class="displaytag">
@@ -68,8 +76,8 @@
 		</a>
 	</display:column>
 
-
 </display:table>
+
 
 <acme:button url="topic/administrator/create.do" code="topic.create" />
 

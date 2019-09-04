@@ -12,6 +12,10 @@
 <%@taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
+<jstl:set var="checkStatusA" value="ACCEPTED" />
+<jstl:set var="checkStatusR" value="REJECTED" />
+
+
 <fieldset>
 		<legend> <spring:message   code="submission.acceptedL"  />   </legend>	
 <display:table pagesize="10" name="${accepted}" id="row"
@@ -27,6 +31,9 @@
 </display:column>
 	<display:column titleKey="submission.assign">
 	<jstl:choose>
+	<jstl:when test="${row.status eq  checkStatusA or row.status eq  checkStatusR}">
+	<spring:message code="submission.cantAddMoreReviewersStatus" />
+	</jstl:when>	
 	<jstl:when test="${conference.notificationDeadline < now}">
 	<spring:message code="submission.cantAssingNDElapsed" />
 	</jstl:when>	
@@ -40,6 +47,9 @@
 		</display:column>
 		<display:column titleKey="submission.assignAutomatic">
 		<jstl:choose>
+	<jstl:when test="${row.status eq  checkStatusA or row.status eq  checkStatusR}">
+	<spring:message code="submission.cantAddMoreReviewersStatus" />
+	</jstl:when>
 	<jstl:when test="${fn:length(row.reviewers) ge 3}">
 	<spring:message code="submission.cantAddMoreReviewers" />
 	</jstl:when>
@@ -111,6 +121,9 @@
 </display:column>
 	<display:column titleKey="submission.assign">
 	<jstl:choose>
+	<jstl:when test="${row.status eq  checkStatusA or row.status eq  checkStatusR}">
+	<spring:message code="submission.cantAddMoreReviewersStatus" />
+	</jstl:when>
 	<jstl:when test="${conference.notificationDeadline < now}">
 	<spring:message code="submission.cantAssingNDElapsed" />
 	</jstl:when>	
@@ -124,6 +137,9 @@
 		</display:column>
 		<display:column titleKey="submission.assignAutomatic">
 		<jstl:choose>
+	<jstl:when test="${row.status eq  checkStatusA or row.status eq  checkStatusR}">
+	<spring:message code="submission.cantAddMoreReviewersStatus" />
+	</jstl:when>
 	<jstl:when test="${fn:length(row.reviewers) ge 3}">
 	<spring:message code="submission.cantAddMoreReviewers" />
 	</jstl:when>

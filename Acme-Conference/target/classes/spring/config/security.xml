@@ -108,6 +108,9 @@
 
 		<security:intercept-url pattern="/author/**"
 			access="permitAll" />
+			
+			<security:intercept-url pattern="/author/show.do"
+			access="hasRole('AUTHOR')" />
 
 		<security:intercept-url pattern="/author/edit.do"
 			access="hasRole('AUTHOR')" />

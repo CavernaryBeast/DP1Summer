@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import services.AdministratorService;
 import services.ConfigurationParametersService;
 import controllers.AbstractController;
 import domain.ConfigurationParameters;
@@ -21,6 +22,9 @@ public class ConfigurationParametersAdmincontroller extends AbstractController {
 
 	@Autowired
 	private ConfigurationParametersService	configurationParametersService;
+
+	@Autowired
+	private AdministratorService			administratorParametersService;
 
 
 	// Edit
@@ -84,6 +88,16 @@ public class ConfigurationParametersAdmincontroller extends AbstractController {
 
 		ModelAndView res;
 		final ConfigurationParameters confParams = this.configurationParametersService.getConfigurationParameters();
+		try {
+			this.administratorParametersService.computeScore();
+			res = new ModelAndView("redirect:display.do");
+
+			final String banner = this.configurationParametersService.getBanner();
+			res.addObject("banner", banner);
+
+		} catch (final Throwable oops) {
+			res = this.ListConfModelAndView("confParams.commit.error");
+		}
 
 		res = new ModelAndView("configurationParameters/display");
 		res.addObject("confParams", confParams);
@@ -117,6 +131,21 @@ public class ConfigurationParametersAdmincontroller extends AbstractController {
 		res.addObject("banner", banner);
 
 		return res;
+	}
+
+	protected ModelAndView ListConfModelAndView() {
+		ModelAndView result;
+
+		result = this.ListConfModelAndView(null);
+
+		return result;
+	}
+
+	protected ModelAndView ListConfModelAndView(final String messageCode) {
+		ModelAndView result;
+		result = this.display();
+		result.addObject("message", messageCode);
+		return result;
 	}
 
 }
