@@ -9,8 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
-import domain.Topic;
 import repositories.TopicRepository;
+import domain.Topic;
 
 @Service
 @Transactional
@@ -36,6 +36,14 @@ public class TopicService {
 		Assert.notEmpty(topics);
 
 		this.administratorService.findByPrincipal();
+
+		return topics;
+	}
+
+	public Collection<Topic> findAll2() {
+
+		final Collection<Topic> topics = this.topicRepository.findAll();
+		Assert.notEmpty(topics);
 
 		return topics;
 	}

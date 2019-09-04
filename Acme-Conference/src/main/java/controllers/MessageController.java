@@ -3,6 +3,7 @@ package controllers;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 
 import javax.validation.Valid;
 
@@ -17,15 +18,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import domain.Actor;
-import domain.Administrator;
-import domain.Message;
-import domain.Topic;
 import services.ActorService;
 import services.AdministratorService;
 import services.ConfigurationParametersService;
 import services.MessageService;
 import services.TopicService;
+import domain.Actor;
+import domain.Administrator;
+import domain.Message;
+import domain.Topic;
 
 @Controller
 @RequestMapping("/message")
@@ -212,15 +213,16 @@ public class MessageController extends AbstractController {
 		ModelAndView res = null;
 
 		if (binding.hasErrors()) {
-			if (type == "edit")
+			m.setRecipients(new HashSet<Actor>());
+			if (type.equals("edit"))
 				res = this.createEditModelAndView(m, false, null);
-			else if (type == "broadcast")
+			else if (type.equals("broadcast"))
 				res = this.createEditModelAndView(m, true, null);
-			else if (type == "broadcastToAllAuthors")
+			else if (type.equals("broadcastToAllAuthors"))
 				res = this.createEditModelAndViewToAuthors(m, null);
-			else if (type == "reply")
+			else if (type.equals("reply"))
 				res = this.createEditModelAndView(m, false, m.getRecipients());
-			else if (type == "submitted" || type == "registered")
+			else if (type.equals("submitted") || type.equals("registered"))
 				res = this.createEditModelAndViewAux(m, type);
 		} else
 			try {
@@ -229,16 +231,22 @@ public class MessageController extends AbstractController {
 				final String banner = this.configurationParametersService.getBanner();
 				res.addObject("banner", banner);
 			} catch (final Throwable oops) {
-				if (type == "edit")
+				if (type.equals("edit")) {
+					m.setRecipients(new HashSet<Actor>());
 					res = this.createEditModelAndView(m, false, null, "message.commit.error");
-				else if (type == "broadcast")
+				}
+
+				else if (type.equals("broadcast"))
 					res = this.createEditModelAndView(m, true, null, "message.commit.error");
-				else if (type == "broadcastToAllAuthors")
+				else if (type.equals("broadcastToAllAuthors"))
 					res = this.createEditModelAndViewToAuthors(m, "message.commit.error");
-				else if (type == "reply")
+				else if (type.equals("reply"))
 					res = this.createEditModelAndView(m, false, m.getRecipients(), "message.commit.error");
-				else if (type == "submitted" || type == "registered")
+				else if (type.equals("submitted") || type.equals("registered")) {
+					m.setRecipients(new HashSet<Actor>());
 					res = this.createEditModelAndViewAux(m, type, "message.commit.error");
+				}
+
 			}
 		final String lang = LocaleContextHolder.getLocale().getLanguage();
 		res.addObject("lang", lang);
@@ -300,7 +308,7 @@ public class MessageController extends AbstractController {
 	//Ancillary methods --------------------------------------------------------
 
 	/**
-	 *
+	 * 
 	 * @param message
 	 *            The message that is going to be created
 	 * @param broadcast
@@ -327,7 +335,7 @@ public class MessageController extends AbstractController {
 
 		final ModelAndView res;
 		final Collection<Actor> possibleRecipients = this.actorService.findAll();
-		final Collection<Topic> topics = this.topicService.findAll();
+		final Collection<Topic> topics = this.topicService.findAll2();
 		String type = "edit";
 
 		res = new ModelAndView("message/edit");
@@ -393,7 +401,7 @@ public class MessageController extends AbstractController {
 	protected ModelAndView createEditModelAndViewAux(final Message message, final String type, final String messageCode) {
 
 		ModelAndView res;
-		final Collection<Topic> topics = this.topicService.findAll();
+		final Collection<Topic> topics = this.topicService.findAll2();
 
 		res = new ModelAndView("message/edit");
 
