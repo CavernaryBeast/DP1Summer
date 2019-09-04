@@ -8,6 +8,7 @@ import javax.persistence.ManyToOne;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.URL;
 
 @Entity
@@ -21,6 +22,7 @@ public class Sponsorship extends DomainEntity {
 	//private Boolean	isDesactivated;
 
 	@URL
+	@NotBlank
 	public String getBanner() {
 		return this.banner;
 	}
@@ -30,6 +32,7 @@ public class Sponsorship extends DomainEntity {
 	}
 
 	@URL
+	@NotBlank
 	public String getTargetURL() {
 		return this.targetURL;
 	}
