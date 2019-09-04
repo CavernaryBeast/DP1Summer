@@ -200,7 +200,7 @@ public class AdministratorService {
 		//Paso 3:Calculamos las buzzWords-> Ej: Si la frequent word más alta es 6, la frontera de las buzzWords es 6 - 0,2*6 =4,8. Pues así
 		final Map<String, Integer> mapNumeroVecesQueApareceFrequentWordOrdenado = AdministratorService.sortByValue(numeroVecesQueApareceFrequentWord);
 		final List<Entry<String, Integer>> numeroVecesQueApareceFrequentWordOrdenado = new ArrayList<>(AdministratorService.sortByValue(numeroVecesQueApareceFrequentWord).entrySet());
-		final Entry<String, Integer> limiteMayor = numeroVecesQueApareceFrequentWordOrdenado.get(0); //Esta sería la palabra que más se repite
+		final Entry<String, Integer> limiteMayor = numeroVecesQueApareceFrequentWordOrdenado.get(numeroVecesQueApareceFrequentWordOrdenado.size() - 1); //Esta sería la palabra que más se repite
 		final Integer maximoValor = limiteMayor.getValue();
 		final Double límiteBuzzWord = maximoValor - 0.2 * maximoValor;
 		final Collection<String> frequentWordsList = mapNumeroVecesQueApareceFrequentWordOrdenado.keySet();
@@ -230,21 +230,7 @@ public class AdministratorService {
 						countMatches++;
 					while (matchesPaperSummary.find())
 						countMatches++;
-					//					
-					//					
-					//					
-					//					final String[] palabrasDelTítulo = s.getPaper().getTitle().trim().split("\\s+");//Separamos las palabras del título
-					//					final String[] palabrasDelSummary = s.getPaper().getSummary().trim().split("\\s+");//Separamos las palabras del summary
-					//					final Set<String> palabrasTítulo = new HashSet<>(Arrays.asList(palabrasDelTítulo));
-					//					final Set<String> palabrasSummary = new HashSet<>(Arrays.asList(palabrasDelSummary));
-					//					//Por cada frequent,contamos cuantas veces aparece en el Título y en el summary de cada submission			
-					//					for (final String p : palabrasTítulo)
-					//						if (p.equals(frequentword))
-					//							countMatches++;
-					//
-					//					for (final String p : palabrasSummary)
-					//						if (p.equals(frequentword))
-					//							countMatches++;
+
 				}
 			puntuacionPorAuthor.put(a, countMatches);
 		}
@@ -253,16 +239,24 @@ public class AdministratorService {
 
 		final List<Entry<Author, Integer>> puntuacionPorAuthormatchesSorted = new ArrayList<>(AdministratorService.sortByValue(puntuacionPorAuthor).entrySet());
 
-		final Author biggestPuntuationOne = puntuacionPorAuthormatchesSorted.get(0).getKey();
+		final Author biggestPuntuationOne = puntuacionPorAuthormatchesSorted.get(puntuacionPorAuthormatchesSorted.size() - 1).getKey();
 		final Integer biggestPuntuation = puntuacionPorAuthorSorted.get(biggestPuntuationOne);
-		biggestPuntuationOne.setPuntuation(biggestPuntuation / biggestPuntuation);
-		this.authorService.save(biggestPuntuationOne);
+		if (biggestPuntuation > 0) {
+			final Integer puntuacionMaxima = biggestPuntuation / biggestPuntuation;
+			biggestPuntuationOne.setPuntuation(puntuacionMaxima);
+		} else
+			biggestPuntuationOne.setPuntuation(0);
+		this.authorService.save2(biggestPuntuationOne);
 
 		for (int i = 1; i < puntuacionPorAuthormatchesSorted.size(); i++) {
 			final Author authorI = puntuacionPorAuthormatchesSorted.get(i).getKey();
-			final Integer puntuation = puntuacionPorAuthorSorted.get(authorI) / biggestPuntuation;
+			final Integer puntuation;
+			if (biggestPuntuation > 0)
+				puntuation = puntuacionPorAuthorSorted.get(authorI) / biggestPuntuation;
+			else
+				puntuation = 0;
 			authorI.setPuntuation(puntuation);
-			this.authorService.save(authorI);
+			this.authorService.save2(authorI);
 		}
 
 	}

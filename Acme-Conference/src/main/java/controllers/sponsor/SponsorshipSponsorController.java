@@ -14,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import services.ConferenceService;
 import services.ConfigurationParametersService;
+import services.RegistrationService;
 import services.SponsorService;
 import services.SponsorshipService;
 import controllers.AbstractController;
@@ -33,6 +34,9 @@ public class SponsorshipSponsorController extends AbstractController {
 
 	@Autowired
 	private ConferenceService				conferenceService;
+
+	@Autowired
+	private RegistrationService				registrationService;
 
 	@Autowired
 	private ConfigurationParametersService	configurationParametersService;
@@ -119,7 +123,7 @@ public class SponsorshipSponsorController extends AbstractController {
 			res = this.createEditModelAndView(sponsorship);
 		else
 			try {
-
+				this.registrationService.tryluhnTest(sponsorship.getCreditCard().getNumber());
 				saved = this.sponsorshipService.save(sponsorship);
 				res = new ModelAndView("redirect:/sponsorship/sponsor/list.do");
 
@@ -128,6 +132,8 @@ public class SponsorshipSponsorController extends AbstractController {
 					res = this.createEditModelAndView(sponsorship, "activity.betweenStartAndEndDate");
 				else if (oops.getMessage().equals("The duration shorter than the conference total one"))
 					res = this.createEditModelAndView(sponsorship, "activity.durationShorterThanConference");
+				else if (oops.getMessage().equals("Not a valid Credit Card"))
+					res = this.createEditModelAndView(sponsorship, "registration.NotValidCreditCard");
 				else
 					res = this.createEditModelAndView(sponsorship, "activity.commit.error");
 
