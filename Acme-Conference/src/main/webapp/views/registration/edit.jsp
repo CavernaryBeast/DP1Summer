@@ -59,4 +59,4 @@
 </form:form>
 
 
-	<acme:button url="/" code="submission.cancel" />
+	<acme:button url="/registration/author/list.do" code="submission.cancel" />

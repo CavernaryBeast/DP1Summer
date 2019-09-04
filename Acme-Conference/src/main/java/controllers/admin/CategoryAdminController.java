@@ -51,9 +51,6 @@ public class CategoryAdminController extends AbstractController {
 		res.addObject("categories", categories);
 		res.addObject("requestURI", "category/administrator/list.do");
 
-		final String banner = this.configurationParametersService.getBanner();
-		res.addObject("banner", banner);
-
 		final String lang = LocaleContextHolder.getLocale().getLanguage();
 		res.addObject("lang", lang);
 

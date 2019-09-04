@@ -40,4 +40,4 @@
 
 </fieldset>
 	<br />
-<acme:button url="/" code="submission.cancel" />
+<acme:button url="/submission/author/list.do" code="submission.cancel" />

@@ -31,4 +31,4 @@
 
 </fieldset>
 	<br />
-<acme:button url="/" code="registration.cancel" />
+<acme:button url="/registration/author/list.do" code="registration.cancel" />
