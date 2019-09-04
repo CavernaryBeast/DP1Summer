@@ -273,4 +273,14 @@ public class ActivityService {
 		return res;
 	}
 
+	public Activity save2(final Activity activity) {
+
+		Assert.notNull(activity);
+		Assert.isTrue(activity.getId() != 0);
+
+		final Activity saved = this.activityRepository.save(activity);
+
+		return saved;
+	}
+
 }

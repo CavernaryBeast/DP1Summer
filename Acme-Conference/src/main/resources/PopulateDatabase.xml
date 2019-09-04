@@ -677,7 +677,7 @@
 		</property>
 	</bean>
 
-		<bean id="userAccount11" class="security.UserAccount">
+	<bean id="userAccount11" class="security.UserAccount">
 		<property name="username" value="sponsor2" />
 		<property name="password" value="3dc67f80a03324e01b1640f45d107485" />
 		<property name="authorities">
@@ -688,8 +688,8 @@
 			</list>
 		</property>
 	</bean>
-	
-		<bean id="userAccount12" class="security.UserAccount">
+
+	<bean id="userAccount12" class="security.UserAccount">
 		<property name="username" value="sponsor3" />
 		<property name="password" value="857a54956061fdc1b88d7722cafe6519" />
 		<property name="authorities">
@@ -700,9 +700,9 @@
 			</list>
 		</property>
 	</bean>
-	
-	
-		<bean id="userAccount13" class="security.UserAccount">
+
+
+	<bean id="userAccount13" class="security.UserAccount">
 		<property name="username" value="sponsor4" />
 		<property name="password" value="a8be034fe44a453e912feadc414dc803" />
 		<property name="authorities">
@@ -713,7 +713,7 @@
 			</list>
 		</property>
 	</bean>
-	
+
 	<!-- SPONSORS FINISHED -->
 
 	<!-- USER ACCOUNTS FINISHED -->
@@ -753,6 +753,7 @@
 		<property name="address" value="Author1 Address" />
 		<property name="userAccount" ref="userAccount2" />
 		<property name="alias" value="Author1 alias" />
+		<property name="finder" ref="finder1" />
 	</bean>
 
 	<bean id="author2" class="domain.Author">
@@ -765,6 +766,7 @@
 		<property name="address" value="Author2 Address" />
 		<property name="userAccount" ref="userAccount3" />
 		<property name="alias" value="Author2 alias" />
+		<property name="finder" ref="finder2" />
 	</bean>
 
 	<bean id="author3" class="domain.Author">
@@ -777,6 +779,7 @@
 		<property name="address" value="Author3 Address" />
 		<property name="userAccount" ref="userAccount4" />
 		<property name="alias" value="Author3 alias" />
+		<property name="finder" ref="finder3" />
 	</bean>
 
 	<bean id="author4" class="domain.Author">
@@ -789,6 +792,7 @@
 		<property name="address" value="Author4 Address" />
 		<property name="userAccount" ref="userAccount5" />
 		<property name="alias" value="Author4 alias" />
+		<property name="finder" ref="finder4" />
 	</bean>
 
 	<!-- AUTHORS FINISHED -->
@@ -869,9 +873,9 @@
 	</bean>
 
 	<!-- REVIEWERS FINISHED -->
-	
+
 	<!-- SPONSORS -->
-		<bean id="sponsor1" class="domain.Sponsor">
+	<bean id="sponsor1" class="domain.Sponsor">
 		<property name="name" value="Sponsor1 Name" />
 		<property name="middleName" value="Sponsor1 Middle Name" />
 		<property name="surname" value="Sponsor1 Surname" />
@@ -881,8 +885,8 @@
 		<property name="address" value="Sponsor1 Address" />
 		<property name="userAccount" ref="userAccount10" />
 	</bean>
-	
-			<bean id="sponsor2" class="domain.Sponsor">
+
+	<bean id="sponsor2" class="domain.Sponsor">
 		<property name="name" value="Sponsor2 Name" />
 		<property name="middleName" value="Sponsor2 Middle Name" />
 		<property name="surname" value="Sponsor2 Surname" />
@@ -892,8 +896,8 @@
 		<property name="address" value="Sponsor2 Address" />
 		<property name="userAccount" ref="userAccount11" />
 	</bean>
-	
-			<bean id="sponsor3" class="domain.Sponsor">
+
+	<bean id="sponsor3" class="domain.Sponsor">
 		<property name="name" value="Sponsor3 Name" />
 		<property name="middleName" value="Sponsor3 Middle Name" />
 		<property name="surname" value="Sponsor3 Surname" />
@@ -903,8 +907,8 @@
 		<property name="address" value="Sponsor3 Address" />
 		<property name="userAccount" ref="userAccount12" />
 	</bean>
-	
-			<bean id="sponsor4" class="domain.Sponsor">
+
+	<bean id="sponsor4" class="domain.Sponsor">
 		<property name="name" value="Sponsor4 Name" />
 		<property name="middleName" value="Sponsor4 Middle Name" />
 		<property name="surname" value="Sponsor4 Surname" />
@@ -914,53 +918,58 @@
 		<property name="address" value="Sponsor4 Address" />
 		<property name="userAccount" ref="userAccount13" />
 	</bean>
-	
-	
+
+
 	<!-- SPONSORS FINISHED -->
 	<!-- ACTORS FINISHED -->
-	
-	
+
+
 	<!-- SPONSORSHIPS -->
 	<bean id="sponsorship1" class="domain.Sponsorship">
-		<property name="banner" value="https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/2fd32b58324945.59f83720f0b79.jpg" />
+		<property name="banner"
+			value="https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/2fd32b58324945.59f83720f0b79.jpg" />
 		<property name="targetURL" value="https://targetURL.org" />
 		<property name="sponsor" ref="sponsor1" />
 		<property name="conference" ref="conference1" />
 		<property name="creditCard" ref="creditCard5" />
 	</bean>
-	
+
 	<bean id="sponsorship2" class="domain.Sponsorship">
-		<property name="banner" value="https://findlogovector.com/wp-content/uploads/2018/12/fanta-logo-vector.png" />
+		<property name="banner"
+			value="https://findlogovector.com/wp-content/uploads/2018/12/fanta-logo-vector.png" />
 		<property name="targetURL" value="https://targetURL.org" />
 		<property name="sponsor" ref="sponsor1" />
 		<property name="conference" ref="conference1" />
 		<property name="creditCard" ref="creditCard5" />
 	</bean>
-	
+
 	<bean id="sponsorship3" class="domain.Sponsorship">
-		<property name="banner" value="https://ichef.bbci.co.uk/news/660/cpsprodpb/66A2/production/_107847262_gettyimages-1152276563-594x594.jpg" />
+		<property name="banner"
+			value="https://ichef.bbci.co.uk/news/660/cpsprodpb/66A2/production/_107847262_gettyimages-1152276563-594x594.jpg" />
 		<property name="targetURL" value="https://targetURL.org" />
 		<property name="sponsor" ref="sponsor2" />
 		<property name="conference" ref="conference1" />
 		<property name="creditCard" ref="creditCard6" />
 	</bean>
-	
-		<bean id="sponsorship4" class="domain.Sponsorship">
-			<property name="banner" value="https://is4-ssl.mzstatic.com/image/thumb/Purple123/v4/34/0c/ff/340cff7f-65bf-8466-aec7-bab2c5c2fd43/AppIcon-0-1x_U007emarketing-0-0-85-220-0-10.png/1200x630wa.png" />
+
+	<bean id="sponsorship4" class="domain.Sponsorship">
+		<property name="banner"
+			value="https://is4-ssl.mzstatic.com/image/thumb/Purple123/v4/34/0c/ff/340cff7f-65bf-8466-aec7-bab2c5c2fd43/AppIcon-0-1x_U007emarketing-0-0-85-220-0-10.png/1200x630wa.png" />
 		<property name="targetURL" value="https://targetURL.org" />
 		<property name="sponsor" ref="sponsor2" />
 		<property name="conference" ref="conference2" />
 		<property name="creditCard" ref="creditCard6" />
 	</bean>
-	
-			<bean id="sponsorship5" class="domain.Sponsorship">
-			<property name="banner" value="https://gabrielapatron.com/wp-content/uploads/2019/01/Glovo.jpg" />
+
+	<bean id="sponsorship5" class="domain.Sponsorship">
+		<property name="banner"
+			value="https://gabrielapatron.com/wp-content/uploads/2019/01/Glovo.jpg" />
 		<property name="targetURL" value="https://targetURL.org" />
 		<property name="sponsor" ref="sponsor3" />
 		<property name="conference" ref="conference2" />
 		<property name="creditCard" ref="creditCard7" />
 	</bean>
-	
+
 	<!-- SPONSORSHIPS FINISHED -->
 
 	<!-- ##################################################################################################### -->
@@ -1144,8 +1153,8 @@
 		<property name="make" value="AMEX" />
 		<property name="owner" ref="author4" />
 	</bean>
-	
-		<bean id="creditCard5" class="domain.CreditCard">
+
+	<bean id="creditCard5" class="domain.CreditCard">
 		<property name="holderName" value="sponsor1" />
 		<property name="brandName" value="Acme Conference's brand" />
 		<property name="number" value="5592372558099087" />
@@ -1155,8 +1164,8 @@
 		<property name="make" value="AMEX" />
 		<property name="owner" ref="sponsor1" />
 	</bean>
-	
-		<bean id="creditCard6" class="domain.CreditCard">
+
+	<bean id="creditCard6" class="domain.CreditCard">
 		<property name="holderName" value="sponsor2" />
 		<property name="brandName" value="Acme Conference's brand" />
 		<property name="number" value="5180982685379471" />
@@ -1166,8 +1175,8 @@
 		<property name="make" value="AMEX" />
 		<property name="owner" ref="sponsor2" />
 	</bean>
-	
-		<bean id="creditCard7" class="domain.CreditCard">
+
+	<bean id="creditCard7" class="domain.CreditCard">
 		<property name="holderName" value="sponsor3" />
 		<property name="brandName" value="Acme Conference's brand" />
 		<property name="number" value="5178144882955470" />
@@ -1177,8 +1186,8 @@
 		<property name="make" value="AMEX" />
 		<property name="owner" ref="sponsor3" />
 	</bean>
-	
-			<bean id="creditCard8" class="domain.CreditCard">
+
+	<bean id="creditCard8" class="domain.CreditCard">
 		<property name="holderName" value="sponsor4" />
 		<property name="brandName" value="Acme Conference's brand" />
 		<property name="number" value="5341202554082692" />
@@ -1188,8 +1197,8 @@
 		<property name="make" value="AMEX" />
 		<property name="owner" ref="sponsor4" />
 	</bean>
-	
-	
+
+
 	<!-- CREDIT CARDS FINISHED -->
 
 
@@ -1657,255 +1666,317 @@
 
 	<!-- CATEGORIES -->
 
-	<!-- <bean id="category1" class="domain.Category"> -->
-	<!-- <property name="name" value="CONFERENCE" /> -->
-	<!-- <property name="nameEs" value="CONFERENCIA" /> -->
-	<!-- <property name="father"> -->
-	<!-- <null></null> -->
-	<!-- </property> -->
-	<!-- <property name="conferences"> -->
-	<!-- <list> -->
+	<bean id="category1" class="domain.Category">
+		<property name="name" value="CONFERENCE" />
+		<property name="nameEs" value="CONFERENCIA" />
+		<property name="father">
+			<null></null>
+		</property>
+		<property name="conferences">
+			<list>
+				<ref bean="conference1" />
+				<ref bean="conference2" />
+			</list>
+		</property>
+	</bean>
 
-	<!-- </list> -->
-	<!-- </property> -->
-	<!-- </bean> -->
+	<bean id="category2" class="domain.Category">
+		<property name="name" value="Computer Science" />
+		<property name="nameEs" value="Ciencia computacional" />
+		<property name="father">
+			<ref bean="category1" />
+		</property>
+		<property name="conferences">
+			<list>
 
-	<!-- <bean id="category2" class="domain.Category"> -->
-	<!-- <property name="name" value="Computer Science" /> -->
-	<!-- <property name="nameEs" value="Ciencia computacional" /> -->
-	<!-- <property name="father"> -->
-	<!-- <ref bean="category1" /> -->
-	<!-- </property> -->
-	<!-- <property name="conferences"> -->
-	<!-- <list> -->
+			</list>
+		</property>
+	</bean>
 
-	<!-- </list> -->
-	<!-- </property> -->
-	<!-- </bean> -->
+	<bean id="category3" class="domain.Category">
+		<property name="name" value="Artificial Intelligence" />
+		<property name="nameEs" value="Inteligencia Artificial" />
+		<property name="father">
+			<ref bean="category2" />
+		</property>
+		<property name="conferences">
+			<list>
 
-	<!-- <bean id="category3" class="domain.Category"> -->
-	<!-- <property name="name" value="Artificial Intelligence" /> -->
-	<!-- <property name="nameEs" value="Inteligencia Artificial" /> -->
-	<!-- <property name="father"> -->
-	<!-- <ref bean="category2" /> -->
-	<!-- </property> -->
-	<!-- <property name="conferences"> -->
-	<!-- <list> -->
+			</list>
+		</property>
+	</bean>
 
-	<!-- </list> -->
-	<!-- </property> -->
-	<!-- </bean> -->
+	<bean id="category4" class="domain.Category">
+		<property name="name" value="Deep Learning" />
+		<property name="nameEs" value="Aprendizaje Profundo" />
+		<property name="father">
+			<ref bean="category3" />
+		</property>
+		<property name="conferences">
+			<list>
 
-	<!-- <bean id="category4" class="domain.Category"> -->
-	<!-- <property name="name" value="Deep Learning" /> -->
-	<!-- <property name="nameEs" value="Aprendizaje Profundo" /> -->
-	<!-- <property name="father"> -->
-	<!-- <ref bean="category3" /> -->
-	<!-- </property> -->
-	<!-- <property name="conferences"> -->
-	<!-- <list> -->
+			</list>
+		</property>
+	</bean>
 
-	<!-- </list> -->
-	<!-- </property> -->
-	<!-- </bean> -->
+	<bean id="category5" class="domain.Category">
+		<property name="name" value="Instance-based learning" />
+		<property name="nameEs" value="Aprendizaje basado en instancias" />
+		<property name="father">
+			<ref bean="category3" />
+		</property>
+		<property name="conferences">
+			<list>
 
-	<!-- <bean id="category5" class="domain.Category"> -->
-	<!-- <property name="name" value="Instance-based learning" /> -->
-	<!-- <property name="nameEs" -->
-	<!-- value="Aprendizaje basado en instancias" /> -->
-	<!-- <property name="father"> -->
-	<!-- <ref bean="category3" /> -->
-	<!-- </property> -->
-	<!-- <property name="conferences"> -->
-	<!-- <list> -->
+			</list>
+		</property>
+	</bean>
 
-	<!-- </list> -->
-	<!-- </property> -->
-	<!-- </bean> -->
+	<bean id="category6" class="domain.Category">
+		<property name="name" value="Regression" />
+		<property name="nameEs" value="Regresión" />
+		<property name="father">
+			<ref bean="category3" />
+		</property>
+		<property name="conferences">
+			<list>
 
-	<!-- <bean id="category6" class="domain.Category"> -->
-	<!-- <property name="name" value="Regression" /> -->
-	<!-- <property name="nameEs" value="Regresión" /> -->
-	<!-- <property name="father"> -->
-	<!-- <ref bean="category3" /> -->
-	<!-- </property> -->
-	<!-- <property name="conferences"> -->
-	<!-- <list> -->
+			</list>
+		</property>
+	</bean>
 
-	<!-- </list> -->
-	<!-- </property> -->
-	<!-- </bean> -->
+	<bean id="category7" class="domain.Category">
+		<property name="name" value="Software Engineering" />
+		<property name="nameEs" value="Ingeniería del Software" />
+		<property name="father">
+			<ref bean="category1" />
+		</property>
+		<property name="conferences">
+			<list>
 
-	<!-- <bean id="category7" class="domain.Category"> -->
-	<!-- <property name="name" value="Software Engineering" /> -->
-	<!-- <property name="nameEs" value="Ingeniería del Software" /> -->
-	<!-- <property name="father"> -->
-	<!-- <ref bean="category1" /> -->
-	<!-- </property> -->
-	<!-- <property name="conferences"> -->
-	<!-- <list> -->
+			</list>
+		</property>
+	</bean>
 
-	<!-- </list> -->
-	<!-- </property> -->
-	<!-- </bean> -->
+	<bean id="category8" class="domain.Category">
+		<property name="name" value="Big Data" />
+		<property name="nameEs" value="Macrodatos" />
+		<property name="father">
+			<ref bean="category7" />
+		</property>
+		<property name="conferences">
+			<list>
 
-	<!-- <bean id="category8" class="domain.Category"> -->
-	<!-- <property name="name" value="Big Data" /> -->
-	<!-- <property name="nameEs" value="Macrodatos" /> -->
-	<!-- <property name="father"> -->
-	<!-- <ref bean="category7" /> -->
-	<!-- </property> -->
-	<!-- <property name="conferences"> -->
-	<!-- <list> -->
+			</list>
+		</property>
+	</bean>
 
-	<!-- </list> -->
-	<!-- </property> -->
-	<!-- </bean> -->
+	<bean id="category9" class="domain.Category">
+		<property name="name" value="Big Processing" />
+		<property name="nameEs" value="Macroprocesamiento" />
+		<property name="father">
+			<ref bean="category7" />
+		</property>
+		<property name="conferences">
+			<list>
 
-	<!-- <bean id="category9" class="domain.Category"> -->
-	<!-- <property name="name" value="Big Processing" /> -->
-	<!-- <property name="nameEs" value="Macroprocesamiento" /> -->
-	<!-- <property name="father"> -->
-	<!-- <ref bean="category7" /> -->
-	<!-- </property> -->
-	<!-- <property name="conferences"> -->
-	<!-- <list> -->
+			</list>
+		</property>
+	</bean>
 
-	<!-- </list> -->
-	<!-- </property> -->
-	<!-- </bean> -->
+	<bean id="category10" class="domain.Category">
+		<property name="name" value="Methods" />
+		<property name="nameEs" value="Métodos" />
+		<property name="father">
+			<ref bean="category7" />
+		</property>
+		<property name="conferences">
+			<list>
 
-	<!-- <bean id="category10" class="domain.Category"> -->
-	<!-- <property name="name" value="Methods" /> -->
-	<!-- <property name="nameEs" value="Métodos" /> -->
-	<!-- <property name="father"> -->
-	<!-- <ref bean="category7" /> -->
-	<!-- </property> -->
-	<!-- <property name="conferences"> -->
-	<!-- <list> -->
+			</list>
+		</property>
+	</bean>
 
-	<!-- </list> -->
-	<!-- </property> -->
-	<!-- </bean> -->
+	<bean id="category11" class="domain.Category">
+		<property name="name" value="Tools" />
+		<property name="nameEs" value="Herramientas" />
+		<property name="father">
+			<ref bean="category7" />
+		</property>
+		<property name="conferences">
+			<list>
 
-	<!-- <bean id="category11" class="domain.Category"> -->
-	<!-- <property name="name" value="Tools" /> -->
-	<!-- <property name="nameEs" value="Herramientas" /> -->
-	<!-- <property name="father"> -->
-	<!-- <ref bean="category7" /> -->
-	<!-- </property> -->
-	<!-- <property name="conferences"> -->
-	<!-- <list> -->
+			</list>
+		</property>
+	</bean>
 
-	<!-- </list> -->
-	<!-- </property> -->
-	<!-- </bean> -->
+	<bean id="category12" class="domain.Category">
+		<property name="name" value="Physics" />
+		<property name="nameEs" value="Física" />
+		<property name="father">
+			<ref bean="category1" />
+		</property>
+		<property name="conferences">
+			<list>
 
-	<!-- <bean id="category12" class="domain.Category"> -->
-	<!-- <property name="name" value="Physics" /> -->
-	<!-- <property name="nameEs" value="Física" /> -->
-	<!-- <property name="father"> -->
-	<!-- <ref bean="category1" /> -->
-	<!-- </property> -->
-	<!-- <property name="conferences"> -->
-	<!-- <list> -->
+			</list>
+		</property>
+	</bean>
 
-	<!-- </list> -->
-	<!-- </property> -->
-	<!-- </bean> -->
+	<bean id="category13" class="domain.Category">
+		<property name="name" value="Cinematic" />
+		<property name="nameEs" value="Cinemática" />
+		<property name="father">
+			<ref bean="category12" />
+		</property>
+		<property name="conferences">
+			<list>
 
-	<!-- <bean id="category13" class="domain.Category"> -->
-	<!-- <property name="name" value="Cinematic" /> -->
-	<!-- <property name="nameEs" value="Cinemática" /> -->
-	<!-- <property name="father"> -->
-	<!-- <ref bean="category12" /> -->
-	<!-- </property> -->
-	<!-- <property name="conferences"> -->
-	<!-- <list> -->
+			</list>
+		</property>
+	</bean>
 
-	<!-- </list> -->
-	<!-- </property> -->
-	<!-- </bean> -->
+	<bean id="category14" class="domain.Category">
+		<property name="name" value="Electricity" />
+		<property name="nameEs" value="Electricidad" />
+		<property name="father">
+			<ref bean="category12" />
+		</property>
+		<property name="conferences">
+			<list>
 
-	<!-- <bean id="category14" class="domain.Category"> -->
-	<!-- <property name="name" value="Electricity" /> -->
-	<!-- <property name="nameEs" value="Electricidad" /> -->
-	<!-- <property name="father"> -->
-	<!-- <ref bean="category12" /> -->
-	<!-- </property> -->
-	<!-- <property name="conferences"> -->
-	<!-- <list> -->
+			</list>
+		</property>
+	</bean>
 
-	<!-- </list> -->
-	<!-- </property> -->
-	<!-- </bean> -->
+	<bean id="category15" class="domain.Category">
+		<property name="name" value="Electronics" />
+		<property name="nameEs" value="Electrónica" />
+		<property name="father">
+			<ref bean="category12" />
+		</property>
+		<property name="conferences">
+			<list>
 
-	<!-- <bean id="category15" class="domain.Category"> -->
-	<!-- <property name="name" value="Electronics" /> -->
-	<!-- <property name="nameEs" value="Electrónica" /> -->
-	<!-- <property name="father"> -->
-	<!-- <ref bean="category12" /> -->
-	<!-- </property> -->
-	<!-- <property name="conferences"> -->
-	<!-- <list> -->
+			</list>
+		</property>
+	</bean>
 
-	<!-- </list> -->
-	<!-- </property> -->
-	<!-- </bean> -->
+	<bean id="category16" class="domain.Category">
+		<property name="name" value="Biology" />
+		<property name="nameEs" value="Biología" />
+		<property name="father">
+			<ref bean="category1" />
+		</property>
+		<property name="conferences">
+			<list>
 
-	<!-- <bean id="category16" class="domain.Category"> -->
-	<!-- <property name="name" value="Biology" /> -->
-	<!-- <property name="nameEs" value="Biología" /> -->
-	<!-- <property name="father"> -->
-	<!-- <ref bean="category1" /> -->
-	<!-- </property> -->
-	<!-- <property name="conferences"> -->
-	<!-- <list> -->
+			</list>
+		</property>
+	</bean>
 
-	<!-- </list> -->
-	<!-- </property> -->
-	<!-- </bean> -->
+	<bean id="category17" class="domain.Category">
+		<property name="name" value="Animals" />
+		<property name="nameEs" value="Animales" />
+		<property name="father">
+			<ref bean="category16" />
+		</property>
+		<property name="conferences">
+			<list>
 
-	<!-- <bean id="category17" class="domain.Category"> -->
-	<!-- <property name="name" value="Animals" /> -->
-	<!-- <property name="nameEs" value="Animales" /> -->
-	<!-- <property name="father"> -->
-	<!-- <ref bean="category16" /> -->
-	<!-- </property> -->
-	<!-- <property name="conferences"> -->
-	<!-- <list> -->
+			</list>
+		</property>
+	</bean>
 
-	<!-- </list> -->
-	<!-- </property> -->
-	<!-- </bean> -->
+	<bean id="category18" class="domain.Category">
+		<property name="name" value="Plants" />
+		<property name="nameEs" value="Plantas" />
+		<property name="father">
+			<ref bean="category16" />
+		</property>
+		<property name="conferences">
+			<list>
 
-	<!-- <bean id="category18" class="domain.Category"> -->
-	<!-- <property name="name" value="Plants" /> -->
-	<!-- <property name="nameEs" value="Plantas" /> -->
-	<!-- <property name="father"> -->
-	<!-- <ref bean="category16" /> -->
-	<!-- </property> -->
-	<!-- <property name="conferences"> -->
-	<!-- <list> -->
+			</list>
+		</property>
+	</bean>
 
-	<!-- </list> -->
-	<!-- </property> -->
-	<!-- </bean> -->
+	<bean id="category19" class="domain.Category">
+		<property name="name" value="Fungi" />
+		<property name="nameEs" value="Hongos" />
+		<property name="father">
+			<ref bean="category16" />
+		</property>
+		<property name="conferences">
+			<list>
 
-	<!-- <bean id="category19" class="domain.Category"> -->
-	<!-- <property name="name" value="Fungi" /> -->
-	<!-- <property name="nameEs" value="Hongos" /> -->
-	<!-- <property name="father"> -->
-	<!-- <ref bean="category16" /> -->
-	<!-- </property> -->
-	<!-- <property name="conferences"> -->
-	<!-- <list> -->
-
-	<!-- </list> -->
-	<!-- </property> -->
-	<!-- </bean> -->
+			</list>
+		</property>
+	</bean>
 
 	<!-- CATEGORIES FINISHED -->
+
+	<!-- FINDERS -->
+
+	<bean id="finder1" class="domain.Finder">
+		<property name="keyword">
+			<null></null>
+		</property>
+		<property name="category">
+			<null></null>
+		</property>
+		<property name="startDate">
+			<null></null>
+		</property>
+		<property name="endDate">
+			<null></null>
+		</property>
+	</bean>
+
+	<bean id="finder2" class="domain.Finder">
+		<property name="keyword">
+			<null></null>
+		</property>
+		<property name="category">
+			<null></null>
+		</property>
+		<property name="startDate">
+			<null></null>
+		</property>
+		<property name="endDate">
+			<null></null>
+		</property>
+	</bean>
+
+	<bean id="finder3" class="domain.Finder">
+		<property name="keyword">
+			<null></null>
+		</property>
+		<property name="category">
+			<null></null>
+		</property>
+		<property name="startDate">
+			<null></null>
+		</property>
+		<property name="endDate">
+			<null></null>
+		</property>
+	</bean>
+
+	<bean id="finder4" class="domain.Finder">
+		<property name="keyword">
+			<null></null>
+		</property>
+		<property name="category">
+			<null></null>
+		</property>
+		<property name="startDate">
+			<null></null>
+		</property>
+		<property name="endDate">
+			<null></null>
+		</property>
+	</bean>
 
 	<!-- ##################################################################################################### -->
 

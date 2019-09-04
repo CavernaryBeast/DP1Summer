@@ -8,34 +8,50 @@ import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
-import domain.Actor;
 import repositories.ActorRepository;
+import repositories.AdministratorRepository;
+import repositories.AuthorRepository;
+import repositories.ReviewerRepository;
+import domain.Actor;
 
 @Component
 @Transactional
 public class StringToActorConverter implements Converter<String, Actor> {
 
 	@Autowired
-	private ActorRepository actorRepository;
+	ActorRepository			actorRepository;
+
+	@Autowired
+	AdministratorRepository	administratorRepository;
+
+	@Autowired
+	ReviewerRepository		reviewerRepository;
+
+	@Autowired
+	AuthorRepository		authorRepository;
 
 
 	@Override
 	public Actor convert(final String text) {
-
-		Actor res;
-		final int id;
+		Actor result;
+		int id;
 
 		try {
 			if (StringUtils.isEmpty(text))
-				res = null;
+				result = null;
 			else {
 				id = Integer.valueOf(text);
-				res = this.actorRepository.findOne(id);
+				result = this.administratorRepository.findOne(id);
+				if (result == null)
+					result = this.reviewerRepository.findOne(id);
+				if (result == null)
+					result = this.authorRepository.findOne(id);
 			}
 		} catch (final Throwable oops) {
 			throw new IllegalArgumentException(oops);
 		}
-		return res;
+
+		return result;
 	}
 
 }
