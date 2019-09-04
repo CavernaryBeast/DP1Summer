@@ -14,17 +14,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import controllers.AbstractController;
-import domain.Author;
-import domain.Conference;
-import domain.CreditCard;
-import domain.Registration;
 import services.AuthorService;
 import services.ConferenceService;
 import services.ConfigurationParametersService;
 import services.CreditCardService;
 import services.PaperService;
 import services.RegistrationService;
+import controllers.AbstractController;
+import domain.Author;
+import domain.Conference;
+import domain.CreditCard;
+import domain.Registration;
 
 @Controller
 @RequestMapping("/registration/author")
@@ -107,14 +107,12 @@ public class RegistrationAuthorController extends AbstractController {
 				saved = this.registrationService.save(registration);
 				registrationsOfConference.add(saved);
 				conference.setRegistrations(registrationsOfConference);
-				this.conferenceService.save(conference);
+				this.conferenceService.save2(conference);
 				res = new ModelAndView("redirect:/registration/author/list.do");
 
 			} catch (final Throwable oops) {
 
 				res = this.createEditModelAndView(registration, "registration.commit.error");
-				System.out.println(oops.getStackTrace());
-				System.out.println(oops.getCause().getMessage());
 			}
 		return res;
 	}

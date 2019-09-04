@@ -66,14 +66,4 @@
 				code="conference.show" /></a>
 	</display:column>
 
-
-	<security:authorize access="hasRole('ADMINISTRATOR')">
-		<display:column titleKey="conference.edit">
-			<jstl:if test="${ row.isFinal eq false}">
-				<a href="conference/administrator/edit.do?conferenceId=${row.id}"><spring:message
-						code="conference.edit" /></a>
-			</jstl:if>
-		</display:column>
-	</security:authorize>
-
 </display:table>
