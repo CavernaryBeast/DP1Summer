@@ -145,23 +145,16 @@ public class CommentService {
 		this.commentRepository.delete(comment);
 	}
 
-	public Collection<Double> findAvgMinMaxStddevConferenceComments() {
-
-		final Collection<Double> res = this.commentRepository.findAvgMinMaxStddevConferenceComments();
-
+	public String findAvgMinMaxStddevConferenceComments() {
+		final String res = this.commentRepository.findAvgMinMaxStddevConferenceComments();
 		Assert.notNull(res);
-		Assert.notEmpty(res);
 
 		return res;
 	}
 
-	public Collection<Double> findAvgMinMaxStddevActivityComments() {
-
-		final Collection<Double> res = this.commentRepository.findAvgMinMaxStddevActivityComments();
-
+	public String findAvgMinMaxStddevActivityComments() {
+		final String res = this.commentRepository.findAvgMinMaxStddevActivityComments();
 		Assert.notNull(res);
-		Assert.notEmpty(res);
-
 		return res;
 	}
 

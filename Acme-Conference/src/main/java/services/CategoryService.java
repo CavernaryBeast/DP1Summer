@@ -9,9 +9,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
+import repositories.CategoryRepository;
 import domain.Category;
 import domain.Conference;
-import repositories.CategoryRepository;
 
 @Service
 @Transactional
@@ -134,12 +134,10 @@ public class CategoryService {
 			this.categoryRepository.delete(c);
 	}
 
-	public Collection<Double> findAvgMinMaxStddevConferencesPerCategory() {
+	public String findAvgMinMaxStddevConferencesPerCategory() {
 
-		final Collection<Double> res = this.categoryRepository.findAvgMinMaxStddevConferencesPerCategory();
-
+		final String res = this.categoryRepository.findAvgMinMaxStddevConferencesPerCategory();
 		Assert.notNull(res);
-		Assert.notEmpty(res);
 
 		return res;
 	}

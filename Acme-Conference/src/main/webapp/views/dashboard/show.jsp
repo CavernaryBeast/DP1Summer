@@ -47,5 +47,30 @@
 	
 		<br/>		
 
+<h2><spring:message code = "dashboard.conferencesPerCategoryStats" /></h2>
+		<p><spring:message code = "dashboard.min" /> : <jstl:out value="${conferencesPerCategoryMin}"/></p>
+		<p><spring:message code = "dashboard.max" /> : <jstl:out value="${conferencesPerCategoryMax}"/></p>
+		<p><spring:message code = "dashboard.avg" /> : <jstl:out value="${conferencesPerCategoryAvg}"/></p>
+		<p><spring:message code = "dashboard.stddev" /> : <jstl:out value="${conferencesPerCategoryStd}"/></p>
+	
+		<br/>	
+		
+<h2><spring:message code = "dashboard.commentsPerConferenceStats" /></h2>
+		<p><spring:message code = "dashboard.min" /> : <jstl:out value="${commentsPerConferenceMin}"/></p>
+		<p><spring:message code = "dashboard.max" /> : <jstl:out value="${commentsPerConferenceMax}"/></p>
+		<p><spring:message code = "dashboard.avg" /> : <jstl:out value="${commentsPerConferenceAvg}"/></p>
+		<p><spring:message code = "dashboard.stddev" /> : <jstl:out value="${commentsPerConferenceStd}"/></p>
+	
+		<br/>			
+		
+<h2><spring:message code = "dashboard.commentsPerActivityStats" /></h2>
+		<p><spring:message code = "dashboard.min" /> : <jstl:out value="${commentsPerActivityStatsMin}"/></p>
+		<p><spring:message code = "dashboard.max" /> : <jstl:out value="${commentsPerActivityStatsMax}"/></p>
+		<p><spring:message code = "dashboard.avg" /> : <jstl:out value="${commentsPerActivityStatsAvg}"/></p>
+		<p><spring:message code = "dashboard.stddev" /> : <jstl:out value="${commentsPerActivityStatsStd}"/></p>
+	
+		<br/>				
+
+
 
 </security:authorize>

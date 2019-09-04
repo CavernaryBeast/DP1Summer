@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import services.AdministratorService;
+import services.CategoryService;
+import services.CommentService;
 import services.ConferenceService;
 import services.RegistrationService;
 import services.SubmissionService;
@@ -25,6 +27,12 @@ public class DashboardAdminController extends AbstractController {
 
 	@Autowired
 	private RegistrationService		registrationService;
+
+	@Autowired
+	private CommentService			commentService;
+
+	@Autowired
+	private CategoryService			categoryService;
 
 	@Autowired
 	private AdministratorService	administratorService;
@@ -67,6 +75,30 @@ public class DashboardAdminController extends AbstractController {
 
 		// -------------------------------------------------------------------------------------
 
+		final String[] conferencesPerCategoryStats = this.categoryService.findAvgMinMaxStddevConferencesPerCategory().split(",");
+		final String conferencesPerCategoryMin = conferencesPerCategoryStats[0];
+		final String conferencesPerCategoryMax = conferencesPerCategoryStats[1];
+		final String conferencesPerCategoryAvg = conferencesPerCategoryStats[2];
+		final String conferencesPerCategoryStd = conferencesPerCategoryStats[3];
+
+		// -------------------------------------------------------------------------------------
+
+		final String[] commentsPerConferenceStats = this.commentService.findAvgMinMaxStddevConferenceComments().split(",");
+		final String commentsPerConferenceMin = commentsPerConferenceStats[0];
+		final String commentsPerConferenceMax = commentsPerConferenceStats[1];
+		final String commentsPerConferenceAvg = commentsPerConferenceStats[2];
+		final String commentsPerConferenceStd = commentsPerConferenceStats[3];
+
+		// -------------------------------------------------------------------------------------
+
+		final String[] commentsPerActivityStats = this.commentService.findAvgMinMaxStddevActivityComments().split(",");
+		final String commentsPerActivityStatsMin = commentsPerActivityStats[0];
+		final String commentsPerActivityStatsMax = commentsPerActivityStats[1];
+		final String commentsPerActivityStatsAvg = commentsPerActivityStats[2];
+		final String commentsPerActivityStatsStd = commentsPerActivityStats[3];
+
+		// -------------------------------------------------------------------------------------
+
 		result = new ModelAndView("dashboard/show");
 
 		result.addObject("submissionsPerConferenceStatsMin", submissionsPerConferenceStatsMin);
@@ -89,8 +121,22 @@ public class DashboardAdminController extends AbstractController {
 		result.addObject("daysPerConferenceStatsAvg", daysPerConferenceStatsAvg);
 		result.addObject("daysPerConferenceStatsStd", daysPerConferenceStatsStd);
 
+		result.addObject("conferencesPerCategoryMin", conferencesPerCategoryMin);
+		result.addObject("conferencesPerCategoryMax", conferencesPerCategoryMax);
+		result.addObject("conferencesPerCategoryAvg", conferencesPerCategoryAvg);
+		result.addObject("conferencesPerCategoryStd", conferencesPerCategoryStd);
+
+		result.addObject("commentsPerConferenceMin", commentsPerConferenceMin);
+		result.addObject("commentsPerConferenceMax", commentsPerConferenceMax);
+		result.addObject("commentsPerConferenceAvg", commentsPerConferenceAvg);
+		result.addObject("commentsPerConferenceStd", commentsPerConferenceStd);
+
+		result.addObject("commentsPerActivityStatsMin", commentsPerActivityStatsMin);
+		result.addObject("commentsPerActivityStatsMax", commentsPerActivityStatsMax);
+		result.addObject("commentsPerActivityStatsAvg", commentsPerActivityStatsAvg);
+		result.addObject("commentsPerActivityStatsStd", commentsPerActivityStatsStd);
+
 		return result;
 
 	}
-
 }

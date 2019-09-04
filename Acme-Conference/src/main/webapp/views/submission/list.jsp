@@ -13,7 +13,8 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 <jstl:set var="checkStatus" value="ACCEPTED" />
-
+<jstl:set var="checkStatusA" value="ACCEPTED" />
+<jstl:set var="checkStatusR" value="REJECTED" />
 
 <display:table pagesize="10" name="${submissions}" id="row"
 	requestURI="${requestURI}">
@@ -62,8 +63,15 @@
 
 	<security:authorize access="hasRole('REVIEWER')">
 		<display:column titleKey="submission.createReport">
-			<a href="report/reviewer/create.do?submissionId=${row.id}"><spring:message
+	<jstl:choose>
+	<jstl:when test="${row.status eq  checkStatusA or row.status eq  checkStatusR }">
+	<spring:message code="submission.cantAddMoreReportsStatus" />
+	</jstl:when>
+	<jstl:otherwise>
+	<a href="report/reviewer/create.do?submissionId=${row.id}"><spring:message
 					code="submission.createReport" /></a>
+	</jstl:otherwise>
+</jstl:choose>
 		</display:column>
 
 	</security:authorize>

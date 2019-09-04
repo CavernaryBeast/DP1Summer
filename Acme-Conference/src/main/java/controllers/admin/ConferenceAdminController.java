@@ -262,6 +262,7 @@ public class ConferenceAdminController extends AbstractController {
 		result.addObject("message", messageCode);
 		return result;
 	}
+
 	@RequestMapping(value = "/assignSubmissionAutomatic", method = RequestMethod.GET)
 	public ModelAndView assignSubmission(@RequestParam final int submissionId) {
 		ModelAndView result;

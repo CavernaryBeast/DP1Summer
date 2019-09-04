@@ -22,6 +22,6 @@ public interface CategoryRepository extends JpaRepository<Category, Integer> {
 	Category findRoot();
 
 	@Query("select min(c.conferences.size), max(c.conferences.size), avg(c.conferences.size), stddev(c.conferences.size) from Category c")
-	Collection<Double> findAvgMinMaxStddevConferencesPerCategory();
+	String findAvgMinMaxStddevConferencesPerCategory();
 
 }

@@ -79,6 +79,20 @@ public class AuthorController extends AbstractController {
 		return res;
 	}
 
+	@RequestMapping(value = "/show", method = RequestMethod.GET)
+	public ModelAndView display() {
+
+		ModelAndView res;
+		Author author;
+
+		author = this.authorService.findByPrincipal();
+		res = new ModelAndView("author/show");
+		res.addObject("author", author);
+		final String banner = this.configurationParametersService.getBanner();
+		res.addObject("banner", banner);
+		return res;
+	}
+
 	// Ancillary methods --------------------------------------------------------
 
 	protected ModelAndView createEditModelAndView(final Author author) {
