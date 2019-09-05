@@ -26,6 +26,7 @@ public class Folet extends DomainEntity {
 
 	private String	ticker;
 	private Date	publicationMoment;
+	private String	title;
 	private String	body;
 	private String	picture;
 	private Boolean	isFinal;
@@ -85,15 +86,23 @@ public class Folet extends DomainEntity {
 		this.picture = picture;
 	}
 
+	@NotBlank
+	public String getTitle() {
+		return this.title;
+	}
+
+	public void setTitle(final String title) {
+		this.title = title;
+	}
+
 
 	//Relationships
-
 	Conference	conference;
 
 
 	@NotNull
 	@Valid
-	@ManyToOne(optional = true)
+	@ManyToOne(optional = false)
 	public Conference getConference() {
 		return this.conference;
 	}

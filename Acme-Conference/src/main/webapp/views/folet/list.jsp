@@ -36,7 +36,7 @@
 			<jstl:choose >
 			<jstl:when test="${ language eq 'Yes' }">
 			<display:column titleKey="folet.publicationMoment" style="background-color: ${color};">
-			<fmt:formatDate value ="${row.publicationDate}"
+			<fmt:formatDate value ="${row.publicationMoment}"
                 pattern="yyyy/MM/dd hh:mm"
                 />
 			</display:column>
@@ -44,7 +44,7 @@
 			
 			<jstl:otherwise>
 			<display:column titleKey="folet.publicationMoment" style="background-color: ${color};">
-			<fmt:formatDate value ="${row.publicationDate}"
+			<fmt:formatDate value ="${row.publicationMoment}"
                 pattern="dd-MM-yyyy hh:mm"
                 />
 			</display:column>
