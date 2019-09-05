@@ -14,7 +14,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
 import repositories.FoletRepository;
-import domain.Actor;
 import domain.Conference;
 import domain.Folet;
 
@@ -90,8 +89,7 @@ public class FoletService {
 		Assert.isTrue(foletId != 0);
 		Assert.isTrue(this.foletRepository.exists(foletId));
 		//	this.conferenceService.checkAuditId(auditId);
-		final Actor actorLogged = this.actorService.findActorLogged();
-		Assert.notNull(actorLogged);
+		this.actorService.findByPrincipal();
 		final Folet foletEnBaseDeDatos = this.findOne(foletId);
 		Assert.isTrue(!foletEnBaseDeDatos.getIsFinal());
 		this.foletRepository.delete(foletEnBaseDeDatos);
