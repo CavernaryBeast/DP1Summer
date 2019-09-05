@@ -18,11 +18,13 @@ import org.springframework.web.servlet.ModelAndView;
 import services.AuthorService;
 import services.ConferenceService;
 import services.PaperService;
+import services.ReportService;
 import services.SubmissionService;
 import controllers.AbstractController;
 import domain.Author;
 import domain.Conference;
 import domain.Paper;
+import domain.Report;
 import domain.Submission;
 
 @Controller
@@ -40,6 +42,9 @@ public class SubmissionAuthorController extends AbstractController {
 
 	@Autowired
 	private PaperService		paperService;
+
+	@Autowired
+	private ReportService		reportService;
 
 
 	//Listing --------------------------------------------------------
@@ -158,8 +163,10 @@ public class SubmissionAuthorController extends AbstractController {
 		Submission submission;
 
 		submission = this.submissionService.findOne(submissionId);
+		final Collection<Report> reports = this.reportService.findBySubmissionId(submissionId);
 		result = new ModelAndView("submission/show");
 		result.addObject("submission", submission);
+		result.addObject("reports", reports);
 
 		return result;
 	}

@@ -17,141 +17,164 @@
 
 
 <fieldset>
-		<legend> <spring:message   code="submission.acceptedL"  />   </legend>	
-<display:table pagesize="10" name="${accepted}" id="row"
-	requestURI="${requestURI}">
+	<legend>
+		<spring:message code="submission.acceptedL" />
+	</legend>
+	<display:table pagesize="10" name="${accepted}" id="row"
+		requestURI="${requestURI}">
 
-<display:column property="ticker" titleKey="submission.ticker" />
-<display:column property="moment" titleKey="submission.moment" />
-<display:column property="status" titleKey="submission.status" />
-<display:column  titleKey="submission.reviewers" >
-<jstl:forEach var="r" items="${row.reviewers }" >
-<jstl:out value="${r.userAccount.username}"></jstl:out>
-</jstl:forEach>
-</display:column>
-	<display:column titleKey="submission.assign">
-	<jstl:choose>
-	<jstl:when test="${row.status eq  checkStatusA or row.status eq  checkStatusR}">
-	<spring:message code="submission.cantAddMoreReviewersStatus" />
-	</jstl:when>	
-	<jstl:when test="${conference.notificationDeadline < now}">
-	<spring:message code="submission.cantAssingNDElapsed" />
-	</jstl:when>	
-	<jstl:when test="${fn:length(row.reviewers) ge 3}">
-	<spring:message code="submission.cantAddMoreReviewers" />
-	</jstl:when>
-	<jstl:otherwise>
-	<a href="conference/administrator/addReviewer.do?submissionId=${row.id}"><spring:message code = "submission.assign"/></a>
-	</jstl:otherwise>
-	</jstl:choose>
+		<display:column property="ticker" titleKey="submission.ticker" />
+		<display:column property="moment" titleKey="submission.moment" />
+		<display:column property="status" titleKey="submission.status" />
+		<display:column titleKey="submission.reviewers">
+			<jstl:forEach var="r" items="${row.reviewers }">
+				<jstl:out value="${r.userAccount.username}"></jstl:out>
+			</jstl:forEach>
+		</display:column>
+		<display:column titleKey="submission.assign">
+			<jstl:choose>
+				<jstl:when
+					test="${row.status eq  checkStatusA or row.status eq  checkStatusR}">
+					<spring:message code="submission.cantAddMoreReviewersStatus" />
+				</jstl:when>
+				<jstl:when test="${conference.notificationDeadline < now}">
+					<spring:message code="submission.cantAssingNDElapsed" />
+				</jstl:when>
+				<jstl:when test="${fn:length(row.reviewers) ge 3}">
+					<spring:message code="submission.cantAddMoreReviewers" />
+				</jstl:when>
+				<jstl:otherwise>
+					<a
+						href="conference/administrator/addReviewer.do?submissionId=${row.id}"><spring:message
+							code="submission.assign" /></a>
+				</jstl:otherwise>
+			</jstl:choose>
 		</display:column>
 		<display:column titleKey="submission.assignAutomatic">
-		<jstl:choose>
-	<jstl:when test="${row.status eq  checkStatusA or row.status eq  checkStatusR}">
-	<spring:message code="submission.cantAddMoreReviewersStatus" />
-	</jstl:when>
-	<jstl:when test="${fn:length(row.reviewers) ge 3}">
-	<spring:message code="submission.cantAddMoreReviewers" />
-	</jstl:when>
-	<jstl:otherwise>
+			<jstl:choose>
+				<jstl:when
+					test="${row.status eq  checkStatusA or row.status eq  checkStatusR}">
+					<spring:message code="submission.cantAddMoreReviewersStatus" />
+				</jstl:when>
+				<jstl:when test="${fn:length(row.reviewers) ge 3}">
+					<spring:message code="submission.cantAddMoreReviewers" />
+				</jstl:when>
+				<jstl:otherwise>
 
-				<a href="conference/administrator/assignSubmissionAutomatic.do?submissionId=${row.id}"><spring:message code = "submission.assignAutomatic"/></a>
-	</jstl:otherwise>
-	</jstl:choose>
-	
+					<a
+						href="conference/administrator/assignSubmissionAutomatic.do?submissionId=${row.id}"><spring:message
+							code="submission.assignAutomatic" /></a>
+				</jstl:otherwise>
+			</jstl:choose>
+
 		</display:column>
-</display:table>
+	</display:table>
 </fieldset>
 
 <fieldset>
-		<legend> <spring:message   code="submission.underReviewL"  />   </legend>	
-<display:table pagesize="10" name="${underReview}" id="row"
-	requestURI="${requestURI}">
+	<legend>
+		<spring:message code="submission.underReviewL" />
+	</legend>
+	<display:table pagesize="10" name="${underReview}" id="row"
+		requestURI="${requestURI}">
 
-<display:column property="ticker" titleKey="submission.ticker" />
-<display:column property="moment" titleKey="submission.moment" />
-<display:column property="status" titleKey="submission.status" />
-<display:column  titleKey="submission.reviewers" >
-<jstl:forEach var="r" items="${row.reviewers }" >
-<jstl:out value="${r.userAccount.username}"></jstl:out>
-</jstl:forEach>
-</display:column>
-	<display:column titleKey="submission.assign">
-	<jstl:choose>
-	<jstl:when test="${conference.notificationDeadline < now}">
-	<spring:message code="submission.cantAssingNDElapsed" />
-	</jstl:when>
-	<jstl:when test="${fn:length(row.reviewers) ge 3}">
-	<spring:message code="submission.cantAddMoreReviewers" />
-	</jstl:when>
-	<jstl:otherwise>
-	<a href="conference/administrator/addReviewer.do?submissionId=${row.id}"><spring:message code = "submission.assign"/></a>
-	</jstl:otherwise>
-	</jstl:choose>
+		<display:column property="ticker" titleKey="submission.ticker" />
+		<display:column property="moment" titleKey="submission.moment" />
+		<display:column property="status" titleKey="submission.status" />
+		<display:column titleKey="submission.reviewers">
+			<jstl:forEach var="r" items="${row.reviewers }">
+				<jstl:out value="${r.userAccount.username}"></jstl:out>
+			</jstl:forEach>
+		</display:column>
+		<display:column titleKey="submission.assign">
+			<jstl:choose>
+				<jstl:when test="${conference.notificationDeadline < now}">
+					<spring:message code="submission.cantAssingNDElapsed" />
+				</jstl:when>
+				<jstl:when test="${fn:length(row.reviewers) ge 3}">
+					<spring:message code="submission.cantAddMoreReviewers" />
+				</jstl:when>
+				<jstl:otherwise>
+					<a
+						href="conference/administrator/addReviewer.do?submissionId=${row.id}"><spring:message
+							code="submission.assign" /></a>
+				</jstl:otherwise>
+			</jstl:choose>
 		</display:column>
 		<display:column titleKey="submission.assignAutomatic">
-		<jstl:choose>
-	<jstl:when test="${conference.notificationDeadline < now}">
-	<spring:message code="submission.cantAssingNDElapsed" />
-	</jstl:when>		
-	<jstl:when test="${fn:length(row.reviewers) ge 3}">
-	<spring:message code="submission.cantAddMoreReviewers" />
-	</jstl:when>
-	<jstl:otherwise>
-				<a href="conference/administrator/assignSubmissionAutomatic.do?submissionId=${row.id}"><spring:message code = "submission.assignAutomatic"/></a>
-	</jstl:otherwise>
-	</jstl:choose>
-	
+			<jstl:choose>
+				<jstl:when test="${conference.notificationDeadline < now}">
+					<spring:message code="submission.cantAssingNDElapsed" />
+				</jstl:when>
+				<jstl:when test="${fn:length(row.reviewers) ge 3}">
+					<spring:message code="submission.cantAddMoreReviewers" />
+				</jstl:when>
+				<jstl:otherwise>
+					<a
+						href="conference/administrator/assignSubmissionAutomatic.do?submissionId=${row.id}"><spring:message
+							code="submission.assignAutomatic" /></a>
+				</jstl:otherwise>
+			</jstl:choose>
+
 		</display:column>
-</display:table>
+
+	</display:table>
 </fieldset>
 
 <fieldset>
-		<legend> <spring:message   code="submission.rejectedL"  />   </legend>	
-<display:table pagesize="10" name="${rejected}" id="row"
-	requestURI="${requestURI}">
+	<legend>
+		<spring:message code="submission.rejectedL" />
+	</legend>
+	<display:table pagesize="10" name="${rejected}" id="row"
+		requestURI="${requestURI}">
 
-<display:column property="ticker" titleKey="submission.ticker" />
-<display:column property="moment" titleKey="submission.moment" />
-<display:column property="status" titleKey="submission.status" />	
-<display:column  titleKey="submission.reviewers" >
-<jstl:forEach var="r" items="${row.reviewers }" >
-<jstl:out value="${r.userAccount.username}"></jstl:out>
-</jstl:forEach>
-</display:column>
-	<display:column titleKey="submission.assign">
-	<jstl:choose>
-	<jstl:when test="${row.status eq  checkStatusA or row.status eq  checkStatusR}">
-	<spring:message code="submission.cantAddMoreReviewersStatus" />
-	</jstl:when>
-	<jstl:when test="${conference.notificationDeadline < now}">
-	<spring:message code="submission.cantAssingNDElapsed" />
-	</jstl:when>	
-	<jstl:when test="${fn:length(row.reviewers) ge 3}">
-	<spring:message code="submission.cantAddMoreReviewers" />
-	</jstl:when>
-	<jstl:otherwise>
-	<a href="conference/administrator/addReviewer.do?submissionId=${row.id}"><spring:message code = "submission.assign"/></a>
-	</jstl:otherwise>
-	</jstl:choose>
+		<display:column property="ticker" titleKey="submission.ticker" />
+		<display:column property="moment" titleKey="submission.moment" />
+		<display:column property="status" titleKey="submission.status" />
+		<display:column titleKey="submission.reviewers">
+			<jstl:forEach var="r" items="${row.reviewers }">
+				<jstl:out value="${r.userAccount.username}"></jstl:out>
+			</jstl:forEach>
+		</display:column>
+		<display:column titleKey="submission.assign">
+			<jstl:choose>
+				<jstl:when
+					test="${row.status eq  checkStatusA or row.status eq  checkStatusR}">
+					<spring:message code="submission.cantAddMoreReviewersStatus" />
+				</jstl:when>
+				<jstl:when test="${conference.notificationDeadline < now}">
+					<spring:message code="submission.cantAssingNDElapsed" />
+				</jstl:when>
+				<jstl:when test="${fn:length(row.reviewers) ge 3}">
+					<spring:message code="submission.cantAddMoreReviewers" />
+				</jstl:when>
+				<jstl:otherwise>
+					<a
+						href="conference/administrator/addReviewer.do?submissionId=${row.id}"><spring:message
+							code="submission.assign" /></a>
+				</jstl:otherwise>
+			</jstl:choose>
 		</display:column>
 		<display:column titleKey="submission.assignAutomatic">
-		<jstl:choose>
-	<jstl:when test="${row.status eq  checkStatusA or row.status eq  checkStatusR}">
-	<spring:message code="submission.cantAddMoreReviewersStatus" />
-	</jstl:when>
-	<jstl:when test="${fn:length(row.reviewers) ge 3}">
-	<spring:message code="submission.cantAddMoreReviewers" />
-	</jstl:when>
-	<jstl:otherwise>
+			<jstl:choose>
+				<jstl:when
+					test="${row.status eq  checkStatusA or row.status eq  checkStatusR}">
+					<spring:message code="submission.cantAddMoreReviewersStatus" />
+				</jstl:when>
+				<jstl:when test="${fn:length(row.reviewers) ge 3}">
+					<spring:message code="submission.cantAddMoreReviewers" />
+				</jstl:when>
+				<jstl:otherwise>
 
-				<a href="conference/administrator/assignSubmissionAutomatic.do?submissionId=${row.id}"><spring:message code = "submission.assignAutomatic"/></a>
-	</jstl:otherwise>
-	</jstl:choose>
-	
-		</display:column>	
-</display:table>
+					<a
+						href="conference/administrator/assignSubmissionAutomatic.do?submissionId=${row.id}"><spring:message
+							code="submission.assignAutomatic" /></a>
+				</jstl:otherwise>
+			</jstl:choose>
+
+		</display:column>
+	</display:table>
 </fieldset>
-<br>
-	<spring:message code="submission.remember" />
+<br />
+<spring:message code="submission.remember" />
 

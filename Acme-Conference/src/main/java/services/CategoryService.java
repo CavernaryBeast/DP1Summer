@@ -118,7 +118,7 @@ public class CategoryService {
 		Assert.notNull(c);
 
 		if (c.getFather() == null)
-			Assert.isTrue(c.getName() == "CONFERENCE");
+			Assert.isTrue(c.getName().equals("CONFERENCE"));
 
 		this.administratorService.findByPrincipal();
 

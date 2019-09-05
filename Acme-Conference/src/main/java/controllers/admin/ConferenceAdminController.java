@@ -34,22 +34,22 @@ import forms.AdministratorFilterConferenceForm;
 public class ConferenceAdminController extends AbstractController {
 
 	@Autowired
-	ConferenceService		conferenceService;
+	private ConferenceService		conferenceService;
 
 	@Autowired
-	SubmissionService		submissionService;
+	private SubmissionService		submissionService;
 
 	@Autowired
-	AdministratorService	administratorService;
+	private AdministratorService	administratorService;
 
 	@Autowired
-	ReviewerService			reviewerService;
+	private ReviewerService			reviewerService;
 
 	@Autowired
-	private ActorService	actorService;
+	private ActorService			actorService;
 
 	@Autowired
-	private CategoryService	categoryService;
+	private CategoryService			categoryService;
 
 
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
@@ -260,6 +260,7 @@ public class ConferenceAdminController extends AbstractController {
 		result.addObject("rejected", rejected);
 		result.addObject("now", now);
 		result.addObject("conference", conference);
+		result.addObject("requestURI", "conference/administrator/listSubmissions.do?conferenceId=" + conferenceId);
 		return result;
 	}
 
@@ -363,6 +364,17 @@ public class ConferenceAdminController extends AbstractController {
 			}
 		return res;
 	}
+
+	//	@RequestMapping(value = "decideStatus", method = RequestMethod.GET)
+	//	public ModelAndView decideStatus(@RequestParam final int conferenceId) {
+	//
+	//		final ModelAndView res;
+	//		this.conferenceService.decideStatus(conferenceId);
+	//
+	//		res = new ModelAndView("redirect:listSubmissions.do?conferenceId=" + conferenceId);
+	//
+	//		return res;
+	//	}
 
 	protected ModelAndView createEditModelAndViewAddReviewer(final Submission submission, final String messageCode) {
 
