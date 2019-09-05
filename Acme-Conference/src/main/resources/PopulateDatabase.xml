@@ -2010,7 +2010,7 @@
 
 	<bean id="Reckon1" class="domain.Reckon">
 
-		<property name="ticker" value="2009/04-11111" />
+		<property name="ticker" value="1909/04-11111" />
 
 		<property name="publicationMoment" value="2019/09/04 20:00" />
 
@@ -2028,7 +2028,7 @@
 
 	<bean id="reckon2" class="domain.Reckon">
 
-		<property name="ticker" value="2008/01-11111" />
+		<property name="ticker" value="1908/01-11111" />
 
 		<property name="publicationMoment" value="2019/08/01 20:00" />
 
@@ -2046,7 +2046,7 @@
 
 	<bean id="reckon3" class="domain.Reckon">
 
-		<property name="ticker" value="2006/01-11111" />
+		<property name="ticker" value="1906/01-11111" />
 
 		<property name="publicationMoment" value="2019/06/01 20:00" />
 
@@ -2064,7 +2064,7 @@
 
 	<bean id="reckon4" class="domain.Reckon">
 
-		<property name="ticker" value="2005/01-11111" />
+		<property name="ticker" value="1905/01-11111" />
 
 		<property name="publicationMoment" value="2019/05/01 20:00" />
 

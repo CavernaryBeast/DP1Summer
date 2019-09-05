@@ -15,6 +15,15 @@
 
 <security:authorize access="hasRole('ADMINISTRATOR')">
 
+	<h2><spring:message code = "dashboard.reckonsPerConferenceStats" /></h2>
+	<p><spring:message code = "dashboard.avg" /> : <jstl:out value="${reckonsPerConferenceStatsAvg}"/></p>
+	<p><spring:message code = "dashboard.stddev" /> : <jstl:out value="${reckonsPerConferenceStatsStd}"/></p>
+	<p><spring:message code = "dashboard.ratioPublished" /> : <jstl:out value="${ratioPublished}"/></p>
+	<p><spring:message code = "dashboard.ratioUnpublished" /> : <jstl:out value="${ratioUnpublished}"/></p>
+	
+	<br/>				
+
+
 <h2><spring:message code = "dashboard.submissionsPerConferenceStats" /></h2>
 		<p><spring:message code = "dashboard.min" /> : <jstl:out value="${submissionsPerConferenceStatsMin}"/></p>
 		<p><spring:message code = "dashboard.max" /> : <jstl:out value="${submissionsPerConferenceStatsMax}"/></p>
@@ -71,13 +80,5 @@
 	
 		<br/>
 		
-		<h2><spring:message code = "dashboard.reckonsPerConferenceStats" /></h2>
-		<p><spring:message code = "dashboard.avg" /> : <jstl:out value="${reckonsPerConferenceStatsAvg}"/></p>
-		<p><spring:message code = "dashboard.stddev" /> : <jstl:out value="${reckonsPerConferenceStatsStd}"/></p>
-		<p><spring:message code = "dashboard.ratioPublished" /> : <jstl:out value="${ratioPublished}"/></p>
-		<p><spring:message code = "dashboard.ratioUnpublished" /> : <jstl:out value="${ratioUnpublished}"/></p>
-	
-		<br/>				
-
 
 </security:authorize>
