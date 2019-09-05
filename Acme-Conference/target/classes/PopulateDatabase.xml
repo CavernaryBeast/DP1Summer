@@ -539,8 +539,8 @@
 	<!-- ADMINISTRATOR -->
 
 	<bean id="userAccount1" class="security.UserAccount">
-		<property name="username" value="admin" />
-		<property name="password" value="21232f297a57a5a743894a0e4a801fc3" />
+		<property name="username" value="administrator1" />
+		<property name="password" value="d5cee333abe432891a0de57d0ee38713" />
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
@@ -549,6 +549,19 @@
 			</list>
 		</property>
 	</bean>
+
+	<bean id="userAccount40" class="security.UserAccount">
+		<property name="username" value="administrator2" />
+		<property name="password" value="82954495ff7e2a735ed2192c35b2cd00" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="ADMINISTRATOR" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+
 
 	<!-- ADMINISTRATOR FINISHED -->
 
@@ -726,16 +739,28 @@
 
 	<!-- ADMINISTRATOR -->
 
-	<bean id="admin" class="domain.Administrator">
-		<property name="name" value="Admin Name" />
-		<property name="middleName" value="Admin Middle Name" />
-		<property name="surname" value="Admin Surname" />
-		<property name="photo" value="https://photoadmin.jpg" />
-		<property name="email" value="admin@us.es" />
+	<bean id="admin1" class="domain.Administrator">
+		<property name="name" value="Admin1 Name" />
+		<property name="middleName" value="Admin1 Middle Name" />
+		<property name="surname" value="Admin1 Surname" />
+		<property name="photo" value="https://photoadmin1.jpg" />
+		<property name="email" value="admin1@us.es" />
 		<property name="phoneNumber" value="666666666" />
-		<property name="address" value="Admin Address" />
+		<property name="address" value="Admin1 Address" />
 		<property name="userAccount" ref="userAccount1" />
 	</bean>
+
+	<bean id="admin2" class="domain.Administrator">
+		<property name="name" value="Admin2 Name" />
+		<property name="middleName" value="Admin2 Middle Name" />
+		<property name="surname" value="Admin2 Surname" />
+		<property name="photo" value="https://photoadmin2.jpg" />
+		<property name="email" value="admin2@us.es" />
+		<property name="phoneNumber" value="666666666" />
+		<property name="address" value="Admin2 Address" />
+		<property name="userAccount" ref="userAccount40" />
+	</bean>
+
 
 	<!-- ADMINISTRATOR FINISHED -->
 
@@ -982,7 +1007,7 @@
 		<property name="subject" value="Message1's subject" />
 		<property name="body" value="Message1's body" />
 		<property name="topic" ref="other" />
-		<property name="sender" ref="admin" />
+		<property name="sender" ref="admin1" />
 		<property name="recipients">
 			<list>
 				<ref bean="author1" />
@@ -1084,7 +1109,7 @@
 		<property name="recipients">
 			<list>
 				<ref bean="reviewer4" />
-				<ref bean="admin" />
+				<ref bean="admin1" />
 			</list>
 		</property>
 	</bean>
@@ -1097,7 +1122,7 @@
 		<property name="sender" ref="reviewer4" />
 		<property name="recipients">
 			<list>
-				<ref bean="admin" />
+				<ref bean="admin1" />
 				<ref bean="author1" />
 			</list>
 		</property>
@@ -1217,7 +1242,7 @@
 		<property name="endDate" value="2019/10/11 21:00" />
 		<property name="summary" value="Conference1's summary" />
 		<property name="fee" value="200.0" />
-		<property name="administrator" ref="admin" />
+		<property name="administrator" ref="admin1" />
 		<property name="registrations">
 			<list>
 				<ref bean="registration1" />
@@ -1253,7 +1278,7 @@
 		<property name="endDate" value="2019/10/20 21:00" />
 		<property name="summary" value="Conference2's summary" />
 		<property name="fee" value="100.0" />
-		<property name="administrator" ref="admin" />
+		<property name="administrator" ref="admin2" />
 		<property name="registrations">
 			<list>
 				<ref bean="registration5" />
@@ -1980,5 +2005,81 @@
 	<!-- ##################################################################################################### -->
 
 	<!-- Other domain beans come here -->
+
+	<!-- FOLET -->
+
+	<bean id="folet1" class="domain.Folet">
+
+		<property name="ticker" value="20-0904-" />
+
+		<property name="publicationMoment" value="2019/09/04 20:00" />
+
+		<property name="title" value="TEST folet1" />
+
+		<property name="body" value="Body folet1" />
+
+		<property name="picture" value="http://folet1.jpg" />
+
+		<property name="isFinal" value="true" />
+
+		<property name="conference" ref="conference1" />
+
+	</bean>
+
+	<bean id="folet2" class="domain.Folet">
+
+		<property name="ticker" value="20-0801-" />
+
+		<property name="publicationMoment" value="2019/08/01 20:00" />
+
+		<property name="title" value="TEST folet2" />
+
+		<property name="body" value="Body folet2" />
+
+		<property name="picture" value="http://folet2.jpg" />
+
+		<property name="isFinal" value="true" />
+
+		<property name="conference" ref="conference1" />
+
+	</bean>
+
+	<bean id="folet3" class="domain.Folet">
+
+		<property name="ticker" value="20-0601-" />
+
+		<property name="publicationMoment" value="2019/06/01 20:00" />
+
+		<property name="title" value="TEST folet3" />
+
+		<property name="body" value="Body folet3" />
+
+		<property name="picture" value="http://folet3.jpg" />
+
+		<property name="isFinal" value="true" />
+
+		<property name="conference" ref="conference2" />
+
+	</bean>
+
+	<bean id="folet4" class="domain.Folet">
+
+		<property name="ticker" value="20-0501-" />
+
+		<property name="publicationMoment" value="2019/05/01 20:00" />
+
+		<property name="title" value="TEST folet4" />
+
+		<property name="body" value="Body folet4" />
+
+		<property name="picture" value="http://folet4.jpg" />
+
+		<property name="isFinal" value="true" />
+
+		<property name="conference" ref="conference2" />
+
+	</bean>
+
+
 
 </beans>

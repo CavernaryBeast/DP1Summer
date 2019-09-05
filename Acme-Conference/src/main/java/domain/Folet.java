@@ -15,8 +15,6 @@ import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotBlank;
-import org.hibernate.validator.constraints.SafeHtml;
-import org.hibernate.validator.constraints.SafeHtml.WhiteListType;
 import org.hibernate.validator.constraints.URL;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -26,6 +24,7 @@ public class Folet extends DomainEntity {
 
 	private String	ticker;
 	private Date	publicationMoment;
+	private String	title;
 	private String	body;
 	private String	picture;
 	private Boolean	isFinal;
@@ -41,7 +40,6 @@ public class Folet extends DomainEntity {
 	}
 
 	//@Pattern(regexp = "^\\d\\d[0-1]\\d[0-3]\\d[-][a-zA-Z0-9]{6}$")
-	@SafeHtml(whitelistType = WhiteListType.NONE)
 	@NotBlank
 	//@Column(unique = true)
 	public String getTicker() {
@@ -85,15 +83,22 @@ public class Folet extends DomainEntity {
 		this.picture = picture;
 	}
 
+	@NotBlank
+	public String getTitle() {
+		return this.title;
+	}
+
+	public void setTitle(final String title) {
+		this.title = title;
+	}
+
 
 	//Relationships
-
 	Conference	conference;
 
 
-	@NotNull
 	@Valid
-	@ManyToOne(optional = true)
+	@ManyToOne(optional = false)
 	public Conference getConference() {
 		return this.conference;
 	}
