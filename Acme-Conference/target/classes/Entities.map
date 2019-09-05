@@ -1,5 +1,5 @@
 #./src/main/resources/Entities.map
-#Thu Sep 05 04:47:25 CEST 2019
+#Thu Sep 05 10:40:43 CEST 2019
 reviewer1=345
 category19=417
 category18=416
@@ -38,12 +38,8 @@ report5=389
 configurationParameters=314
 report4=388
 report3=387
-folet4=421
 report2=386
-folet3=420
 report1=385
-folet2=419
-folet1=418
 author4=343
 author3=341
 author2=339
@@ -62,6 +58,7 @@ registration2=394
 creditCard2=363
 registration1=393
 creditCard1=362
+Reckon1=418
 submission4=383
 submission3=379
 submission2=377
@@ -100,8 +97,11 @@ userAccount9=330
 userAccount8=329
 userAccount7=328
 userAccount6=327
+reckon4=421
 userAccount5=326
+reckon3=420
 userAccount4=325
+reckon2=419
 userAccount3=324
 userAccount2=323
 userAccount1=321

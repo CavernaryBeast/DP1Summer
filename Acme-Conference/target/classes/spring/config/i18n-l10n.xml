@@ -39,7 +39,7 @@
 		<value>/views/reviewer/messages</value>
 		<value>/views/category/messages</value>
 		<value>/views/report/messages</value>
-		<value>/views/folet/messages</value>
+		<value>/views/reckon/messages</value>
 	</util:list>
 
 </beans>

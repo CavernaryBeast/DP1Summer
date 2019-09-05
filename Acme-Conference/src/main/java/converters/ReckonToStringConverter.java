@@ -6,21 +6,21 @@ import javax.transaction.Transactional;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
-import domain.Folet;
+import domain.Reckon;
 
 @Component
 @Transactional
-public class FoletToStringConverter implements Converter<Folet, String> {
+public class ReckonToStringConverter implements Converter<Reckon, String> {
 
 	@Override
-	public String convert(final Folet folet) {
+	public String convert(final Reckon reckon) {
 
 		String res;
 
-		if (folet == null)
+		if (reckon == null)
 			res = null;
 		else
-			res = String.valueOf(folet.getId());
+			res = String.valueOf(reckon.getId());
 		return res;
 	}
 

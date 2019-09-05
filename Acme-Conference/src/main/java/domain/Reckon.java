@@ -12,6 +12,7 @@ import javax.persistence.TemporalType;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotBlank;
@@ -20,7 +21,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Access(AccessType.PROPERTY)
-public class Folet extends DomainEntity {
+public class Reckon extends DomainEntity {
 
 	private String	ticker;
 	private Date	publicationMoment;
@@ -39,7 +40,7 @@ public class Folet extends DomainEntity {
 		this.isFinal = isFinal;
 	}
 
-	//@Pattern(regexp = "^\\d\\d[0-1]\\d[0-3]\\d[-][a-zA-Z0-9]{6}$")
+	@Pattern(regexp = "^[0-9]{4}/[0-9]{2}-\\d{5}$")
 	@NotBlank
 	//@Column(unique = true)
 	public String getTicker() {
@@ -64,7 +65,7 @@ public class Folet extends DomainEntity {
 	}
 
 	@NotBlank
-	@Size(min = 1, max = 100)
+	@Size(min = 1, max = 251)
 	public String getBody() {
 		return this.body;
 	}
@@ -73,7 +74,7 @@ public class Folet extends DomainEntity {
 		this.body = body;
 	}
 
-	@NotBlank
+	@NotNull
 	@URL
 	public String getPicture() {
 		return this.picture;

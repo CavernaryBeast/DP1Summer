@@ -90,9 +90,9 @@
 	code="conference.activities" /></a>
 	</display:column>
 
-	<display:column titleKey="conference.folets">
-		<a href="folet/administrator/list.do?conferenceId=${row.id}"><spring:message
-	code="conference.folets" /></a>
+	<display:column titleKey="conference.reckons">
+		<a href="reckon/administrator/list.do?conferenceId=${row.id}"><spring:message
+	code="conference.reckons" /></a>
 	</display:column>
 
 	</security:authorize>

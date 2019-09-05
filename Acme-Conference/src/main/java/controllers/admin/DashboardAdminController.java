@@ -11,6 +11,7 @@ import services.AdministratorService;
 import services.CategoryService;
 import services.CommentService;
 import services.ConferenceService;
+import services.ReckonService;
 import services.RegistrationService;
 import services.SubmissionService;
 import controllers.AbstractController;
@@ -36,6 +37,9 @@ public class DashboardAdminController extends AbstractController {
 
 	@Autowired
 	private AdministratorService	administratorService;
+
+	@Autowired
+	private ReckonService			reckonService;
 
 
 	@RequestMapping(value = "/show", method = RequestMethod.GET)
@@ -99,6 +103,15 @@ public class DashboardAdminController extends AbstractController {
 
 		// -------------------------------------------------------------------------------------
 
+		final String[] reckonsPerConferenceStats = this.reckonService.getReckonsPerConferenceStats().split(",");
+		final String reckonsPerConferenceStatsAvg = reckonsPerConferenceStats[0];
+		final String reckonsPerConferenceStatsStd = reckonsPerConferenceStats[1];
+
+		final double ratioPublished = this.reckonService.getRatioPublishedVSTotal();
+		final double ratioUnpublished = this.reckonService.getRatioUnPublishedVSTotal();
+
+		// -------------------------------------------------------------------------------------
+
 		result = new ModelAndView("dashboard/show");
 
 		result.addObject("submissionsPerConferenceStatsMin", submissionsPerConferenceStatsMin);
@@ -135,6 +148,12 @@ public class DashboardAdminController extends AbstractController {
 		result.addObject("commentsPerActivityStatsMax", commentsPerActivityStatsMax);
 		result.addObject("commentsPerActivityStatsAvg", commentsPerActivityStatsAvg);
 		result.addObject("commentsPerActivityStatsStd", commentsPerActivityStatsStd);
+
+		result.addObject("reckonsPerConferenceStatsAvg", reckonsPerConferenceStatsAvg);
+		result.addObject("reckonsPerConferenceStatsStd", reckonsPerConferenceStatsStd);
+
+		result.addObject("ratioPublished", ratioPublished);
+		result.addObject("ratioUnpublished", ratioUnpublished);
 
 		return result;
 

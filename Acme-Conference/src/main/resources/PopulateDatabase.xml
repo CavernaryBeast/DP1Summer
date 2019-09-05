@@ -2008,17 +2008,17 @@
 
 	<!-- FOLET -->
 
-	<bean id="folet1" class="domain.Folet">
+	<bean id="Reckon1" class="domain.Reckon">
 
-		<property name="ticker" value="20-0904-" />
+		<property name="ticker" value="2009/04-11111" />
 
 		<property name="publicationMoment" value="2019/09/04 20:00" />
 
-		<property name="title" value="TEST folet1" />
+		<property name="title" value="TEST reckon1" />
 
-		<property name="body" value="Body folet1" />
+		<property name="body" value="Body reckon1" />
 
-		<property name="picture" value="http://folet1.jpg" />
+		<property name="picture" value="http://reckon1.jpg" />
 
 		<property name="isFinal" value="true" />
 
@@ -2026,17 +2026,17 @@
 
 	</bean>
 
-	<bean id="folet2" class="domain.Folet">
+	<bean id="reckon2" class="domain.Reckon">
 
-		<property name="ticker" value="20-0801-" />
+		<property name="ticker" value="2008/01-11111" />
 
 		<property name="publicationMoment" value="2019/08/01 20:00" />
 
-		<property name="title" value="TEST folet2" />
+		<property name="title" value="TEST reckon2" />
 
-		<property name="body" value="Body folet2" />
+		<property name="body" value="Body reckon2" />
 
-		<property name="picture" value="http://folet2.jpg" />
+		<property name="picture" value="http://reckon2.jpg" />
 
 		<property name="isFinal" value="true" />
 
@@ -2044,17 +2044,17 @@
 
 	</bean>
 
-	<bean id="folet3" class="domain.Folet">
+	<bean id="reckon3" class="domain.Reckon">
 
-		<property name="ticker" value="20-0601-" />
+		<property name="ticker" value="2006/01-11111" />
 
 		<property name="publicationMoment" value="2019/06/01 20:00" />
 
-		<property name="title" value="TEST folet3" />
+		<property name="title" value="TEST reckon3" />
 
-		<property name="body" value="Body folet3" />
+		<property name="body" value="Body reckon3" />
 
-		<property name="picture" value="http://folet3.jpg" />
+		<property name="picture" value="http://reckon3.jpg" />
 
 		<property name="isFinal" value="true" />
 
@@ -2062,17 +2062,17 @@
 
 	</bean>
 
-	<bean id="folet4" class="domain.Folet">
+	<bean id="reckon4" class="domain.Reckon">
 
-		<property name="ticker" value="20-0501-" />
+		<property name="ticker" value="2005/01-11111" />
 
 		<property name="publicationMoment" value="2019/05/01 20:00" />
 
-		<property name="title" value="TEST folet4" />
+		<property name="title" value="TEST reckon4" />
 
-		<property name="body" value="Body folet4" />
+		<property name="body" value="Body reckon4" />
 
-		<property name="picture" value="http://folet4.jpg" />
+		<property name="picture" value="http://reckon4.jpg" />
 
 		<property name="isFinal" value="true" />
 

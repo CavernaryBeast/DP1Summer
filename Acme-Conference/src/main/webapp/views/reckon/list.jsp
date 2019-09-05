@@ -11,9 +11,9 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 
-<spring:message code="folet.yes"  var="language"/>
+<spring:message code="reckon.yes"  var="language"/>
 
-	<display:table pagesize="10" name="folets" id="row" requestURI="${requestURI}">
+	<display:table pagesize="10" name="reckons" id="row" requestURI="${requestURI}">
 	
 	<fmt:formatDate value="${row.publicationMoment}" pattern="dd" var="day" />
 		<fmt:formatDate value="${row.publicationMoment}" pattern="MM" var="month" /> 
@@ -21,66 +21,66 @@
 		
 		<jstl:choose>
 			<jstl:when test="${(year eq nowYear) and ((month eq nowMonth and day <= nowDay) or (month eq nowMonth-1 and day >= nowDay))}">
-			<jstl:set var="color" value="LavenderBlush"/>
+			<jstl:set var="color" value="YellowGreen"/>
 			</jstl:when>
 			<jstl:when test="${(year eq nowYear) and ((month eq nowMonth-1 and day < nowDay) or (month eq nowMonth-2 and day >= nowDay))}">
-			<jstl:set var="color" value="Crimson"/>
+			<jstl:set var="color" value="LightSeaGreen"/>
 			</jstl:when>
 			<jstl:otherwise>
-			<jstl:set var="color" value="IndianRed"/>
+			<jstl:set var="color" value="Thistle"/>
 			</jstl:otherwise>
 		</jstl:choose>
 	
 	
-	       <display:column property="title" titleKey="folet.title"  style="background-color: ${color};"/>
-			<display:column property="ticker" titleKey="folet.ticker" style="background-color: ${color};" />
+	       <display:column property="title" titleKey="reckon.title"  style="background-color: ${color};"/>
+			<display:column property="ticker" titleKey="reckon.ticker" style="background-color: ${color};" />
 
 
 			<jstl:choose >
 			<jstl:when test="${ language eq 'Yes' }">
-			<display:column titleKey="folet.publicationMoment" style="background-color: ${color};">
+			<display:column titleKey="reckon.publicationMoment" style="background-color: ${color};">
 			<fmt:formatDate value ="${row.publicationMoment}"
                 pattern="yyyy/MM/dd hh:mm"
                 />
 			</display:column>
 			</jstl:when>
 			<jstl:otherwise>
-			<display:column titleKey="folet.publicationMoment" style="background-color: ${color};">
+			<display:column titleKey="reckon.publicationMoment" style="background-color: ${color};">
 			<fmt:formatDate value ="${row.publicationMoment}"
                 pattern="dd-MM-yyyy hh:mm"
                 />
 			</display:column>
 			</jstl:otherwise>
 			</jstl:choose>
-			<display:column property="isFinal" titleKey="folet.isFinal"  style="background-color: ${color};"/>
-			<display:column titleKey="folet.show"  style="background-color: ${color};" >
+			<display:column property="isFinal" titleKey="reckon.isFinal"  style="background-color: ${color};"/>
+			<display:column titleKey="reckon.show"  style="background-color: ${color};" >
 				<input type="button" name="show"
-					value="<spring:message code="folet.show" />"
-					onclick="javascript: relativeRedir('folet/administrator/show.do?foletId=${row.id}');" />
+					value="<spring:message code="reckon.show" />"
+					onclick="javascript: relativeRedir('reckon/administrator/show.do?reckonId=${row.id}');" />
 			</display:column>
-				<display:column titleKey="folet.edit" style="background-color: ${color};">
+				<display:column titleKey="reckon.edit" style="background-color: ${color};">
 			<jstl:choose>
 			<jstl:when test="${not row.isFinal }">
-			<a href="folet/administrator/edit.do?foletId=${row.id}"><spring:message code = "folet.edit"/></a>
+			<a href="reckon/administrator/edit.do?reckonId=${row.id}"><spring:message code = "reckon.edit"/></a>
 			</jstl:when>
 			<jstl:otherwise>
-			<spring:message code="folet.cantEditFinalMode" />
+			<spring:message code="reckon.cantEditFinalMode" />
 			</jstl:otherwise>
 			</jstl:choose>
 				</display:column>
-				<display:column titleKey="folet.delete" style="background-color: ${color};">
+				<display:column titleKey="reckon.delete" style="background-color: ${color};">
 			<jstl:choose>
 			<jstl:when test="${not row.isFinal }">
-			<a href="folet/administrator/delete.do?foletId=${row.id}"><spring:message code = "folet.delete"/></a>
+			<a href="reckon/administrator/delete.do?reckonId=${row.id}"><spring:message code = "reckon.delete"/></a>
 			</jstl:when>
 			<jstl:otherwise>
-			<spring:message code="folet.cantDeleteFinalMode" />
+			<spring:message code="reckon.cantDeleteFinalMode" />
 			</jstl:otherwise>
 			</jstl:choose>
 				</display:column>
 				
 	</display:table>
 	<security:authorize access = "hasRole('ADMINISTRATOR')">
-	<input type="button" name = "create" value ="<spring:message code = 'folet.create' />" class = "btn"
-	onclick="javascript: relativeRedir('folet/administrator/add.do?conferenceId=${conferenceId}');" />
+	<input type="button" name = "create" value ="<spring:message code = 'reckon.create' />" class = "btn"
+	onclick="javascript: relativeRedir('reckon/administrator/add.do?conferenceId=${conferenceId}');" />
 </security:authorize>
