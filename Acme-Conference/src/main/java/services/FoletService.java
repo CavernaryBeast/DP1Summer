@@ -64,6 +64,16 @@ public class FoletService {
 		result = this.foletRepository.findOne(foletId);
 		Assert.notNull(result);
 		return result;
+
+	}
+
+	public Folet findOneEditable(final int foletId) {
+		Assert.isTrue(foletId != 0);
+		Folet result;
+		result = this.foletRepository.findOne(foletId);
+		Assert.notNull(result);
+		Assert.isTrue(result.getIsFinal().equals(false), "The folet was already in final mode");
+		return result;
 	}
 
 	public Folet save(final Folet folet) {
@@ -84,14 +94,14 @@ public class FoletService {
 
 		return result;
 	}
-	public void delete(final int foletId, final int conferenceId) {
+	public void delete(final int foletId) {
 		Assert.notNull(foletId);
 		Assert.isTrue(foletId != 0);
 		Assert.isTrue(this.foletRepository.exists(foletId));
 		//	this.conferenceService.checkAuditId(auditId);
 		this.actorService.findByPrincipal();
 		final Folet foletEnBaseDeDatos = this.findOne(foletId);
-		Assert.isTrue(!foletEnBaseDeDatos.getIsFinal());
+		Assert.isTrue(!foletEnBaseDeDatos.getIsFinal(), "The folet was already in final mode");
 		this.foletRepository.delete(foletEnBaseDeDatos);
 	}
 
@@ -127,9 +137,16 @@ public class FoletService {
 		return folet;
 	}
 
-	public Collection<Folet> getFoletsByConferencetId(final int auditId) {
+	public Collection<Folet> getFoletsByConferencetId(final int conferencetId) {
 		Collection<Folet> result;
-		result = this.foletRepository.getFoletsByConferencetId(auditId);
+		result = this.foletRepository.getFoletsByConferencetId(conferencetId);
+		Assert.notNull(result, "The list of the folets by auditId can't be null");
+		return result;
+	}
+
+	public Collection<Folet> getPublicFolets(final int auditId) {
+		Collection<Folet> result;
+		result = this.foletRepository.getPublicFolets(auditId);
 		Assert.notNull(result, "The list of the folets by auditId can't be null");
 		return result;
 	}

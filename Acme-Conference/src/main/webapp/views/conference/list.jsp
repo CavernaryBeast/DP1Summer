@@ -65,5 +65,8 @@
 		<a href="conference/show.do?conferenceId=${row.id}"><spring:message
 				code="conference.show" /></a>
 	</display:column>
-
+	<display:column titleKey="conference.folets">
+		<a href="folet/listFolets.do?conferenceId=${row.id}"><spring:message
+				code="conference.folets" /></a>
+	</display:column>
 </display:table>

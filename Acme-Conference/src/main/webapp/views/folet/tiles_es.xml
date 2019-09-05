@@ -20,6 +20,11 @@
 		<put-attribute name="body" value="/views/folet/list.jsp" />
 	</definition>
 	
+		<definition name="folet/listPublic" extends="master.page">
+		<put-attribute name="title" value="Listar folets" />
+		<put-attribute name="body" value="/views/folet/listPublic.jsp" />
+	</definition>
+	
 	<definition name="folet/edit" extends="master.page">
 		<put-attribute name="title" value="Editar folet" />
 		<put-attribute name="body" value="/views/folet/edit.jsp" />

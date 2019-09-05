@@ -11,9 +11,13 @@
 
 <security:authorize access = "hasRole('ADMINISTRATOR')">
 
-	<form:form id = "form" action="folet/administrator/edit.do" modelAttribute="folet">
+	<form:form id = "form" action="folet/administrator/edit.do?conferenceId=${conferenceId }" modelAttribute="folet">
 		<form:hidden path="id"/>
 		<form:hidden path="version"/>
+		
+		<acme:textbox code="folet.title" path="title"/>
+		<br />
+		
 		<acme:textbox code="folet.picture" path="picture"/>
 		<br />
 		<acme:textarea code="folet.body" path="body"/>
