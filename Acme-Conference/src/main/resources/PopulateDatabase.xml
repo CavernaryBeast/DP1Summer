@@ -2008,7 +2008,7 @@
 
 	<!-- FOLET -->
 
-	<bean id="Reckon1" class="domain.Reckon">
+	<bean id="reckon1" class="domain.Reckon">
 
 		<property name="ticker" value="1909/04-11111" />
 
@@ -2023,6 +2023,8 @@
 		<property name="isFinal" value="true" />
 
 		<property name="conference" ref="conference1" />
+
+		<property name="administrator" ref="admin1" />
 
 	</bean>
 
@@ -2042,6 +2044,8 @@
 
 		<property name="conference" ref="conference1" />
 
+		<property name="administrator" ref="admin1" />
+
 	</bean>
 
 	<bean id="reckon3" class="domain.Reckon">
@@ -2060,6 +2064,8 @@
 
 		<property name="conference" ref="conference2" />
 
+		<property name="administrator" ref="admin2" />
+
 	</bean>
 
 	<bean id="reckon4" class="domain.Reckon">
@@ -2077,6 +2083,8 @@
 		<property name="isFinal" value="true" />
 
 		<property name="conference" ref="conference2" />
+
+		<property name="administrator" ref="admin2" />
 
 	</bean>
 

@@ -15,6 +15,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
 import repositories.ReckonRepository;
+import domain.Administrator;
 import domain.Conference;
 import domain.Reckon;
 
@@ -46,8 +47,9 @@ public class ReckonService {
 
 	public Reckon create() {
 		Reckon result;
-		this.actorService.findByPrincipal();
+		final Administrator principal = this.administratorService.findByPrincipal();
 		result = new Reckon();
+		result.setAdministrator(principal);
 		result.setIsFinal(false);
 		return result;
 	}
@@ -70,8 +72,14 @@ public class ReckonService {
 
 	public Reckon findOneEditable(final int reckonId) {
 		Assert.isTrue(reckonId != 0);
+
+		final Administrator principal = this.administratorService.findByPrincipal();
+
 		Reckon result;
 		result = this.reckonRepository.findOne(reckonId);
+
+		Assert.isTrue(result.getAdministrator().equals(principal));
+
 		Assert.notNull(result);
 		Assert.isTrue(result.getIsFinal().equals(false), "The reckon was already in final mode");
 		return result;
@@ -79,8 +87,14 @@ public class ReckonService {
 
 	public Reckon save(final Reckon reckon) {
 		Assert.notNull(reckon);
+
 		final Reckon result;
-		this.administratorService.findByPrincipal();
+
+		final Administrator principal = this.administratorService.findByPrincipal();
+		if (reckon.getId() == 0)
+			reckon.setAdministrator(principal);
+		Assert.isTrue(reckon.getAdministrator().equals(principal));
+
 		if (reckon.getIsFinal()) {
 			if (reckon.getId() != 0) {
 				final Reckon savedReckon = this.findOne(reckon.getId());
@@ -99,10 +113,15 @@ public class ReckonService {
 		Assert.notNull(reckonId);
 		Assert.isTrue(reckonId != 0);
 		Assert.isTrue(this.reckonRepository.exists(reckonId));
+
+		final Administrator principal = this.administratorService.findByPrincipal();
+
 		//	this.conferenceService.checkAuditId(auditId);
-		this.actorService.findByPrincipal();
 		final Reckon reckonEnBaseDeDatos = this.findOne(reckonId);
 		Assert.isTrue(!reckonEnBaseDeDatos.getIsFinal(), "The reckon was already in final mode");
+
+		Assert.isTrue(reckonEnBaseDeDatos.getAdministrator().equals(principal));
+
 		this.reckonRepository.delete(reckonEnBaseDeDatos);
 	}
 
@@ -110,6 +129,7 @@ public class ReckonService {
 
 	public Reckon reconstruct(final Reckon reckon, final int conferenceId, final BindingResult binding) {
 		final Reckon result;
+		final Administrator principal = this.administratorService.findByPrincipal();
 
 		if (reckon.getId() == 0) {
 			//			result = reckon;
@@ -126,12 +146,14 @@ public class ReckonService {
 			//	this.auditService.checkAuditId(auditId);
 			final Conference conference = this.conferenceService.findOne(conferenceId);
 			reckon.setConference(conference);
+			reckon.setAdministrator(principal);
 		} else {
 			final Reckon original = this.reckonRepository.findOne(reckon.getId());
 			reckon.setId(original.getId());
 			reckon.setVersion(original.getVersion());
 			reckon.setTicker(original.getTicker());
 			reckon.setConference(original.getConference());
+			reckon.setAdministrator(principal);
 		}
 		this.validator.validate(reckon, binding);
 

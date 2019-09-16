@@ -16,6 +16,7 @@ import services.ActorService;
 import services.AdministratorService;
 import services.ReckonService;
 import controllers.AbstractController;
+import domain.Administrator;
 import domain.Conference;
 import domain.Reckon;
 
@@ -69,10 +70,12 @@ public class ReckonAdminController extends AbstractController {
 	}
 
 	@RequestMapping(value = "/listReckons", method = RequestMethod.GET)
-	public ModelAndView listAudit(@RequestParam final int conferenceId) {
+	public ModelAndView listReckons(@RequestParam final int conferenceId) {
 		ModelAndView result;
 		Collection<Reckon> reckons;
-		this.administratorService.findByPrincipal();
+
+		final Administrator principal = this.administratorService.findByPrincipal();
+
 		final int year = Calendar.getInstance().get(Calendar.YEAR);
 		final int month = Calendar.getInstance().get(Calendar.MONTH) + 1;
 		final int day = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
@@ -82,7 +85,9 @@ public class ReckonAdminController extends AbstractController {
 		result.addObject("nowYear", year);
 		result.addObject("nowMonth", month);
 		result.addObject("nowDay", day);
+		result.addObject("conferenceId", conferenceId);
 		result.addObject("requestURI", "reckon/administrator/listReckons.do?conferenceId=" + conferenceId);
+		result.addObject("principal", principal);
 		return result;
 	}
 
@@ -135,7 +140,7 @@ public class ReckonAdminController extends AbstractController {
 			try {
 
 				this.reckonService.save(reckon);
-				final String url = "redirect:/reckon/administrator/list.do?conferenceId=" + conferenceId;
+				final String url = "redirect:/reckon/administrator/listReckons.do?conferenceId=" + conferenceId;
 				result = new ModelAndView(url);
 			} catch (final Throwable oops) {
 				if (oops.getMessage().equals("The reckon was already in final mode"))
@@ -157,7 +162,7 @@ public class ReckonAdminController extends AbstractController {
 		this.reckonService.findOneEditable(reckonId);
 		try {
 			this.reckonService.delete(reckonId);
-			final String url = "redirect:/reckon/administrator/list.do?conferenceId=" + conference.getId();
+			final String url = "redirect:/reckon/administrator/listReckons.do?conferenceId=" + conference.getId();
 			result = new ModelAndView(url);
 			//		result.addObject("conferenceId", conference.getId());
 		} catch (final Throwable oops) {
@@ -199,7 +204,7 @@ public class ReckonAdminController extends AbstractController {
 
 	protected ModelAndView ListSubmissionModelAndView(final int conferenceId, final String messageCode) {
 		ModelAndView result;
-		result = this.list(conferenceId);
+		result = this.listReckons(conferenceId);
 		result.addObject("message", messageCode);
 		return result;
 	}

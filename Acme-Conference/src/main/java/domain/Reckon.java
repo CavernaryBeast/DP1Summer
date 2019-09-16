@@ -95,7 +95,8 @@ public class Reckon extends DomainEntity {
 
 
 	//Relationships
-	Conference	conference;
+	Conference		conference;
+	Administrator	administrator;
 
 
 	@Valid
@@ -106,6 +107,16 @@ public class Reckon extends DomainEntity {
 
 	public void setConference(final Conference conference) {
 		this.conference = conference;
+	}
+
+	@Valid
+	@ManyToOne(optional = false)
+	public Administrator getAdministrator() {
+		return this.administrator;
+	}
+
+	public void setAdministrator(final Administrator administrator) {
+		this.administrator = administrator;
 	}
 
 }
