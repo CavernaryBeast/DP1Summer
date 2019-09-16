@@ -18,9 +18,17 @@
 :
 <jstl:out value="${topic.nameEs}" />
 <br />
+<br />
 
-<acme:button url="topic/administrator/edit.do?topicId=${topic.id}"
-	code="topic.edit" />
+<jstl:choose>
+	<jstl:when test="${topic.name eq 'BASIC' or topic.name eq 'DECISION'}">
+		<spring:message code="topic.notEditable" />
+	</jstl:when>
+	<jstl:otherwise>
+		<acme:button url="topic/administrator/edit.do?topicId=${topic.id}"
+			code="topic.edit" />
+	</jstl:otherwise>
+</jstl:choose>
 
 <br />
 

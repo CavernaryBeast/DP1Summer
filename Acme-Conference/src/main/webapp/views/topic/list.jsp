@@ -17,15 +17,27 @@
 	<display:column property="name" titleKey="topic.name" />
 	<display:column property="nameEs" titleKey="topic.nameEs" />
 	<display:column>
-		<a href="topic/administrator/edit.do?topicId=${row.id}"><spring:message
-				code="topic.edit" /></a>
+		<jstl:choose>
+			<jstl:when test="${row.name eq 'BASIC' or row.name eq 'DECISION'}">
+				<spring:message code="topic.notEditable" />
+			</jstl:when>
+			<jstl:otherwise>
+				<a href="topic/administrator/edit.do?topicId=${row.id}"><spring:message
+						code="topic.edit" /></a>
+			</jstl:otherwise>
+		</jstl:choose>
 	</display:column>
-	<jstl:if test="${fn:length(topics) > 1}">
-		<display:column>
-			<a href="topic/administrator/delete.do?topicId=${row.id}"><spring:message
-					code="topic.delete" /></a>
-		</display:column>
-	</jstl:if>
+	<display:column>
+		<jstl:choose>
+			<jstl:when test="${row.name eq 'BASIC' or row.name eq 'DECISION'}">
+				<spring:message code="topic.notDeletable" />
+			</jstl:when>
+			<jstl:otherwise>
+				<a href="topic/administrator/delete.do?topicId=${row.id}"><spring:message
+						code="topic.delete" /></a>
+			</jstl:otherwise>
+		</jstl:choose>
+	</display:column>
 	<display:column>
 		<a href="topic/administrator/display.do?topicId=${row.id}"><spring:message
 				code="topic.display" /></a>

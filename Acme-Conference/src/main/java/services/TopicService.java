@@ -10,10 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
-import repositories.TopicRepository;
 import domain.ConfigurationParameters;
 import domain.Message;
 import domain.Topic;
+import repositories.TopicRepository;
 
 @Service
 @Transactional
@@ -84,12 +84,17 @@ public class TopicService {
 		Assert.notNull(topic);
 		this.administratorService.findByPrincipal();
 
+		Assert.isTrue(!topic.getName().equals("BASIC"));
+		Assert.isTrue(!topic.getName().equals("DECISION"));
+
 		return this.topicRepository.save(topic);
 	}
 
 	public void delete(final Topic topic) {
 
 		Assert.notNull(topic);
+		Assert.isTrue(!topic.getName().equals("BASIC"));
+		Assert.isTrue(!topic.getName().equals("DECISION"));
 
 		this.administratorService.findByPrincipal();
 
