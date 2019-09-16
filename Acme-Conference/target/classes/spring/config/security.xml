@@ -134,7 +134,7 @@
 			access="hasRole('ADMINISTRATOR')" />
 
 		<security:intercept-url pattern="/actor/signUp.do"
-			access="permitAll" />
+			access="isAnonymous()" />
 
 		<security:intercept-url pattern="/actor/createAuthor.do"
 			access="isAnonymous()" />

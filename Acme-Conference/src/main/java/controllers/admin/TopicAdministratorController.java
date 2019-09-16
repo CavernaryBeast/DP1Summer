@@ -76,7 +76,7 @@ public class TopicAdministratorController extends AbstractController {
 
 		final ModelAndView res;
 
-		final Topic topic = this.topicService.findOne(topicId);
+		final Topic topic = this.topicService.findOneEditable(topicId);
 
 		res = this.createEditModelAndView(topic);
 

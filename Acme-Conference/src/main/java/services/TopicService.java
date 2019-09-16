@@ -10,10 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
+import repositories.TopicRepository;
 import domain.ConfigurationParameters;
 import domain.Message;
 import domain.Topic;
-import repositories.TopicRepository;
 
 @Service
 @Transactional
@@ -69,6 +69,24 @@ public class TopicService {
 		return res;
 	}
 
+	public Topic findOneEditable(final int id) {
+
+		Assert.isTrue(id != 0);
+
+		this.administratorService.findByPrincipal();
+
+		final Topic res = this.topicRepository.findOne(id);
+		Assert.notNull(res);
+
+		Assert.isTrue(!res.getName().equals("DECISION"));
+		Assert.isTrue(!res.getName().equals("BASIC"));
+
+		Assert.isTrue(!res.getNameEs().equals("BÁSICO"));
+		Assert.isTrue(!res.getNameEs().equals("DECISIÓN"));
+
+		return res;
+	}
+
 	public Topic findByName(final String name) {
 
 		Assert.isTrue(name.length() > 0);
@@ -87,6 +105,9 @@ public class TopicService {
 		Assert.isTrue(!topic.getName().equals("BASIC"));
 		Assert.isTrue(!topic.getName().equals("DECISION"));
 
+		Assert.isTrue(!topic.getNameEs().equals("BÁSICO"));
+		Assert.isTrue(!topic.getNameEs().equals("DECISIÓN"));
+
 		return this.topicRepository.save(topic);
 	}
 
@@ -95,6 +116,9 @@ public class TopicService {
 		Assert.notNull(topic);
 		Assert.isTrue(!topic.getName().equals("BASIC"));
 		Assert.isTrue(!topic.getName().equals("DECISION"));
+
+		Assert.isTrue(!topic.getNameEs().equals("BÁSICO"));
+		Assert.isTrue(!topic.getNameEs().equals("DECISIÓN"));
 
 		this.administratorService.findByPrincipal();
 

@@ -17,8 +17,8 @@
 
 
 <div>
-	<a href="#"><img src="images/acme-conference.png" alt="Acme-Conference Co., Inc."
-		style="margin-bottom: 0.5em;" /></a>
+	<a href="#"><img src="images/acme-conference.png"
+		alt="Acme-Conference Co., Inc." style="margin-bottom: 0.5em;" /></a>
 </div>
 
 
@@ -40,6 +40,9 @@
 								code="master.page.administrator.topics" /></a></li>
 					<li><a href="category/administrator/list.do"><spring:message
 								code="master.page.administrator.categories" /></a></li>
+					<li><a href="actor/administrator/createAdministrator.do"><spring:message
+								code="master.page.actor.signUp.administrator" /></a></li>
+
 				</ul></li>
 			<li><a class="fNiv"> <spring:message
 						code="master.page.adminMessage" />

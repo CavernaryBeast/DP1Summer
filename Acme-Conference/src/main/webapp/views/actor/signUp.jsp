@@ -16,12 +16,6 @@
 <acme:button url="actor/createReviewer.do" code="actor.signUp.reviewer" />
 <acme:button url="actor/createSponsor.do" code="actor.signUp.sponsor" />
 
-<security:authorize access="hasRole('ADMINISTRATOR')">
-
-	<acme:button url="actor/administrator/createAdministrator.do"
-		code="actor.signUp.administrator" />
-
-</security:authorize>
 <br />
 
 <acme:button url="security/login.do" code="actor.cancel" />
