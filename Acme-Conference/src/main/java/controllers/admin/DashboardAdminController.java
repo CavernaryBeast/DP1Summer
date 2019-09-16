@@ -13,6 +13,7 @@ import services.CommentService;
 import services.ConferenceService;
 import services.RegistrationService;
 import services.SubmissionService;
+import services.VasteService;
 import controllers.AbstractController;
 
 @Controller
@@ -33,6 +34,9 @@ public class DashboardAdminController extends AbstractController {
 
 	@Autowired
 	private CategoryService			categoryService;
+
+	@Autowired
+	private VasteService			vasteService;
 
 	@Autowired
 	private AdministratorService	administratorService;
@@ -99,6 +103,20 @@ public class DashboardAdminController extends AbstractController {
 
 		// -------------------------------------------------------------------------------------
 
+		final String[] publishedVastesPerConferenceStats = this.vasteService.getPublishedVastesPerConferenceStats().split(",");
+		final String publishedVastesPerConferenceAvg = publishedVastesPerConferenceStats[0];
+		final String publishedVastesPerConferenceStd = publishedVastesPerConferenceStats[1];
+
+		// -------------------------------------------------------------------------------------
+
+		final String ratioOfPublishedVastesVSTotalVastes = this.vasteService.getRatioOfPublishedVastesVSTotalVastes();
+
+		// -------------------------------------------------------------------------------------
+
+		final String ratioOfUnpublishedVastesVSTotalVastes = this.vasteService.getRatioOfUnpublishedVastesVSTotalVastes();
+
+		// -------------------------------------------------------------------------------------
+
 		result = new ModelAndView("dashboard/show");
 
 		result.addObject("submissionsPerConferenceStatsMin", submissionsPerConferenceStatsMin);
@@ -135,6 +153,13 @@ public class DashboardAdminController extends AbstractController {
 		result.addObject("commentsPerActivityStatsMax", commentsPerActivityStatsMax);
 		result.addObject("commentsPerActivityStatsAvg", commentsPerActivityStatsAvg);
 		result.addObject("commentsPerActivityStatsStd", commentsPerActivityStatsStd);
+
+		result.addObject("publishedVastesPerConferenceAvg", publishedVastesPerConferenceAvg);
+		result.addObject("publishedVastesPerConferenceStd", publishedVastesPerConferenceStd);
+
+		result.addObject("ratioOfPublishedVastesVSTotalVastes", ratioOfPublishedVastesVSTotalVastes);
+
+		result.addObject("ratioOfUnpublishedVastesVSTotalVastes", ratioOfUnpublishedVastesVSTotalVastes);
 
 		return result;
 

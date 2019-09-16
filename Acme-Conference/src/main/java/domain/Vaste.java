@@ -20,11 +20,10 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Access(AccessType.PROPERTY)
-public class Folet extends DomainEntity {
+public class Vaste extends DomainEntity {
 
 	private String	ticker;
 	private Date	publicationMoment;
-	private String	title;
 	private String	body;
 	private String	picture;
 	private Boolean	isFinal;
@@ -64,7 +63,7 @@ public class Folet extends DomainEntity {
 	}
 
 	@NotBlank
-	@Size(min = 1, max = 100)
+	@Size(min = 1, max = 251)
 	public String getBody() {
 		return this.body;
 	}
@@ -73,7 +72,6 @@ public class Folet extends DomainEntity {
 		this.body = body;
 	}
 
-	@NotBlank
 	@URL
 	public String getPicture() {
 		return this.picture;
@@ -81,15 +79,6 @@ public class Folet extends DomainEntity {
 
 	public void setPicture(final String picture) {
 		this.picture = picture;
-	}
-
-	@NotBlank
-	public String getTitle() {
-		return this.title;
-	}
-
-	public void setTitle(final String title) {
-		this.title = title;
 	}
 
 

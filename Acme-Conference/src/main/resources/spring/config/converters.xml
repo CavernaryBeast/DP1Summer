@@ -67,8 +67,8 @@
 		<bean class="converters.CategoryToStringConverter" />
 		<bean class="converters.StringToCategoryConverter" />
 
-		<bean class="converters.FoletToStringConverter" />
-		<bean class="converters.StringToFoletConverter" />
+		<bean class="converters.VasteToStringConverter" />
+		<bean class="converters.StringToVasteConverter" />
 
 	</util:list>
 

@@ -15,6 +15,17 @@
 
 <security:authorize access="hasRole('ADMINISTRATOR')">
 
+<h2><spring:message code = "dashboard.publishedVastesPerConferenceStats" /></h2>
+		<p><spring:message code = "dashboard.avg" /> : <jstl:out value="${publishedVastesPerConferenceAvg}"/></p>
+		<p><spring:message code = "dashboard.stddev" /> : <jstl:out value="${publishedVastesPerConferenceStd}"/></p>
+
+	<h2><spring:message code = "dashboard.ratioOfPublishedVastesVSTotalVastes" /> : </h2><jstl:out value="${ratioOfPublishedVastesVSTotalVastes}"/>
+	
+	<br>
+
+	<h2><spring:message code = "dashboard.ratioOfUnpublishedVastesVSTotalVastes" /> : </h2><jstl:out value="${ratioOfUnpublishedVastesVSTotalVastes}"/>
+	<br>
+
 <h2><spring:message code = "dashboard.submissionsPerConferenceStats" /></h2>
 		<p><spring:message code = "dashboard.min" /> : <jstl:out value="${submissionsPerConferenceStatsMin}"/></p>
 		<p><spring:message code = "dashboard.max" /> : <jstl:out value="${submissionsPerConferenceStatsMax}"/></p>
@@ -70,7 +81,6 @@
 		<p><spring:message code = "dashboard.stddev" /> : <jstl:out value="${commentsPerActivityStatsStd}"/></p>
 	
 		<br/>				
-
 
 
 </security:authorize>

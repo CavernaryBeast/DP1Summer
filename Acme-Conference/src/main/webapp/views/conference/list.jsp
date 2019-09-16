@@ -65,8 +65,8 @@
 		<a href="conference/show.do?conferenceId=${row.id}"><spring:message
 				code="conference.show" /></a>
 	</display:column>
-	<display:column titleKey="conference.folets">
-		<a href="folet/listFolets.do?conferenceId=${row.id}"><spring:message
-				code="conference.folets" /></a>
+	<display:column titleKey="conference.vastes">
+		<a href="vaste/listVastes.do?conferenceId=${row.id}"><spring:message
+				code="conference.vastes" /></a>
 	</display:column>
 </display:table>

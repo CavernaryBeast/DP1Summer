@@ -1,5 +1,5 @@
 #./src/main/resources/Entities.map
-#Thu Sep 05 04:47:25 CEST 2019
+#Thu Sep 05 11:33:04 CEST 2019
 reviewer1=345
 category19=417
 category18=416
@@ -38,12 +38,8 @@ report5=389
 configurationParameters=314
 report4=388
 report3=387
-folet4=421
 report2=386
-folet3=420
 report1=385
-folet2=419
-folet1=418
 author4=343
 author3=341
 author2=339
@@ -90,6 +86,10 @@ message2=354
 inquiry=315
 message1=353
 userAccount40=322
+vaste4=421
+vaste3=420
+vaste2=419
+vaste1=418
 other=319
 sponsorship5=426
 sponsorship4=425

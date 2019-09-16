@@ -6,21 +6,21 @@ import javax.transaction.Transactional;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
-import domain.Folet;
+import domain.Vaste;
 
 @Component
 @Transactional
-public class FoletToStringConverter implements Converter<Folet, String> {
+public class VasteToStringConverter implements Converter<Vaste, String> {
 
 	@Override
-	public String convert(final Folet folet) {
+	public String convert(final Vaste vaste) {
 
 		String res;
 
-		if (folet == null)
+		if (vaste == null)
 			res = null;
 		else
-			res = String.valueOf(folet.getId());
+			res = String.valueOf(vaste.getId());
 		return res;
 	}
 

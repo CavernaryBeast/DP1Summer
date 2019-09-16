@@ -2008,17 +2008,15 @@
 
 	<!-- FOLET -->
 
-	<bean id="folet1" class="domain.Folet">
+	<bean id="vaste1" class="domain.Vaste">
 
-		<property name="ticker" value="20-0904-" />
+		<property name="ticker" value="19-w6-0904" />
 
 		<property name="publicationMoment" value="2019/09/04 20:00" />
 
-		<property name="title" value="TEST folet1" />
+		<property name="body" value="Body vaste1" />
 
-		<property name="body" value="Body folet1" />
-
-		<property name="picture" value="http://folet1.jpg" />
+		<property name="picture" value="http://vaste1.jpg" />
 
 		<property name="isFinal" value="true" />
 
@@ -2026,17 +2024,15 @@
 
 	</bean>
 
-	<bean id="folet2" class="domain.Folet">
+	<bean id="vaste2" class="domain.Vaste">
 
-		<property name="ticker" value="20-0801-" />
+		<property name="ticker" value="19-h2-0801" />
 
 		<property name="publicationMoment" value="2019/08/01 20:00" />
 
-		<property name="title" value="TEST folet2" />
+		<property name="body" value="Body vaste2" />
 
-		<property name="body" value="Body folet2" />
-
-		<property name="picture" value="http://folet2.jpg" />
+		<property name="picture" value="http://vaste2.jpg" />
 
 		<property name="isFinal" value="true" />
 
@@ -2044,17 +2040,15 @@
 
 	</bean>
 
-	<bean id="folet3" class="domain.Folet">
+	<bean id="vaste3" class="domain.Vaste">
 
-		<property name="ticker" value="20-0601-" />
+		<property name="ticker" value="19-Kz-0601" />
 
 		<property name="publicationMoment" value="2019/06/01 20:00" />
 
-		<property name="title" value="TEST folet3" />
+		<property name="body" value="Body vaste3" />
 
-		<property name="body" value="Body folet3" />
-
-		<property name="picture" value="http://folet3.jpg" />
+		<property name="picture" value="http://vaste3.jpg" />
 
 		<property name="isFinal" value="true" />
 
@@ -2062,17 +2056,15 @@
 
 	</bean>
 
-	<bean id="folet4" class="domain.Folet">
+	<bean id="vaste4" class="domain.Vaste">
 
-		<property name="ticker" value="20-0501-" />
+		<property name="ticker" value="19-p8-0501" />
 
 		<property name="publicationMoment" value="2019/05/01 20:00" />
 
-		<property name="title" value="TEST folet4" />
+		<property name="body" value="Body vaste4" />
 
-		<property name="body" value="Body folet4" />
-
-		<property name="picture" value="http://folet4.jpg" />
+		<property name="picture" value="http://vaste4.jpg" />
 
 		<property name="isFinal" value="true" />
 

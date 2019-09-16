@@ -11,30 +11,27 @@
 
 <security:authorize access = "hasRole('ADMINISTRATOR')">
 
-	<form:form id = "form" action="folet/administrator/edit.do?conferenceId=${conferenceId }" modelAttribute="folet">
+	<form:form id = "form" action="vaste/administrator/edit.do?conferenceId=${conferenceId }" modelAttribute="vaste">
 		<form:hidden path="id"/>
 		<form:hidden path="version"/>
 		
-		<acme:textbox code="folet.title" path="title"/>
+		<acme:textbox code="vaste.picture" path="picture"/>
 		<br />
-		
-		<acme:textbox code="folet.picture" path="picture"/>
-		<br />
-		<acme:textarea code="folet.body" path="body"/>
+		<acme:textarea code="vaste.body" path="body"/>
 		<br />
 		
 		<form:label path = "isFinal">
-			<spring:message code = "folet.isFinal"/>
+			<spring:message code = "vaste.isFinal"/>
 		</form:label>
-		<form:radiobutton path="isFinal" value="true"/><spring:message code="folet.yes"/>
-		<form:radiobutton path="isFinal" value="false"/><spring:message code="folet.no"/>
+		<form:radiobutton path="isFinal" value="true"/><spring:message code="vaste.yes"/>
+		<form:radiobutton path="isFinal" value="false"/><spring:message code="vaste.no"/>
 		<form:errors cssClass="error" path="isFinal"/>
 		<br />
 		
-		<input type="submit" name = "save" value ="<spring:message code = 'folet.save' />"/>
+		<input type="submit" name = "save" value ="<spring:message code = 'vaste.save' />"/>
 	</form:form>
 	
-	<input type="button" name = "back" value ="<spring:message code = 'folet.back' />" class = "btn"
-	onclick="javascript: relativeRedir('folet/author/list.do');" />
+	<input type="button" name = "back" value ="<spring:message code = 'vaste.back' />" class = "btn"
+	onclick="javascript: relativeRedir('vaste/administrator/list.do?conferenceId=${conferenceId }');" />
 
 </security:authorize>

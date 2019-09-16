@@ -14,17 +14,17 @@ import org.springframework.web.servlet.ModelAndView;
 
 import services.ActorService;
 import services.AdministratorService;
-import services.FoletService;
+import services.VasteService;
 import controllers.AbstractController;
 import domain.Conference;
-import domain.Folet;
+import domain.Vaste;
 
 @Controller
-@RequestMapping("/folet/administrator")
-public class FoletAdminController extends AbstractController {
+@RequestMapping("/vaste/administrator")
+public class VasteAdminController extends AbstractController {
 
 	@Autowired
-	FoletService			foletService;
+	VasteService			vasteService;
 	@Autowired
 	ActorService			actorService;
 	@Autowired
@@ -36,12 +36,12 @@ public class FoletAdminController extends AbstractController {
 	@RequestMapping(value = "/add", method = RequestMethod.GET)
 	public ModelAndView create(@RequestParam final int conferenceId) {
 		ModelAndView result;
-		Folet folet;
+		final Vaste vaste;
 		//		Audit audit;
 		//		audit = this.auditService.findOne2(auditId);
 		this.administratorService.findByPrincipal();
-		folet = this.foletService.create();
-		result = this.createEditModelAndView(folet, conferenceId);
+		vaste = this.vasteService.create();
+		result = this.createEditModelAndView(vaste, conferenceId);
 		return result;
 	}
 
@@ -50,15 +50,15 @@ public class FoletAdminController extends AbstractController {
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ModelAndView list(@RequestParam final int conferenceId) {
 		ModelAndView result;
-		Collection<Folet> folets;
+		Collection<Vaste> vastes;
 
 		this.administratorService.findByPrincipal();
 		final int year = Calendar.getInstance().get(Calendar.YEAR);
 		final int month = Calendar.getInstance().get(Calendar.MONTH) + 1;
 		final int day = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
-		folets = this.foletService.getFoletsByConferencetId(conferenceId);
-		result = new ModelAndView("folet/list");
-		result.addObject("folets", folets);
+		vastes = this.vasteService.getVastesByConferencetId(conferenceId);
+		result = new ModelAndView("vaste/list");
+		result.addObject("vastes", vastes);
 		result.addObject("requestURI", "conference/administrator/list.do");
 		result.addObject("conferenceId", conferenceId);
 		result.addObject("nowYear", year);
@@ -68,17 +68,17 @@ public class FoletAdminController extends AbstractController {
 		return result;
 	}
 
-	@RequestMapping(value = "/listFolets", method = RequestMethod.GET)
+	@RequestMapping(value = "/listVastes", method = RequestMethod.GET)
 	public ModelAndView listAudit(@RequestParam final int conferenceId) {
 		ModelAndView result;
-		Collection<Folet> folets;
+		final Collection<Vaste> vastes;
 		this.administratorService.findByPrincipal();
 		final int year = Calendar.getInstance().get(Calendar.YEAR);
 		final int month = Calendar.getInstance().get(Calendar.MONTH);
 		final int day = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
-		folets = this.foletService.getFoletsByConferencetId(conferenceId);
-		result = new ModelAndView("folet/list");
-		result.addObject("folets", folets);
+		vastes = this.vasteService.getVastesByConferencetId(conferenceId);
+		result = new ModelAndView("vaste/list");
+		result.addObject("vastes", vastes);
 		result.addObject("nowYear", year);
 		result.addObject("nowMonth", month);
 		result.addObject("nowDay", day);
@@ -88,32 +88,32 @@ public class FoletAdminController extends AbstractController {
 	// Show ----------------------------------------------------------------------------------
 
 	@RequestMapping(value = "/show", method = RequestMethod.GET)
-	public ModelAndView show(@RequestParam final int foletId) {
+	public ModelAndView show(@RequestParam final int vasteId) {
 		ModelAndView result;
-		Folet folet;
-		folet = this.foletService.findOne(foletId);
-		result = new ModelAndView("folet/show");
-		result.addObject("folet", folet);
+		Vaste vaste;
+		vaste = this.vasteService.findOne(vasteId);
+		result = new ModelAndView("vaste/show");
+		result.addObject("vaste", vaste);
 		return result;
 	}
 
 	// Edit ----------------------------------------------------------------------------------
 
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
-	public ModelAndView edit(@RequestParam final int foletId) {
+	public ModelAndView edit(@RequestParam final int vasteId) {
 		ModelAndView result;
-		Folet folet;
-		final Folet found = this.foletService.findOne(foletId);
+		Vaste vaste;
+		final Vaste found = this.vasteService.findOne(vasteId);
 		final Conference conference = found.getConference();
 		this.administratorService.findByPrincipal();
 
 		try {
-			folet = this.foletService.findOneEditable(foletId);
-			result = this.createEditModelAndView(folet, conference.getId());
+			vaste = this.vasteService.findOneEditable(vasteId);
+			result = this.createEditModelAndView(vaste, conference.getId());
 			result.addObject("conferenceId", conference.getId());
 		} catch (final Throwable oops) {
-			if (oops.getMessage().equals("The folet was already in final mode"))
-				result = this.ListSubmissionModelAndView(conference.getId(), "folet.cantEditFinalMode");
+			if (oops.getMessage().equals("The vaste was already in final mode"))
+				result = this.ListSubmissionModelAndView(conference.getId(), "vaste.cantEditFinalMode");
 			else
 				result = this.ListSubmissionModelAndView(conference.getId());
 		}
@@ -124,23 +124,23 @@ public class FoletAdminController extends AbstractController {
 	// Save ----------------------------------------------------------------------------------
 
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(Folet folet, final BindingResult binding, @RequestParam final int conferenceId) {
+	public ModelAndView save(Vaste vaste, final BindingResult binding, @RequestParam final int conferenceId) {
 		ModelAndView result;
-		folet = this.foletService.reconstruct(folet, conferenceId, binding);
+		vaste = this.vasteService.reconstruct(vaste, conferenceId, binding);
 
 		if (binding.hasErrors())
-			result = this.createEditModelAndView(folet, conferenceId);
+			result = this.createEditModelAndView(vaste, conferenceId);
 		else
 			try {
 
-				this.foletService.save(folet);
-				final String url = "redirect:/folet/administrator/list.do?conferenceId=" + conferenceId;
+				this.vasteService.save(vaste);
+				final String url = "redirect:/vaste/administrator/list.do?conferenceId=" + conferenceId;
 				result = new ModelAndView(url);
 			} catch (final Throwable oops) {
-				if (oops.getMessage().equals("The folet was already in final mode"))
-					result = this.ListSubmissionModelAndView(conferenceId, "You can't edit the folet because is in final mode ");
+				if (oops.getMessage().equals("The vaste was already in final mode"))
+					result = this.ListSubmissionModelAndView(conferenceId, "You can't edit the vaste because is in final mode ");
 				else
-					result = this.createEditModelAndView(folet, conferenceId, "problem.commit.error");
+					result = this.createEditModelAndView(vaste, conferenceId, "vaste.commit.error");
 			}
 
 		return result;
@@ -149,19 +149,19 @@ public class FoletAdminController extends AbstractController {
 	// Delete --------------------------------------------------------------------------------
 
 	@RequestMapping(value = "/delete", method = RequestMethod.GET)
-	public ModelAndView delete(@RequestParam final int foletId) {
+	public ModelAndView delete(@RequestParam final int vasteId) {
 		ModelAndView result;
-		final Folet folet = this.foletService.findOne(foletId);
-		final Conference conference = folet.getConference();
-		this.foletService.findOneEditable(foletId);
+		final Vaste vaste = this.vasteService.findOne(vasteId);
+		final Conference conference = vaste.getConference();
+		this.vasteService.findOneEditable(vasteId);
 		try {
-			this.foletService.delete(foletId);
-			final String url = "redirect:/folet/administrator/list.do?conferenceId=" + conference.getId();
+			this.vasteService.delete(vasteId);
+			final String url = "redirect:/vaste/administrator/list.do?conferenceId=" + conference.getId();
 			result = new ModelAndView(url);
 			//		result.addObject("conferenceId", conference.getId());
 		} catch (final Throwable oops) {
-			if (oops.getMessage().equals("The folet was already in final mode"))
-				result = this.ListSubmissionModelAndView(conference.getId(), "folet.cantDeleteFinalMode");
+			if (oops.getMessage().equals("The vaste was already in final mode"))
+				result = this.ListSubmissionModelAndView(conference.getId(), "vaste.cantDeleteFinalMode");
 			else
 				result = this.ListSubmissionModelAndView(conference.getId());
 		}
@@ -170,18 +170,18 @@ public class FoletAdminController extends AbstractController {
 	}
 	// Ancillary methods ---------------------------------------------------------------------
 
-	protected ModelAndView createEditModelAndView(final Folet folet, final int conferenceId) {
+	protected ModelAndView createEditModelAndView(final Vaste vaste, final int conferenceId) {
 		ModelAndView result;
 
-		result = this.createEditModelAndView(folet, conferenceId, null);
+		result = this.createEditModelAndView(vaste, conferenceId, null);
 
 		return result;
 	}
 
-	protected ModelAndView createEditModelAndView(final Folet folet, final int conferenceId, final String messageCode) {
+	protected ModelAndView createEditModelAndView(final Vaste vaste, final int conferenceId, final String messageCode) {
 		ModelAndView result;
-		result = new ModelAndView("folet/edit");
-		result.addObject("folet", folet);
+		result = new ModelAndView("vaste/edit");
+		result.addObject("vaste", vaste);
 		result.addObject("conferenceId", conferenceId);
 		result.addObject("message", messageCode);
 

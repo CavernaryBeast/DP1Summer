@@ -8,21 +8,21 @@ import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
-import repositories.FoletRepository;
-import domain.Folet;
+import repositories.VasteRepository;
+import domain.Vaste;
 
 @Component
 @Transactional
-public class StringToFoletConverter implements Converter<String, Folet> {
+public class StringToVasteConverter implements Converter<String, Vaste> {
 
 	@Autowired
-	private FoletRepository	foletRepository;
+	private VasteRepository	vasteRepository;
 
 
 	@Override
-	public Folet convert(final String text) {
+	public Vaste convert(final String text) {
 
-		Folet res;
+		Vaste res;
 		final int id;
 
 		try {
@@ -30,7 +30,7 @@ public class StringToFoletConverter implements Converter<String, Folet> {
 				res = null;
 			else {
 				id = Integer.valueOf(text);
-				res = this.foletRepository.findOne(id);
+				res = this.vasteRepository.findOne(id);
 			}
 		} catch (final Throwable oops) {
 			throw new IllegalArgumentException(oops);

@@ -84,7 +84,7 @@
 		<security:intercept-url pattern="/activity/administrator/**"
 			access="hasRole('ADMINISTRATOR')" />
 			
-		<security:intercept-url pattern="/folet/administrator/**"
+		<security:intercept-url pattern="/vaste/administrator/**"
 			access="hasRole('ADMINISTRATOR')" />
 			
 
@@ -113,7 +113,7 @@
 		<security:intercept-url pattern="/author/**"
 			access="permitAll" />
 		
-			<security:intercept-url pattern="/folet/**"
+			<security:intercept-url pattern="/vaste/**"
 			access="permitAll" />
 			
 			<security:intercept-url pattern="/author/show.do"
