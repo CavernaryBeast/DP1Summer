@@ -193,7 +193,7 @@ public class ActivityAdminController extends AbstractController {
 	//Save --------------------------------------------------------
 
 	@RequestMapping(value = "/editPresentation", method = RequestMethod.POST, params = "save")
-	public ModelAndView savePresentation(@Valid Activity activity, final BindingResult binding, final Integer conferenceId) {
+	public ModelAndView savePresentation(Activity activity, final BindingResult binding, final Integer conferenceId) {
 
 		ModelAndView res;
 		Activity saved;
@@ -259,7 +259,7 @@ public class ActivityAdminController extends AbstractController {
 	}
 
 	@RequestMapping(value = "/editPanel", method = RequestMethod.POST, params = "save")
-	public ModelAndView savePanel(@Valid Activity activity, final BindingResult binding, final Integer conferenceId) {
+	public ModelAndView savePanel(Activity activity, final BindingResult binding, final Integer conferenceId) {
 
 		ModelAndView res;
 		Activity saved;

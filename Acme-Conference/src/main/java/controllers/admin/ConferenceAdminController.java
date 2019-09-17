@@ -188,9 +188,18 @@ public class ConferenceAdminController extends AbstractController {
 				final Conference saved = this.conferenceService.save(conference);
 
 				final Category category = this.categoryService.findOne(categoryId);
-				category.getConferences().add(saved);
-				this.categoryService.save(category);
 
+				if (conference.getId() != 0) {
+					final Category aux = this.categoryService.findByConferenceId(conference.getId());
+					if (!category.equals(aux)) {
+						aux.getConferences().remove(conference);
+						this.categoryService.save(aux);
+					}
+				}
+				if (!category.getConferences().contains(saved)) {
+					category.getConferences().add(saved);
+					this.categoryService.save(category);
+				}
 				result = new ModelAndView("redirect:/conference/administrator/list.do");
 
 			} catch (final Throwable oops) {
@@ -217,7 +226,6 @@ public class ConferenceAdminController extends AbstractController {
 		return result;
 
 	}
-
 	// Update ----------------------------------------------------------------------------------
 
 	@RequestMapping(value = "/update", method = RequestMethod.GET)

@@ -171,4 +171,15 @@ public class CategoryService {
 		return res;
 	}
 
+	public Category findByConferenceId(final int id) {
+
+		Assert.isTrue(id != 0);
+		Assert.notNull(id);
+
+		final Category res = this.categoryRepository.findByConferenceId(id);
+		Assert.notNull(res);
+
+		return res;
+	}
+
 }
