@@ -16,6 +16,7 @@ import services.ActorService;
 import services.AdministratorService;
 import services.VasteService;
 import controllers.AbstractController;
+import domain.Administrator;
 import domain.Conference;
 import domain.Vaste;
 
@@ -72,9 +73,10 @@ public class VasteAdminController extends AbstractController {
 	public ModelAndView listAudit(@RequestParam final int conferenceId) {
 		ModelAndView result;
 		final Collection<Vaste> vastes;
-		this.administratorService.findByPrincipal();
+		final Administrator administrator = this.administratorService.findByPrincipal();
+		final String username = administrator.getUserAccount().getUsername();
 		final int year = Calendar.getInstance().get(Calendar.YEAR);
-		final int month = Calendar.getInstance().get(Calendar.MONTH);
+		final int month = Calendar.getInstance().get(Calendar.MONTH) + 1;
 		final int day = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
 		vastes = this.vasteService.getVastesByConferencetId(conferenceId);
 		result = new ModelAndView("vaste/list");
@@ -82,6 +84,8 @@ public class VasteAdminController extends AbstractController {
 		result.addObject("nowYear", year);
 		result.addObject("nowMonth", month);
 		result.addObject("nowDay", day);
+		result.addObject("administrator", administrator);
+		result.addObject("conferenceId", conferenceId);
 		return result;
 	}
 
@@ -134,7 +138,7 @@ public class VasteAdminController extends AbstractController {
 			try {
 
 				this.vasteService.save(vaste);
-				final String url = "redirect:/vaste/administrator/list.do?conferenceId=" + conferenceId;
+				final String url = "redirect:/vaste/administrator/listVastes.do?conferenceId=" + conferenceId;
 				result = new ModelAndView(url);
 			} catch (final Throwable oops) {
 				if (oops.getMessage().equals("The vaste was already in final mode"))
@@ -156,7 +160,7 @@ public class VasteAdminController extends AbstractController {
 		this.vasteService.findOneEditable(vasteId);
 		try {
 			this.vasteService.delete(vasteId);
-			final String url = "redirect:/vaste/administrator/list.do?conferenceId=" + conference.getId();
+			final String url = "redirect:/vaste/administrator/listVastes.do?conferenceId=" + conference.getId();
 			result = new ModelAndView(url);
 			//		result.addObject("conferenceId", conference.getId());
 		} catch (final Throwable oops) {
@@ -198,7 +202,7 @@ public class VasteAdminController extends AbstractController {
 
 	protected ModelAndView ListSubmissionModelAndView(final int conferenceId, final String messageCode) {
 		ModelAndView result;
-		result = this.list(conferenceId);
+		result = this.listAudit(conferenceId);
 		result.addObject("message", messageCode);
 		return result;
 	}

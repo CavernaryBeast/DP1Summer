@@ -91,7 +91,7 @@
 	</display:column>
 
 	<display:column titleKey="conference.vastes">
-		<a href="vaste/administrator/list.do?conferenceId=${row.id}"><spring:message
+		<a href="vaste/administrator/listVastes.do?conferenceId=${row.id}"><spring:message
 	code="conference.vastes" /></a>
 	</display:column>
 

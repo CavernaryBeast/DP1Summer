@@ -11,9 +11,13 @@
 
 <security:authorize access = "hasRole('ADMINISTRATOR')">
 
-	<form:form id = "form" action="vaste/administrator/edit.do?conferenceId=${conferenceId }" modelAttribute="vaste">
+	<form:form id = "form" action="vaste/administrator/edit.do?conferenceId=${conferenceId}" modelAttribute="vaste">
 		<form:hidden path="id"/>
 		<form:hidden path="version"/>
+		<form:hidden path="administrator"/>
+		
+			<acme:textbox code="vaste.title" path="title"/>
+		<br />
 		
 		<acme:textbox code="vaste.picture" path="picture"/>
 		<br />

@@ -15,6 +15,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
 import repositories.VasteRepository;
+import domain.Administrator;
 import domain.Conference;
 import domain.Vaste;
 
@@ -46,9 +47,10 @@ public class VasteService {
 
 	public Vaste create() {
 		Vaste result;
-		this.actorService.findByPrincipal();
+		final Administrator logged = this.administratorService.findByPrincipal();
 		result = new Vaste();
 		result.setIsFinal(false);
+		result.setAdministrator(logged);
 		return result;
 	}
 
@@ -71,20 +73,28 @@ public class VasteService {
 	public Vaste findOneEditable(final int vasteId) {
 		Assert.isTrue(vasteId != 0);
 		Vaste result;
+
+		final Administrator logged = this.administratorService.findByPrincipal();
 		result = this.vasteRepository.findOne(vasteId);
 		Assert.notNull(result);
 		Assert.isTrue(result.getIsFinal().equals(false), "The vaste was already in final mode");
+		Assert.isTrue(result.getAdministrator().equals(logged), "The administrator who edits the vaste must be the same one who created it");
 		return result;
 	}
 
 	public Vaste save(final Vaste vaste) {
 		Assert.notNull(vaste);
 		final Vaste result;
-		this.administratorService.findByPrincipal();
+		final Administrator logged = this.administratorService.findByPrincipal();
+		if (vaste.getId() == 0)
+			vaste.setAdministrator(logged);
+		Assert.isTrue(vaste.getAdministrator().equals(logged));
+
 		if (vaste.getIsFinal()) {
 			if (vaste.getId() != 0) {
 				final Vaste savedVaste = this.findOne(vaste.getId());
 				Assert.isTrue(savedVaste.getIsFinal().equals(false), "The vaste was already in final mode");
+				//	Assert.isTrue(vaste.getAdministrator().equals(savedVaste.getAdministrator()), "The admin editing the vaste must be the same who created it");
 			}
 			final DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd  hh:mm");
 			final Date now = new Date(System.currentTimeMillis() - 1);
@@ -100,9 +110,10 @@ public class VasteService {
 		Assert.isTrue(vasteId != 0);
 		Assert.isTrue(this.vasteRepository.exists(vasteId));
 		//	this.conferenceService.checkAuditId(auditId);
-		this.actorService.findByPrincipal();
+		final Administrator logged = this.administratorService.findByPrincipal();
 		final Vaste vasteEnBaseDeDatos = this.findOne(vasteId);
 		Assert.isTrue(!vasteEnBaseDeDatos.getIsFinal(), "The vaste was already in final mode");
+		Assert.isTrue(logged.equals(vasteEnBaseDeDatos.getAdministrator()), "The admin editing the vaste must be the same who created it");
 		this.vasteRepository.delete(vasteEnBaseDeDatos);
 	}
 
@@ -112,7 +123,8 @@ public class VasteService {
 		final Vaste result;
 
 		if (vaste.getId() == 0) {
-			//			result = vaste;
+
+			final Administrator logged = this.administratorService.findByPrincipal();
 			final DateFormat dateFormat = new SimpleDateFormat("yy-");
 
 			final DateFormat dateFormat2 = new SimpleDateFormat("-MMdd");
@@ -131,12 +143,14 @@ public class VasteService {
 			//	this.auditService.checkAuditId(auditId);
 			final Conference conference = this.conferenceService.findOne(conferenceId);
 			vaste.setConference(conference);
+			vaste.setAdministrator(logged);
 		} else {
 			final Vaste original = this.vasteRepository.findOne(vaste.getId());
 			vaste.setId(original.getId());
 			vaste.setVersion(original.getVersion());
 			vaste.setTicker(original.getTicker());
 			vaste.setConference(original.getConference());
+			vaste.setAdministrator(original.getAdministrator());
 		}
 		this.validator.validate(vaste, binding);
 

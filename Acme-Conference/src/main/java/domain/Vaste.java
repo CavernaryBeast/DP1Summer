@@ -22,12 +22,22 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Access(AccessType.PROPERTY)
 public class Vaste extends DomainEntity {
 
+	private String	title;
 	private String	ticker;
 	private Date	publicationMoment;
 	private String	body;
 	private String	picture;
 	private Boolean	isFinal;
 
+
+	@NotBlank
+	public String getTitle() {
+		return this.title;
+	}
+
+	public void setTitle(final String title) {
+		this.title = title;
+	}
 
 	@NotNull
 	public Boolean getIsFinal() {
@@ -83,8 +93,19 @@ public class Vaste extends DomainEntity {
 
 
 	//Relationships
-	Conference	conference;
+	Conference		conference;
+	Administrator	administrator;
 
+
+	@Valid
+	@ManyToOne(optional = false)
+	public Administrator getAdministrator() {
+		return this.administrator;
+	}
+
+	public void setAdministrator(final Administrator administrator) {
+		this.administrator = administrator;
+	}
 
 	@Valid
 	@ManyToOne(optional = false)

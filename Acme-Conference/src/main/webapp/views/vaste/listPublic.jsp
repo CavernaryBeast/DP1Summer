@@ -30,6 +30,8 @@
 			<jstl:set var="color" value="DarkViolet"/>
 			</jstl:otherwise>
 		</jstl:choose>
+		
+			<display:column property="administrator.userAccount.username" titleKey="vaste.administrator" style="background-color: ${color};" />
 
 			<display:column property="ticker" titleKey="vaste.ticker" style="background-color: ${color};" />
 

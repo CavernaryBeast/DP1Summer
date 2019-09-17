@@ -2010,6 +2010,8 @@
 
 	<bean id="vaste1" class="domain.Vaste">
 
+	<property name="title" value="TEST vaste1" />
+
 		<property name="ticker" value="19-w6-0904" />
 
 		<property name="publicationMoment" value="2019/09/04 20:00" />
@@ -2021,10 +2023,14 @@
 		<property name="isFinal" value="true" />
 
 		<property name="conference" ref="conference1" />
+		
+		<property name="administrator" ref="admin1" />
 
 	</bean>
 
 	<bean id="vaste2" class="domain.Vaste">
+
+<property name="title" value="TEST vaste2" />
 
 		<property name="ticker" value="19-h2-0801" />
 
@@ -2037,10 +2043,14 @@
 		<property name="isFinal" value="true" />
 
 		<property name="conference" ref="conference1" />
+		
+			<property name="administrator" ref="admin1" />
 
 	</bean>
 
 	<bean id="vaste3" class="domain.Vaste">
+
+<property name="title" value="TEST vaste3" />
 
 		<property name="ticker" value="19-Kz-0601" />
 
@@ -2053,10 +2063,14 @@
 		<property name="isFinal" value="true" />
 
 		<property name="conference" ref="conference2" />
+		
+			<property name="administrator" ref="admin2" />
 
 	</bean>
 
 	<bean id="vaste4" class="domain.Vaste">
+	
+	<property name="title" value="TEST vaste4" />
 
 		<property name="ticker" value="19-p8-0501" />
 
@@ -2069,6 +2083,8 @@
 		<property name="isFinal" value="true" />
 
 		<property name="conference" ref="conference2" />
+		
+			<property name="administrator" ref="admin2" />
 
 	</bean>
 

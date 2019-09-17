@@ -15,9 +15,13 @@
 
 	<display:table pagesize="10" name="vastes" id="row" requestURI="${requestURI}">
 	
+	
+	
 	<fmt:formatDate value="${row.publicationMoment}" pattern="dd" var="day" />
 		<fmt:formatDate value="${row.publicationMoment}" pattern="MM" var="month" /> 
 		<fmt:formatDate value="${row.publicationMoment}" pattern="yyyy" var="year" /> 
+	
+	
 		
 		<jstl:choose>
 			<jstl:when test="${(year eq nowYear) and ((month eq nowMonth and day <= nowDay) or (month eq nowMonth-1 and day >= nowDay))}">
@@ -31,7 +35,13 @@
 			</jstl:otherwise>
 		</jstl:choose>
 	
+	
+	<display:column property="title" titleKey="vaste.title" style="background-color: ${color};" />
+	
+		<display:column property="administrator.userAccount.username" titleKey="vaste.administrator" style="background-color: ${color};" />
+		
 			<display:column property="ticker" titleKey="vaste.ticker" style="background-color: ${color};" />
+
 
 
 			<jstl:choose >
@@ -58,21 +68,21 @@
 			</display:column>
 				<display:column titleKey="vaste.edit" style="background-color: ${color};">
 			<jstl:choose>
-			<jstl:when test="${not row.isFinal }">
+			<jstl:when test="${not row.isFinal and row.administrator eq administrator }">
 			<a href="vaste/administrator/edit.do?vasteId=${row.id}"><spring:message code = "vaste.edit"/></a>
 			</jstl:when>
 			<jstl:otherwise>
-			<spring:message code="vaste.cantEditFinalMode" />
+			<spring:message code="vaste.cantEdit" />
 			</jstl:otherwise>
 			</jstl:choose>
 				</display:column>
 				<display:column titleKey="vaste.delete" style="background-color: ${color};">
 			<jstl:choose>
-			<jstl:when test="${not row.isFinal }">
+			<jstl:when test="${not row.isFinal and row.administrator eq administrator}">
 			<a href="vaste/administrator/delete.do?vasteId=${row.id}"><spring:message code = "vaste.delete"/></a>
 			</jstl:when>
 			<jstl:otherwise>
-			<spring:message code="vaste.cantDeleteFinalMode" />
+			<spring:message code="vaste.cantDelete" />
 			</jstl:otherwise>
 			</jstl:choose>
 				</display:column>
