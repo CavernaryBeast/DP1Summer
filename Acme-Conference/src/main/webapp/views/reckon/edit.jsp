@@ -42,6 +42,6 @@
 
 	<input type="button" name="back"
 		value="<spring:message code = 'reckon.back' />" class="btn"
-		onclick="javascript: relativeRedir('reckon/administrator/list.do?conferenceId=${reckon.conference.id}');" />
+		onclick="javascript: relativeRedir('reckon/administrator/list.do?conferenceId=${conferenceId}');" />
 
 </security:authorize>

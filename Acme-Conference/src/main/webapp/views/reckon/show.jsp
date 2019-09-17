@@ -9,7 +9,7 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
-	<p><spring:message code="reckon.ticker" />: <jstl:out value = "${reckon.ticker}"/></p>
+	<p><spring:message code="reckon.tracer" />: <jstl:out value = "${reckon.tracer}"/></p>
 	<p><spring:message code="reckon.publicationMoment" />: <jstl:out value = "${reckon.publicationMoment}"/></p>
 	<p><spring:message code="reckon.body" />: <jstl:out value = "${reckon.body}"/></p>
 	<p><spring:message code="reckon.picture" />: <jstl:out value = "${reckon.picture}"/></p>

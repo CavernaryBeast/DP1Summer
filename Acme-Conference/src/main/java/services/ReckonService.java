@@ -135,14 +135,14 @@ public class ReckonService {
 			//			result = reckon;
 			final DateFormat dateFormat = new SimpleDateFormat("yyMM/dd-");
 			final Date now = new Date(System.currentTimeMillis() - 1);
-			final String ticker = dateFormat.format(now).toString() + RandomStringUtils.randomNumeric(5);
+			final String tracer = dateFormat.format(now).toString() + RandomStringUtils.randomNumeric(5);
 
 			//			final int year = Calendar.getInstance().get(Calendar.YEAR);
 			//			final int month = Calendar.getInstance().get(Calendar.MONTH) + 1;
 			//			final int day = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
 			//			
-			//	ticker = ""
-			reckon.setTicker(ticker);
+			//	tracer = ""
+			reckon.setTracer(tracer);
 			//	this.auditService.checkAuditId(auditId);
 			final Conference conference = this.conferenceService.findOne(conferenceId);
 			reckon.setConference(conference);
@@ -151,7 +151,7 @@ public class ReckonService {
 			final Reckon original = this.reckonRepository.findOne(reckon.getId());
 			reckon.setId(original.getId());
 			reckon.setVersion(original.getVersion());
-			reckon.setTicker(original.getTicker());
+			reckon.setTracer(original.getTracer());
 			reckon.setConference(original.getConference());
 			reckon.setAdministrator(principal);
 		}

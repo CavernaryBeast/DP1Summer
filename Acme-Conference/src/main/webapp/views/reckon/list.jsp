@@ -39,7 +39,7 @@
 
 	<display:column property="title" titleKey="reckon.title"
 		style="background-color: ${color};" />
-	<display:column property="ticker" titleKey="reckon.ticker"
+	<display:column property="tracer" titleKey="reckon.tracer"
 		style="background-color: ${color};" />
 
 

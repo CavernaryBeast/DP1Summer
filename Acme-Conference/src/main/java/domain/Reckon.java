@@ -23,7 +23,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Access(AccessType.PROPERTY)
 public class Reckon extends DomainEntity {
 
-	private String	ticker;
+	private String	tracer;
 	private Date	publicationMoment;
 	private String	title;
 	private String	body;
@@ -43,12 +43,12 @@ public class Reckon extends DomainEntity {
 	@Pattern(regexp = "^[0-9]{4}/[0-9]{2}-\\d{5}$")
 	@NotBlank
 	//@Column(unique = true)
-	public String getTicker() {
-		return this.ticker;
+	public String getTracer() {
+		return this.tracer;
 	}
 
-	public void setTicker(final String ticker) {
-		this.ticker = ticker;
+	public void setTracer(final String tracer) {
+		this.tracer = tracer;
 	}
 
 	//	@Past
