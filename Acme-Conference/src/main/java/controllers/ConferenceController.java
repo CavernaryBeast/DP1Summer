@@ -18,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import services.CategoryService;
 import services.ConferenceService;
+import services.ConfigurationParametersService;
 import services.SponsorshipService;
 import domain.Category;
 import domain.Conference;
@@ -29,13 +30,16 @@ import forms.FilterConferenceForm;
 public class ConferenceController extends AbstractController {
 
 	@Autowired
-	ConferenceService			conferenceService;
+	ConferenceService						conferenceService;
 
 	@Autowired
-	private CategoryService		categoryService;
+	private CategoryService					categoryService;
 
 	@Autowired
-	private SponsorshipService	sponsorshipService;
+	private SponsorshipService				sponsorshipService;
+
+	@Autowired
+	private ConfigurationParametersService	configurationParametersService;
 
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
@@ -58,6 +62,10 @@ public class ConferenceController extends AbstractController {
 		result.addObject("filterConferenceForm", filterConferenceForm);
 		result.addObject("now", now);
 		result.addObject("categories", categories);
+
+		final String banner = this.configurationParametersService.getBanner();
+		result.addObject("banner", banner);
+
 		return result;
 	}
 
@@ -92,6 +100,10 @@ public class ConferenceController extends AbstractController {
 		result.addObject("filterConferenceForm", filterConferenceForm);
 		result.addObject("now", now);
 		result.addObject("categories", categories);
+
+		final String banner = this.configurationParametersService.getBanner();
+		result.addObject("banner", banner);
+
 		return result;
 	}
 
@@ -111,6 +123,9 @@ public class ConferenceController extends AbstractController {
 		}
 		result.addObject("sponsorships", sponsorships);
 
+		final String banner = this.configurationParametersService.getBanner();
+		result.addObject("banner", banner);
+
 		return result;
 	}
 
@@ -128,6 +143,10 @@ public class ConferenceController extends AbstractController {
 
 		result.addObject("conference", conference);
 		result.addObject("message", messageCode);
+
+		final String banner = this.configurationParametersService.getBanner();
+		result.addObject("banner", banner);
+
 		return result;
 	}
 

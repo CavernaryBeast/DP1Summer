@@ -17,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import services.AuthorService;
 import services.ConferenceService;
+import services.ConfigurationParametersService;
 import services.PaperService;
 import services.ReportService;
 import services.SubmissionService;
@@ -32,19 +33,22 @@ import domain.Submission;
 public class SubmissionAuthorController extends AbstractController {
 
 	@Autowired
-	private SubmissionService	submissionService;
+	private SubmissionService				submissionService;
 
 	@Autowired
-	private AuthorService		authorService;
+	private AuthorService					authorService;
 
 	@Autowired
-	private ConferenceService	conferenceService;
+	private ConferenceService				conferenceService;
 
 	@Autowired
-	private PaperService		paperService;
+	private PaperService					paperService;
 
 	@Autowired
-	private ReportService		reportService;
+	private ReportService					reportService;
+
+	@Autowired
+	private ConfigurationParametersService	configurationParametersService;
 
 
 	//Listing --------------------------------------------------------
@@ -63,6 +67,9 @@ public class SubmissionAuthorController extends AbstractController {
 		res.addObject("conferences", conferences);
 		res.addObject("submissionsWithEditablePapers", submissionsWithEditablePapers);
 		res.addObject("requestURI", "submission/author/list.do");
+
+		final String banner = this.configurationParametersService.getBanner();
+		res.addObject("banner", banner);
 
 		return res;
 	}
@@ -87,6 +94,9 @@ public class SubmissionAuthorController extends AbstractController {
 				result = this.ListModelAndView();
 		}
 
+		final String banner = this.configurationParametersService.getBanner();
+		result.addObject("banner", banner);
+
 		return result;
 	}
 
@@ -102,6 +112,10 @@ public class SubmissionAuthorController extends AbstractController {
 		ModelAndView result;
 		result = this.list();
 		result.addObject("message", messageCode);
+
+		final String banner = this.configurationParametersService.getBanner();
+		result.addObject("banner", banner);
+
 		return result;
 	}
 
@@ -152,6 +166,10 @@ public class SubmissionAuthorController extends AbstractController {
 				System.out.println(oops.getStackTrace());
 				System.out.println(oops.getCause().getMessage());
 			}
+
+		final String banner = this.configurationParametersService.getBanner();
+		res.addObject("banner", banner);
+
 		return res;
 	}
 
@@ -167,6 +185,9 @@ public class SubmissionAuthorController extends AbstractController {
 		result = new ModelAndView("submission/show");
 		result.addObject("submission", submission);
 		result.addObject("reports", reports);
+
+		final String banner = this.configurationParametersService.getBanner();
+		result.addObject("banner", banner);
 
 		return result;
 	}
@@ -199,6 +220,9 @@ public class SubmissionAuthorController extends AbstractController {
 				res = this.ListModelAndView();
 		}
 
+		final String banner = this.configurationParametersService.getBanner();
+		res.addObject("banner", banner);
+
 		return res;
 	}
 
@@ -223,6 +247,10 @@ public class SubmissionAuthorController extends AbstractController {
 				System.out.println(oops.getStackTrace());
 				System.out.println(oops.getCause().getMessage());
 			}
+
+		final String banner = this.configurationParametersService.getBanner();
+		res.addObject("banner", banner);
+
 		return res;
 	}
 
@@ -277,6 +305,10 @@ public class SubmissionAuthorController extends AbstractController {
 		res.addObject("submission", submission);
 		res.addObject("authors", authors);
 		res.addObject("conferences", conferences);
+
+		final String banner = this.configurationParametersService.getBanner();
+		res.addObject("banner", banner);
+
 		return res;
 	}
 
@@ -299,6 +331,10 @@ public class SubmissionAuthorController extends AbstractController {
 		res.addObject("message", messageCode);
 		res.addObject("paper", paper);
 		res.addObject("authors", authors);
+
+		final String banner = this.configurationParametersService.getBanner();
+		res.addObject("banner", banner);
+
 		return res;
 	}
 

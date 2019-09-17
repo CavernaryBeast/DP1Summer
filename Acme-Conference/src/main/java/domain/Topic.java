@@ -3,6 +3,7 @@ package domain;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 
 import org.hibernate.validator.constraints.NotBlank;
@@ -19,6 +20,7 @@ public class Topic extends DomainEntity {
 	//Getters and setters
 
 	@NotBlank
+	@Column(unique = true)
 	public String getName() {
 		return this.name;
 	}
@@ -28,6 +30,7 @@ public class Topic extends DomainEntity {
 	}
 
 	@NotBlank
+	@Column(unique = true)
 	public String getNameEs() {
 		return this.nameEs;
 	}

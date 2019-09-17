@@ -57,6 +57,9 @@ public class SubmissionReviewerController extends AbstractController {
 		result = new ModelAndView("submission/show");
 		result.addObject("submission", submission);
 
+		final String banner = this.configurationParametersService.getBanner();
+		result.addObject("banner", banner);
+
 		return result;
 	}
 

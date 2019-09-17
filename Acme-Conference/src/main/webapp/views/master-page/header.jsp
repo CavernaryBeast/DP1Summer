@@ -17,8 +17,8 @@
 
 
 <div>
-	<a href="#"><img src="images/acme-conference.png"
-		alt="Acme-Conference Co., Inc." style="margin-bottom: 0.5em;" /></a>
+	<a href="#"><img src="${banner}" alt="Acme-Conference Co., Inc."
+		style="margin-bottom: 0.5em;" /></a>
 </div>
 
 

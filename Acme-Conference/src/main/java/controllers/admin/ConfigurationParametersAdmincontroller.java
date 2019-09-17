@@ -145,6 +145,10 @@ public class ConfigurationParametersAdmincontroller extends AbstractController {
 		ModelAndView result;
 		result = this.display();
 		result.addObject("message", messageCode);
+
+		final String banner = this.configurationParametersService.getBanner();
+		result.addObject("banner", banner);
+
 		return result;
 	}
 

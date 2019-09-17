@@ -20,6 +20,7 @@ import services.ActorService;
 import services.AdministratorService;
 import services.CategoryService;
 import services.ConferenceService;
+import services.ConfigurationParametersService;
 import services.ReviewerService;
 import services.SubmissionService;
 import controllers.AbstractController;
@@ -34,22 +35,25 @@ import forms.AdministratorFilterConferenceForm;
 public class ConferenceAdminController extends AbstractController {
 
 	@Autowired
-	private ConferenceService		conferenceService;
+	private ConferenceService				conferenceService;
 
 	@Autowired
-	private SubmissionService		submissionService;
+	private SubmissionService				submissionService;
 
 	@Autowired
-	private AdministratorService	administratorService;
+	private AdministratorService			administratorService;
 
 	@Autowired
-	private ReviewerService			reviewerService;
+	private ReviewerService					reviewerService;
 
 	@Autowired
-	private ActorService			actorService;
+	private ActorService					actorService;
 
 	@Autowired
-	private CategoryService			categoryService;
+	private CategoryService					categoryService;
+
+	@Autowired
+	private ConfigurationParametersService	configurationParametersService;
 
 
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
@@ -80,6 +84,10 @@ public class ConferenceAdminController extends AbstractController {
 		result.addObject("requestURI", "conference/administrator/list.do");
 		result.addObject("actionFilter", "conference/administrator/adminFilter.do");
 		result.addObject("administratorfilterConferenceForm", administratorfilterConferenceForm);
+
+		final String banner = this.configurationParametersService.getBanner();
+		result.addObject("banner", banner);
+
 		return result;
 
 	}
@@ -111,6 +119,10 @@ public class ConferenceAdminController extends AbstractController {
 		result.addObject("actionFilter", "conference/administrator/adminFilter.do");
 		result.addObject("administratorfilterConferenceForm", administratorfilterConferenceForm);
 		result.addObject("conferencesWithUnderReviewSubmissions", conferencesWithUnderReviewSubmissions);
+
+		final String banner = this.configurationParametersService.getBanner();
+		result.addObject("banner", banner);
+
 		return result;
 	}
 
@@ -135,6 +147,9 @@ public class ConferenceAdminController extends AbstractController {
 				result = this.ListModelAndView();
 		}
 
+		final String banner = this.configurationParametersService.getBanner();
+		result.addObject("banner", banner);
+
 		return result;
 
 	}
@@ -150,6 +165,10 @@ public class ConferenceAdminController extends AbstractController {
 		ModelAndView result;
 		result = this.list();
 		result.addObject("message", messageCode);
+
+		final String banner = this.configurationParametersService.getBanner();
+		result.addObject("banner", banner);
+
 		return result;
 	}
 
@@ -192,6 +211,9 @@ public class ConferenceAdminController extends AbstractController {
 					result = this.createEditModelAndView(conference, "conference.commit.error");
 			}
 
+		final String banner = this.configurationParametersService.getBanner();
+		result.addObject("banner", banner);
+
 		return result;
 
 	}
@@ -217,6 +239,10 @@ public class ConferenceAdminController extends AbstractController {
 			else
 				result = this.ListModelAndView();
 		}
+
+		final String banner = this.configurationParametersService.getBanner();
+		result.addObject("banner", banner);
+
 		return result;
 	}
 	protected ModelAndView createEditModelAndView(final Conference conference) {
@@ -238,6 +264,10 @@ public class ConferenceAdminController extends AbstractController {
 		result.addObject("categories", categories);
 		result.addObject("lang", lang);
 		result.addObject("message", messageCode);
+
+		final String banner = this.configurationParametersService.getBanner();
+		result.addObject("banner", banner);
+
 		return result;
 	}
 
@@ -261,6 +291,10 @@ public class ConferenceAdminController extends AbstractController {
 		result.addObject("now", now);
 		result.addObject("conference", conference);
 		result.addObject("requestURI", "conference/administrator/listSubmissions.do?conferenceId=" + conferenceId);
+
+		final String banner = this.configurationParametersService.getBanner();
+		result.addObject("banner", banner);
+
 		return result;
 	}
 
@@ -276,6 +310,10 @@ public class ConferenceAdminController extends AbstractController {
 		ModelAndView result;
 		result = this.listSubmissions(conferenceId);
 		result.addObject("message", messageCode);
+
+		final String banner = this.configurationParametersService.getBanner();
+		result.addObject("banner", banner);
+
 		return result;
 	}
 
@@ -301,6 +339,9 @@ public class ConferenceAdminController extends AbstractController {
 				result = this.ListModelAndView();
 		}
 
+		final String banner = this.configurationParametersService.getBanner();
+		result.addObject("banner", banner);
+
 		return result;
 	}
 
@@ -324,6 +365,9 @@ public class ConferenceAdminController extends AbstractController {
 			else
 				result = this.ListModelAndView();
 		}
+
+		final String banner = this.configurationParametersService.getBanner();
+		result.addObject("banner", banner);
 
 		return result;
 
@@ -362,6 +406,10 @@ public class ConferenceAdminController extends AbstractController {
 				System.out.println(oops.getStackTrace());
 				System.out.println(oops.getCause().getMessage());
 			}
+
+		final String banner = this.configurationParametersService.getBanner();
+		res.addObject("banner", banner);
+
 		return res;
 	}
 
@@ -385,6 +433,9 @@ public class ConferenceAdminController extends AbstractController {
 		res.addObject("message", messageCode);
 		res.addObject("submission", submission);
 		res.addObject("reviewers", posibleReviewers);
+
+		final String banner = this.configurationParametersService.getBanner();
+		res.addObject("banner", banner);
 
 		return res;
 	}

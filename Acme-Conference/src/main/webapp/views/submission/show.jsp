@@ -86,4 +86,11 @@
 
 </fieldset>
 <br />
-<acme:button url="/submission/author/list.do" code="submission.cancel" />
+<security:authorize access="hasRole('AUTHOR')">
+	<acme:button url="/submission/author/list.do" code="submission.cancel" />
+</security:authorize>
+
+<security:authorize access="hasRole('REVIEWER')">
+	<acme:button url="/submission/reviewer/list.do"
+		code="submission.cancel" />
+</security:authorize>

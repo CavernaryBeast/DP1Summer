@@ -14,35 +14,39 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import services.ActivityService;
+import services.AuthorService;
+import services.ConferenceService;
+import services.ConfigurationParametersService;
+import services.PaperService;
+import services.SubmissionService;
 import controllers.AbstractController;
 import domain.Activity;
 import domain.Conference;
 import domain.Paper;
 import domain.Section;
-import services.ActivityService;
-import services.AuthorService;
-import services.ConferenceService;
-import services.PaperService;
-import services.SubmissionService;
 
 @Controller
 @RequestMapping("/activity/administrator")
 public class ActivityAdminController extends AbstractController {
 
 	@Autowired
-	private ActivityService		activityService;
+	private ActivityService					activityService;
 
 	@Autowired
-	private AuthorService		authorService;
+	private AuthorService					authorService;
 
 	@Autowired
-	private ConferenceService	conferenceService;
+	private ConferenceService				conferenceService;
 
 	@Autowired
-	private SubmissionService	submissionService;
+	private SubmissionService				submissionService;
 
 	@Autowired
-	private PaperService		paperService;
+	private PaperService					paperService;
+
+	@Autowired
+	private ConfigurationParametersService	configurationParametersService;
 
 
 	//Listing --------------------------------------------------------
@@ -69,6 +73,9 @@ public class ActivityAdminController extends AbstractController {
 		res.addObject("now", now);
 		res.addObject("requestURI", "activity/administrator/list.do?conferenceId=" + conferenceId);
 
+		final String banner = this.configurationParametersService.getBanner();
+		res.addObject("banner", banner);
+
 		return res;
 	}
 
@@ -84,6 +91,10 @@ public class ActivityAdminController extends AbstractController {
 		ModelAndView result;
 		result = this.list(conferenceId);
 		result.addObject("message", messageCode);
+
+		final String banner = this.configurationParametersService.getBanner();
+		result.addObject("banner", banner);
+
 		return result;
 	}
 
@@ -107,6 +118,9 @@ public class ActivityAdminController extends AbstractController {
 				res = this.ListModelAndView(conferenceId);
 		}
 
+		final String banner = this.configurationParametersService.getBanner();
+		res.addObject("banner", banner);
+
 		return res;
 	}
 	@RequestMapping(value = "/createTutorial", method = RequestMethod.GET)
@@ -125,6 +139,9 @@ public class ActivityAdminController extends AbstractController {
 				res = this.ListModelAndView(conferenceId);
 		}
 
+		final String banner = this.configurationParametersService.getBanner();
+		res.addObject("banner", banner);
+
 		return res;
 	}
 	@RequestMapping(value = "/createPanel", method = RequestMethod.GET)
@@ -142,6 +159,9 @@ public class ActivityAdminController extends AbstractController {
 			else
 				res = this.ListModelAndView(conferenceId);
 		}
+
+		final String banner = this.configurationParametersService.getBanner();
+		res.addObject("banner", banner);
 
 		return res;
 	}
@@ -163,6 +183,9 @@ public class ActivityAdminController extends AbstractController {
 			else
 				res = this.ListModelAndView(conferenceId);
 		}
+
+		final String banner = this.configurationParametersService.getBanner();
+		res.addObject("banner", banner);
 
 		return res;
 	}
@@ -199,6 +222,9 @@ public class ActivityAdminController extends AbstractController {
 					res = this.createEditModelAndView(activity, conferenceId, "activity.commit.error");
 
 			}
+		final String banner = this.configurationParametersService.getBanner();
+		res.addObject("banner", banner);
+
 		return res;
 	}
 
@@ -226,6 +252,9 @@ public class ActivityAdminController extends AbstractController {
 				else
 					res = this.createEditModelAndView(activity, conferenceId, "activity.commit.error");
 			}
+		final String banner = this.configurationParametersService.getBanner();
+		res.addObject("banner", banner);
+
 		return res;
 	}
 
@@ -252,6 +281,9 @@ public class ActivityAdminController extends AbstractController {
 				else
 					res = this.createEditModelAndView(activity, conferenceId, "activity.commit.error");
 			}
+		final String banner = this.configurationParametersService.getBanner();
+		res.addObject("banner", banner);
+
 		return res;
 	}
 
@@ -269,6 +301,10 @@ public class ActivityAdminController extends AbstractController {
 		result = new ModelAndView("activity/show");
 		result.addObject("activity", activity);
 		result.addObject("schedule", schedule);
+
+		final String banner = this.configurationParametersService.getBanner();
+		result.addObject("banner", banner);
+
 		return result;
 	}
 
@@ -299,6 +335,9 @@ public class ActivityAdminController extends AbstractController {
 			//	System.out.println(oops.getCause().getMessage());
 		}
 
+		final String banner = this.configurationParametersService.getBanner();
+		res.addObject("banner", banner);
+
 		return res;
 	}
 
@@ -323,6 +362,9 @@ public class ActivityAdminController extends AbstractController {
 				System.out.println(oops.getStackTrace());
 				System.out.println(oops.getCause().getMessage());
 			}
+		final String banner = this.configurationParametersService.getBanner();
+		res.addObject("banner", banner);
+
 		return res;
 	}
 
@@ -345,6 +387,9 @@ public class ActivityAdminController extends AbstractController {
 			else
 				res = this.ListModelAndView(conferenceId);
 		}
+
+		final String banner = this.configurationParametersService.getBanner();
+		res.addObject("banner", banner);
 
 		return res;
 	}
@@ -376,6 +421,10 @@ public class ActivityAdminController extends AbstractController {
 		}
 		res.addObject("message", messageCode);
 		res.addObject("conferenceId", conferenceId);
+
+		final String banner = this.configurationParametersService.getBanner();
+		res.addObject("banner", banner);
+
 		return res;
 	}
 
@@ -395,6 +444,10 @@ public class ActivityAdminController extends AbstractController {
 		res.addObject("section", section);
 		res.addObject("message", messageCode);
 		res.addObject("activityId", activityId);
+
+		final String banner = this.configurationParametersService.getBanner();
+		res.addObject("banner", banner);
+
 		return res;
 	}
 

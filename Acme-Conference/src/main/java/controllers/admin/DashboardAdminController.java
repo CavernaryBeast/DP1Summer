@@ -11,6 +11,7 @@ import services.AdministratorService;
 import services.CategoryService;
 import services.CommentService;
 import services.ConferenceService;
+import services.ConfigurationParametersService;
 import services.RegistrationService;
 import services.SubmissionService;
 import controllers.AbstractController;
@@ -20,22 +21,25 @@ import controllers.AbstractController;
 public class DashboardAdminController extends AbstractController {
 
 	@Autowired
-	private ConferenceService		conferenceService;
+	private ConferenceService				conferenceService;
 
 	@Autowired
-	private SubmissionService		submissionService;
+	private SubmissionService				submissionService;
 
 	@Autowired
-	private RegistrationService		registrationService;
+	private RegistrationService				registrationService;
 
 	@Autowired
-	private CommentService			commentService;
+	private CommentService					commentService;
 
 	@Autowired
-	private CategoryService			categoryService;
+	private CategoryService					categoryService;
 
 	@Autowired
-	private AdministratorService	administratorService;
+	private AdministratorService			administratorService;
+
+	@Autowired
+	private ConfigurationParametersService	configurationParametersService;
 
 
 	@RequestMapping(value = "/show", method = RequestMethod.GET)
@@ -135,6 +139,9 @@ public class DashboardAdminController extends AbstractController {
 		result.addObject("commentsPerActivityStatsMax", commentsPerActivityStatsMax);
 		result.addObject("commentsPerActivityStatsAvg", commentsPerActivityStatsAvg);
 		result.addObject("commentsPerActivityStatsStd", commentsPerActivityStatsStd);
+
+		final String banner = this.configurationParametersService.getBanner();
+		result.addObject("banner", banner);
 
 		return result;
 

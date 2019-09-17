@@ -51,6 +51,10 @@ public class SponsorshipSponsorController extends AbstractController {
 		res = new ModelAndView("sponsorship/list");
 		res.addObject("sponsorships", sponsorships);
 		res.addObject("now", now);
+
+		final String banner = this.configurationParametersService.getBanner();
+		res.addObject("banner", banner);
+
 		return res;
 	}
 
@@ -66,6 +70,10 @@ public class SponsorshipSponsorController extends AbstractController {
 		ModelAndView result;
 		result = this.list();
 		result.addObject("message", messageCode);
+
+		final String banner = this.configurationParametersService.getBanner();
+		result.addObject("banner", banner);
+
 		return result;
 	}
 
@@ -87,6 +95,9 @@ public class SponsorshipSponsorController extends AbstractController {
 				res = this.ListModelAndView();
 		}
 
+		final String banner = this.configurationParametersService.getBanner();
+		res.addObject("banner", banner);
+
 		return res;
 	}
 
@@ -107,6 +118,9 @@ public class SponsorshipSponsorController extends AbstractController {
 			else
 				res = this.ListModelAndView();
 		}
+
+		final String banner = this.configurationParametersService.getBanner();
+		res.addObject("banner", banner);
 
 		return res;
 	}
@@ -138,6 +152,10 @@ public class SponsorshipSponsorController extends AbstractController {
 					res = this.createEditModelAndView(sponsorship, "activity.commit.error");
 
 			}
+
+		final String banner = this.configurationParametersService.getBanner();
+		res.addObject("banner", banner);
+
 		return res;
 	}
 
@@ -148,6 +166,10 @@ public class SponsorshipSponsorController extends AbstractController {
 		sponsorship = this.sponsorshipService.findOne(sponsorshipId);
 		result = new ModelAndView("sponsorship/show");
 		result.addObject("sponsorship", sponsorship);
+
+		final String banner = this.configurationParametersService.getBanner();
+		result.addObject("banner", banner);
+
 		return result;
 	}
 
@@ -167,6 +189,10 @@ public class SponsorshipSponsorController extends AbstractController {
 		res.addObject("message", messageCode);
 		res.addObject("conferences", conferences);
 		res.addObject("makes", makes);
+
+		final String banner = this.configurationParametersService.getBanner();
+		res.addObject("banner", banner);
+
 		return res;
 	}
 
@@ -187,6 +213,9 @@ public class SponsorshipSponsorController extends AbstractController {
 			else
 				res = this.ListModelAndView();
 		}
+
+		final String banner = this.configurationParametersService.getBanner();
+		res.addObject("banner", banner);
 
 		return res;
 	}

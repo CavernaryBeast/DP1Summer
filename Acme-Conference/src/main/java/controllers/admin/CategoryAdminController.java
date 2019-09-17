@@ -54,6 +54,9 @@ public class CategoryAdminController extends AbstractController {
 		final String lang = LocaleContextHolder.getLocale().getLanguage();
 		res.addObject("lang", lang);
 
+		final String banner = this.configurationParametersService.getBanner();
+		res.addObject("banner", banner);
+
 		return res;
 	}
 

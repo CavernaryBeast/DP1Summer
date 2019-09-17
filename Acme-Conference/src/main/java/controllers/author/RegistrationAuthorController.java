@@ -62,6 +62,9 @@ public class RegistrationAuthorController extends AbstractController {
 		res.addObject("conferences", conferences);
 		res.addObject("requestURI", "submission/author/list.do");
 
+		final String banner = this.configurationParametersService.getBanner();
+		res.addObject("banner", banner);
+
 		return res;
 	}
 
@@ -81,6 +84,9 @@ public class RegistrationAuthorController extends AbstractController {
 			else
 				res = this.ListModelAndView();
 		}
+
+		final String banner = this.configurationParametersService.getBanner();
+		res.addObject("banner", banner);
 
 		return res;
 	}
@@ -124,6 +130,10 @@ public class RegistrationAuthorController extends AbstractController {
 					res = this.createEditModelAndView(registration, "registration.commit.error");
 
 			}
+
+		final String banner = this.configurationParametersService.getBanner();
+		res.addObject("banner", banner);
+
 		return res;
 	}
 	// Show ----------------------------------------------------------------------------------
@@ -143,6 +153,9 @@ public class RegistrationAuthorController extends AbstractController {
 			else
 				result = this.ListModelAndView();
 		}
+
+		final String banner = this.configurationParametersService.getBanner();
+		result.addObject("banner", banner);
 
 		return result;
 	}
@@ -168,6 +181,10 @@ public class RegistrationAuthorController extends AbstractController {
 		res.addObject("registration", registration);
 		res.addObject("conferences", conferences);
 		res.addObject("makes", makes);
+
+		final String banner = this.configurationParametersService.getBanner();
+		res.addObject("banner", banner);
+
 		return res;
 	}
 
@@ -183,6 +200,10 @@ public class RegistrationAuthorController extends AbstractController {
 		ModelAndView result;
 		result = this.list();
 		result.addObject("message", messageCode);
+
+		final String banner = this.configurationParametersService.getBanner();
+		result.addObject("banner", banner);
+
 		return result;
 	}
 

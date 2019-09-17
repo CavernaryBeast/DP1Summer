@@ -103,9 +103,10 @@ public class ReportReviewerController extends AbstractController {
 		ModelAndView res;
 		Report saved;
 		//	this.reportService.reconstruct(report, binding, submissionId);
-		if (binding.hasErrors())
+		if (binding.hasErrors()) {
 			res = this.createEditModelAndView(report);
-		else
+			res.addObject("submissionId", submissionId);
+		} else
 			try {
 				final Submission submission = this.submissionService.findOne2(submissionId);
 				this.submissionService.checkSubmisisonCanBeSavedToReview(submissionId);
